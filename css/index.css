@@ -1,0 +1,200 @@
+* {
+   margin: 0;
+   padding: 0;
+}
+body, html {
+   height:100%;
+}
+
+html{
+    /*隐藏滚动条，当IE下溢出，仍然可以滚动*/
+    -ms-overflow-style:none;
+    /*火狐下隐藏滚动条*/
+    overflow:-moz-scrollbars-none;
+	overflow: hidden;
+}
+
+.dis_flex{
+	display: flex;
+}
+
+::-webkit-scrollbar{
+    display:none;
+}
+
+.myCanvas{
+	background-color: #DEDEDE;
+	position: absolute;
+	z-index: -1;
+}
+
+.main_wrap{
+	display: flex;
+}
+
+.task_wrap{
+	width: 27%;
+	min-width: 30rem;
+	height: 100vh;
+	-webkit-overflow-scrolling: touch;
+	overflow-x: scroll;
+	background-color: #99D3DF;
+	text-align: center;
+	z-index: 3;
+}
+
+.task_title{
+	margin: 4.5rem 0;
+	font-size: 1.8rem;
+	font-weight: 800;
+	letter-spacing: 0.05rem;
+}
+
+.space{
+	width: 0.5rem;
+	background-color: white;
+}
+
+.space2{
+	width: 100%;
+	height: 0.5rem;
+	background-color: white;
+	
+}
+
+.tree_wrap{
+	width: 68%;
+	min-width: 60rem;
+	z-index: 2;
+	text-align: center;
+}
+
+.itemBox{
+	background-color: #8BBDD6;
+}
+
+.itemBox:nth-of-type(odd){
+	background-color: darkcyan;
+	color: white;
+}
+
+.inputW{
+	padding: 1.6rem 0;
+	vertical-align: middle;
+}
+
+.itemName{
+	width: 45%;
+	min-width: 14rem;
+	margin-right: 0.625rem;
+	font-weight: 700;
+	vertical-align: middle;
+	text-align: right;
+	line-height: 2rem;
+}
+
+.itemName span{
+	line-height: 1rem;
+}
+
+.inputBox{
+	width: 14rem;
+	padding: 0.125rem 0;
+	border:0.0625rem solid #dbdbdb;
+	border-radius: 0.3125rem;
+	outline:none;
+	text-indent:10px;
+	height: 75%;
+}
+
+
+.subB{
+	background-color: #99D3DF;
+	width: 18rem;
+	font-size: 2.5rem;
+	letter-spacing: 0.5rem;
+	padding: 0.5rem;
+	margin: 2.4rem 0;
+	border: 0.5rem solid white;
+	border-radius: 1rem;
+}
+
+.subB p{
+	font-family: 'Roboto'; 
+	text-align: center;
+	text-transform: uppercase;
+	color: #FFF;
+	user-select: none;
+}
+
+.subB:hover {
+	cursor: pointer;
+}
+
+.subB:active {
+	padding: 0.8rem;
+	font-size: 2rem;
+	background-color: darkcyan;
+}
+
+.tree_title{
+	margin: 4rem 0;
+	font-size: 3.6rem;
+	letter-spacing: 0.4rem;
+	color: darkcyan;
+	font-weight: 1000;
+	color: d;
+	text-align: center;
+}
+
+.node_wrap{
+	width: 80%;
+	margin-left: 10%;
+}
+
+.nodetree{
+	text-align: center;
+	display: flex;
+	flex-wrap: wrap;/*span 需要独占一行，所以此 flex 布局必须要折行显示 */
+}
+
+.nodetree > span {
+  margin: 2rem 0;
+  width: 100%;
+  min-width: 12.5rem;
+  text-align: center;
+}
+
+.nodeText{
+	display: inline;
+	width: -webkit-fit-content;
+	padding: 1rem;
+	border-radius: 8%;
+	background-color: white;
+	min-width: 6.25rem;
+}
+
+.fade-enter-active, .fade-leave-active {
+    transition: opacity 2s
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active, 2.1.8 版本以下 */ {
+    opacity: 0
+}
+
+.nodetree {
+	width: 50%;
+}
+
+.trueNode{
+	color: white;
+	background-color: orangered;
+	border-color: red;
+}
+
+.leafNode{
+	border-radius: 50%;
+}
+
+.nobrother{
+	width: 100%;
+} 
