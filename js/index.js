@@ -223,14 +223,20 @@ var task = new Vue({
 	]
   },
   methods:{
+	//重置数据
+	initialization:function(){
+		for(var i =0; i < this.items.length; i++){
+			this.items[i].value = null;
+		}
+	},
 	getResult: function(){
 		var isInput = true;
 		for(var i = 0; i < this.items.length; i++){
-			if(this.items[i].value == null)	isInput = false;
+			if(this.items[i].value == null||this.items[i].value == '')	isInput = false;
 		}
+		tree1.initialization();
+		tree2.initialization();
 		if(isInput){
-			tree1.initialization();
-			tree2.initialization();
 			treeTitle.title = 'Decision-Making Process of TS-DT';
 			tree1.$set(tree1.nodes[0],'isTrue',true);
 			//tree1.nodes[0].isTrue = true;
@@ -309,15 +315,13 @@ var task = new Vue({
 					}
 				}
 			}
-			this.$nextTick( () => {
-				// 渲染完毕再执行这个
-				makeTrees();
-			})
-			
 		}else{
-			alert("Incomplete informations");
+			alert("Incomplete information");
 		}
-		
+		this.$nextTick( () => {
+			// 渲染完毕再执行这个
+			makeTrees();
+		})
 	}
   }
 })
@@ -335,7 +339,6 @@ function makeTrees(){
 	var ctx=c.getContext("2d");
 	ctx.lineWidth = "3";
 	var nodeNum = $(".tree1").length;
-	console.log(nodeNum);
 	for(var i = 1; i <= nodeNum; i++){
 		drawTree(ctx,$("#node"+i));
 	}
@@ -348,7 +351,6 @@ function makeTrees(){
 function drawTree(ctx,node){
 	var nodef = node.find(".nodeText").eq(0);
 	var isTrue1 = nodef.hasClass("trueNode");
-	if(isTrue1) console.log("trueNode1");
 	var pos1 = nodef.position();
 	var width1 = nodef.width();
 	var paddingl = nodef.css("padding-left");
@@ -363,10 +365,8 @@ function drawTree(ctx,node){
 	for(var j = 0; j < children.length; j++){
 		var nodes = children.eq(j).find(".nodeText").eq(0);
 		var isTrue2 = nodes.hasClass("trueNode");
-		if(isTrue2) console.log("trueNode2");
 		if(isTrue1 && isTrue2){
 			ctx.strokeStyle = "red";
-			console.log("trueline");
 		}else{
 			ctx.strokeStyle = "#CDCDCD";
 		}
