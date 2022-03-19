@@ -292,7 +292,7 @@ var task = new Vue({
 					//tree1.nodes[0].nodes[1].nodes[1].isTrue = true;
 					//第三层 Fine motor < 75
 					if(this.items[3].value < 75){
-						tree1.$set(ree1.nodes[0].nodes[1].nodes[1].nodes[0],'isTrue',true);
+						tree1.$set(tree1.nodes[0].nodes[1].nodes[1].nodes[0],'isTrue',true);
 						//tree1.nodes[0].nodes[1].nodes[1].nodes[0].isTrue = true;
 						tree2.$set(tree2.nodes[0],'isTrue',true);
 						//tree2.nodes[0].isTrue = true;
