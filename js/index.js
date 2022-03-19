@@ -248,6 +248,15 @@ var task = new Vue({
 				if(this.items[1].value < 75){
 					tree1.$set(tree1.nodes[0].nodes[0].nodes[0],'isTrue',true);
 					//tree1.nodes[0].nodes[0].nodes[0].isTrue = true;
+					tree2.$set(tree2.nodes[0],'isTrue',true);
+					//tree2.nodes[0].isTrue = true;
+					if(this.items[4].value < 3){
+						tree2.$set(tree2.nodes[0].nodes[0],'isTrue',true);
+						//tree2.nodes[0].nodes[0].isTrue = true;
+					}else{
+						tree2.$set(tree2.nodes[0].nodes[1],'isTrue',true);
+						//tree2.nodes[0].nodes[1].isTrue = true;
+					}
 				}else{
 					tree1.$set(tree1.nodes[0].nodes[0].nodes[1],'isTrue',true);
 					//tree1.nodes[0].nodes[0].nodes[1].isTrue = true;
