@@ -232,65 +232,92 @@ var task = new Vue({
 			tree1.initialization();
 			tree2.initialization();
 			treeTitle.title = 'Decision-Making Process of TS-DT';
-			tree1.nodes[0].isTrue = true;
+			tree1.$set(tree1.nodes[0],'isTrue',true);
+			//tree1.nodes[0].isTrue = true;
 			//第一层 Adaptive < 75
 			if(this.items[0].value < 75){
-				tree1.nodes[0].nodes[0].isTrue = true;
+				tree1.$set(tree1.nodes[0].nodes[0],'isTrue',true);
+				//tree1.nodes[0].nodes[0].isTrue = true;
 				//第二层 Pesonal-social < 75
 				if(this.items[1].value < 75){
-					tree1.nodes[0].nodes[0].nodes[0].isTrue = true;
+					tree1.$set(tree1.nodes[0].nodes[0].nodes[0],'isTrue',true);
+					//tree1.nodes[0].nodes[0].nodes[0].isTrue = true;
 				}else{
-					tree1.nodes[0].nodes[0].nodes[1].isTrue = true;
+					tree1.$set(tree1.nodes[0].nodes[0].nodes[1],'isTrue',true);
+					//tree1.nodes[0].nodes[0].nodes[1].isTrue = true;
 					//第三层 Fine motor < 75
 					if(this.items[3].value < 75){
-						tree1.nodes[0].nodes[0].nodes[1].nodes[0].isTrue = true;
-						tree2.nodes[0].isTrue = true;
+						tree1.$set(tree1.nodes[0].nodes[0].nodes[1].nodes[0],'isTrue',true);
+						//tree1.nodes[0].nodes[0].nodes[1].nodes[0].isTrue = true;
+						tree2.$set(tree2.nodes[0],'isTrue',true);
+						//tree2.nodes[0].isTrue = true;
 						if(this.items[4].value < 3){
-							tree2.nodes[0].nodes[0].isTrue = true;
+							tree2.$set(tree2.nodes[0].nodes[0],'isTrue',true);
+							//tree2.nodes[0].nodes[0].isTrue = true;
 						}else{
-							tree2.nodes[0].nodes[1].isTrue = true;
+							tree2.$set(tree2.nodes[0].nodes[1],'isTrue',true);
+							//tree2.nodes[0].nodes[1].isTrue = true;
 						}
 					}else{
-						tree1.nodes[0].nodes[0].nodes[1].nodes[1].isTrue = true;
+						tree1.$set(tree1.nodes[0].nodes[0].nodes[1].nodes[1],'isTrue',true);
+						//tree1.nodes[0].nodes[0].nodes[1].nodes[1].isTrue = true;
 					}
 				}
 			}else{
-				tree1.nodes[0].nodes[1].isTrue = true;
+				tree1.$set(tree1.nodes[0].nodes[1],'isTrue',true);
+				//tree1.nodes[0].nodes[1].isTrue = true;
 				//第二层 Gross motor < 76
 				if(this.items[2].value < 76){
-					tree1.nodes[0].nodes[1].nodes[0].isTrue = true;
+					tree1.$set(tree1.nodes[0].nodes[1].nodes[0],'isTrue',true);
+					//tree1.nodes[0].nodes[1].nodes[0].isTrue = true;
 					//第三层 Pesonal-social < 75
 					if(this.items[1].value < 75){
-						tree1.nodes[0].nodes[1].nodes[0].nodes[0].isTrue = true;
-						tree2.nodes[0].isTrue = true;
+						tree1.$set(tree1.nodes[0].nodes[1].nodes[0].nodes[0],'isTrue',true);
+						//tree1.nodes[0].nodes[1].nodes[0].nodes[0].isTrue = true;
+						tree2.$set(tree2.nodes[0],'isTrue',true);
+						//tree2.nodes[0].isTrue = true;
 						if(this.items[4].value < 3){
-							tree2.nodes[0].nodes[0].isTrue = true;
+							tree2.$set(tree2.nodes[0].nodes[0],'isTrue',true);
+							//tree2.nodes[0].nodes[0].isTrue = true;
 						}else{
-							tree2.nodes[0].nodes[1].isTrue = true;
+							tree2.$set(tree2.nodes[0].nodes[1],'isTrue',true);
+							//tree2.nodes[0].nodes[1].isTrue = true;
 						}
 					}else{
-						tree1.nodes[0].nodes[1].nodes[0].nodes[1].isTrue = true;
+						tree1.$set(tree1.nodes[0].nodes[1].nodes[0].nodes[1],'isTrue',true);
+						//tree1.nodes[0].nodes[1].nodes[0].nodes[1].isTrue = true;
 					}
 				}else{
-					tree1.nodes[0].nodes[1].nodes[1].isTrue = true;
+					tree1.$set(tree1.nodes[0].nodes[1].nodes[1],'isTrue',true);
+					//tree1.nodes[0].nodes[1].nodes[1].isTrue = true;
 					//第三层 Fine motor < 75
 					if(this.items[3].value < 75){
-						tree1.nodes[0].nodes[1].nodes[1].nodes[0].isTrue = true;
-						tree2.nodes[0].isTrue = true;
+						tree1.$set(ree1.nodes[0].nodes[1].nodes[1].nodes[0],'isTrue',true);
+						//tree1.nodes[0].nodes[1].nodes[1].nodes[0].isTrue = true;
+						tree2.$set(tree2.nodes[0],'isTrue',true);
+						//tree2.nodes[0].isTrue = true;
 						if(this.items[4].value < 3){
-							tree2.nodes[0].nodes[0].isTrue = true;
+							tree2.$set(tree2.nodes[0].nodes[0],'isTrue',true);
+							//tree2.nodes[0].nodes[0].isTrue = true;
 						}else{
-							tree2.nodes[0].nodes[1].isTrue = true;
+							tree2.$set(tree2.nodes[0].nodes[1],'isTrue',true);
+							//tree2.nodes[0].nodes[1].isTrue = true;
 						}
 					}else{
-						tree1.nodes[0].nodes[1].nodes[1].nodes[1].isTrue = true;
+						tree1.$set(tree1.nodes[0].nodes[1].nodes[1].nodes[1],'isTrue',true);
+						//tree1.nodes[0].nodes[1].nodes[1].nodes[1].isTrue = true;
 					}
 				}
 			}
-			makeTrees();
+			this.$nextTick( () => {
+				// 渲染完毕再执行这个
+				makeTrees();
+			})
+			
 		}else{
 			alert("Incomplete informations");
 		}
+		
 	}
   }
 })
@@ -307,8 +334,8 @@ function makeTrees(){
 	clearCanves(c);
 	var ctx=c.getContext("2d");
 	ctx.lineWidth = "3";
-	ctx.strokeStyle = "#DDDDDD";
 	var nodeNum = $(".tree1").length;
+	console.log(nodeNum);
 	for(var i = 1; i <= nodeNum; i++){
 		drawTree(ctx,$("#node"+i));
 	}
@@ -321,6 +348,7 @@ function makeTrees(){
 function drawTree(ctx,node){
 	var nodef = node.find(".nodeText").eq(0);
 	var isTrue1 = nodef.hasClass("trueNode");
+	if(isTrue1) console.log("trueNode1");
 	var pos1 = nodef.position();
 	var width1 = nodef.width();
 	var paddingl = nodef.css("padding-left");
@@ -335,8 +363,10 @@ function drawTree(ctx,node){
 	for(var j = 0; j < children.length; j++){
 		var nodes = children.eq(j).find(".nodeText").eq(0);
 		var isTrue2 = nodes.hasClass("trueNode");
+		if(isTrue2) console.log("trueNode2");
 		if(isTrue1 && isTrue2){
 			ctx.strokeStyle = "red";
+			console.log("trueline");
 		}else{
 			ctx.strokeStyle = "#CDCDCD";
 		}
