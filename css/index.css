@@ -44,8 +44,8 @@ html{
 }
 
 .task_title{
-	margin: 4.5rem 0;
-	font-size: 1.6rem;
+	margin: 4rem 0;
+	font-size: 1.2rem;
 	font-weight: 700;
 	letter-spacing: 0.05rem;
 }
@@ -140,7 +140,7 @@ html{
 }
 
 .tree_title{
-	margin: 4rem 0;
+	margin: 3% 0;
 	font-size: 3rem;
 	letter-spacing: 0.2rem;
 	color: darkcyan;
