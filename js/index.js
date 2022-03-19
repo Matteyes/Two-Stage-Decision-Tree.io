@@ -201,19 +201,19 @@ var task = new Vue({
   data: {
 	items:[
 		{
-			name: 'Gesell developmental scale: \n Adaptive domain',
+			name: 'Gesell Developmental Scale: \n Adaptive domain',
 			value: null
 		},
 		{
-			name: 'Gesell developmental scale: \n Personal-social domain',
+			name: 'Gesell Developmental Scale: \n Personal-social domain',
 			value: null
 		},
 		{
-			name: 'Gesell developmental scale: \n Gross motor domain',
+			name: 'Gesell Developmental Scale: \n Gross motor domain',
 			value: null
 		},
 		{
-			name: 'Gesell developmental scale: \n Fine motor domain',
+			name: 'Gesell Developmental Scale: \n Fine motor domain',
 			value: null
 		},
 		{

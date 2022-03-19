@@ -44,9 +44,9 @@ html{
 }
 
 .task_title{
-	margin: 4rem 0;
-	font-size: 1.2rem;
-	font-weight: 700;
+	margin: 2.5rem 0;
+	font-size: 1.6rem;
+	font-weight: 800;
 	letter-spacing: 0.05rem;
 }
 
@@ -80,19 +80,19 @@ html{
 
 .inputW{
 	padding: 1.6rem 0;
-	padding-left: 2rem;
+	padding-left: 1rem;
 	text-align: center;
 	vertical-align: middle;
 }
 
 .itemName{
-	width: 45%;
-	min-width: 14rem;
+	width: 46%;
+	min-width: 15rem;
 	margin-right: 0.625rem;
 	font-weight: 700;
 	vertical-align: middle;
 	text-align: right;
-	line-height: 2rem;
+	line-height: 1.8rem;
 }
 
 .itemName span{
