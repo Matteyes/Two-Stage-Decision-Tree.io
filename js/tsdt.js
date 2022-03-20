@@ -1,3 +1,4 @@
+
 var treeTitle = new Vue({
 	el: '#treeTitle',
 	data: {
@@ -199,6 +200,8 @@ var tree2 = new Vue({
 var task = new Vue({
   el: '#dvalue',
   data: {
+	hide: false,
+	buttonText: "Hide ↑",
 	items:[
 		{
 			name: 'Gesell Developmental Scale: \n Adaptive domain',
@@ -228,6 +231,21 @@ var task = new Vue({
 		for(var i =0; i < this.items.length; i++){
 			this.items[i].value = null;
 		}
+	},
+	hideTask: function(){
+		if(this.hide){
+			this.hide = false;
+			this.buttonText = "Hide ↑";
+			$('html,body').animate({scrollTop:800},200);
+		}else{
+			this.hide = true;
+			this.buttonText = "Show ↓";
+			$('html,body').animate({scrollTop:0},200);//回到顶端
+		}
+		this.$nextTick( () => {
+			// 渲染完毕再执行这个
+			makeTrees();
+		})
 	},
 	getResult: function(){
 		var isInput = true;

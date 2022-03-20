@@ -9,36 +9,37 @@
 		<meta name="format-detection" content="telephone=yes" />
 		<meta name="msapplication-tap-highlight" content="no" />
 		<meta http-equiv="X-UA-Compatible" content="IE=Edge，chrome=1">
-		<link rel="stylesheet" type="text/css" href="./css/tsdt.css" />
+		<link rel="stylesheet" type="text/css" href="./css/tsdt_phone.css" />
 		<script src="./js/jquery-3.6.0.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="js/v3.2.8/vue.global.prod.js" type="text/javascript" charset="utf-8"></script>
 		<script src="./js/v2.6.10/vue.min.js" type="text/javascript" charset="utf-8"></script>
-		<script type=”text/javascript”>
-			if( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
-				window.location = “tsdt_phone”; //可以换成http地址
-			}
-		</script>
 	</head>
 	<body>
 		<div class="main_wrap">
-			<canvas id="can" class="myCanvas" width="2000px" height="1500px">您的浏览器不支持 HTML5 canvas 标签。</canvas>
+			<canvas id="can" class="myCanvas" width="2000px" height="1800px">您的浏览器不支持 HTML5 canvas 标签。</canvas>
 			<div id="dvalue" class="task_wrap">
 				<div class="task_title">Developmental <br /> and <br /> Behavioral Assessment</div>
-				<div class="space2"></div>
-				<div class="itemBox" v-for="item in items">
-					<div class="dis_flex inputW">
-						<div class="itemName"><span>{{item.name}}</span></div>
-						<label class="inputWrap">
-							<input class="inputBox" placeholder="Please Input the score" v-model="item.value" oninput="value=value.replace(/[^\d]/g,'')">
-						</label>
-					</div>
+				<div v-bind:class="{hideWrap: hide}">
 					<div class="space2"></div>
+					<div class="itemBox" v-for="item in items" >
+						<div class="dis_flex inputW">
+							<div class="itemName"><span>{{item.name}}</span></div>
+							<label class="inputWrap">
+								<input class="inputBox" placeholder="Please Input the score" v-model="item.value" oninput="value=value.replace(/[^\d]/g,'')">
+							</label>
+						</div>
+						<div class="space2"></div>
+					</div>
+					<button class="subB" v-on:click="getResult()">
+						<p>Submit</p>
+					</button>
 				</div>
-				<button class="subB" v-on:click="getResult()">
-					<p>Submit</p>
-				</button>
+				
+				
+				<div class="hideB" v-on:click="hideTask()">
+					<p>{{buttonText}}</p>
+				</div>
 			</div>
-			<div class="space"></div>
 			<div  class="tree_wrap">
 				<div id="treeTitle" class="tree_title">{{title}}</div>
 			    <div id="tree" class="node_wrap" >
@@ -69,4 +70,5 @@
 		
 	</body>
 	<script src="js/tsdt.js" type="text/javascript" charset="utf-8"></script>
+	<script src="js/tsdt_phone.js" type="text/javascript" charset="utf-8"></script>
 </html>
