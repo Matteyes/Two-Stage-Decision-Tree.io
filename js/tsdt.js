@@ -204,23 +204,28 @@ var task = new Vue({
 	buttonText: "Hide ↑",
 	items:[
 		{
-			name: 'Gesell Developmental Scale: \n Adaptive domain',
+			name: 'Gesell Developmental Scale:',
+			nameadd: 'Adaptive domain',
 			value: null
 		},
 		{
-			name: 'Gesell Developmental Scale: \n Personal-social domain',
+			name: 'Gesell Developmental Scale:',
+			nameadd: 'Personal-social domain',
 			value: null
 		},
 		{
-			name: 'Gesell Developmental Scale: \n Gross motor domain',
+			name: 'Gesell Developmental Scale:',
+			nameadd: 'Gross motor domain',
 			value: null
 		},
 		{
-			name: 'Gesell Developmental Scale: \n Fine motor domain',
+			name: 'Gesell Developmental Scale:',
+			nameadd: 'Fine motor domain',
 			value: null
 		},
 		{
 			name: 'M-CHAT critical items',
+			nameadd: '',
 			value: null
 		}
 	]

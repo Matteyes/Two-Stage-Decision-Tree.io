@@ -3,7 +3,7 @@
    padding: 0;
 }
 body, html {
-   height:100%;
+   height: 106.25rem;
    overflow-x: hidden;
 }
 
@@ -25,20 +25,167 @@ body, html {
 }
 
 .task_wrap{
-	width: 100%;
-	-webkit-overflow-scrolling: touch;
-	overflow-x: scroll;
 	background-color: #99D3DF;
+	overflow: hidden;
 	text-align: center;
 	z-index: 3;
 }
-
-.task_title{
-	margin: 1.5rem 0;
-	font-size: 1.6rem;
-	font-weight: 800;
-	letter-spacing: 0.05rem;
+@media (min-width:0px){
+    .task_title{
+    	margin: 1.5rem 0;
+    	font-size: 1.2rem;
+    	font-weight: 800;
+    	letter-spacing: 0.05rem;
+    }
+	.itemName{
+		width: 50%;
+		margin-right: 0.625rem;
+		font-size: 0.4em;
+		font-weight: 700;
+		vertical-align: middle;
+		text-align: right;
+		line-height: 1.8rem;
+	}
+	.nodeText{
+		display: inline-block;
+		font-size: 0.2rem;
+		width: -webkit-fit-content;
+		padding: 0.3rem;
+		border-radius: 8%;
+		background-color: white;
+	}
+	
 }
+@media (min-width: 320px){
+    .task_title{
+    	margin: 1.5rem 0;
+    	font-size: 1.3rem;
+    	font-weight: 800;
+    	letter-spacing: 0.05rem;
+    }
+	.itemName{
+		width: 50%;
+		margin-right: 0.625rem;
+		font-size: 0.5em;
+		font-weight: 700;
+		vertical-align: middle;
+		text-align: right;
+		line-height: 1.8rem;
+	}
+	.nodeText{
+		display: inline-block;
+		font-size: 0.3rem;
+		width: -webkit-fit-content;
+		padding: 0.3rem;
+		border-radius: 8%;
+		background-color: white;
+	}
+}
+@media (min-width: 340px){
+    .task_title{
+    	margin: 1.5rem 0;
+    	font-size: 1.4rem;
+    	font-weight: 800;
+    	letter-spacing: 0.05rem;
+    }
+	.itemName{
+		width: 50%;
+		margin-right: 0.625rem;
+		font-size: 0.5em;
+		font-weight: 700;
+		vertical-align: middle;
+		text-align: right;
+		line-height: 1.8rem;
+	}
+	.nodeText{
+		display: inline-block;
+		font-size: 0.3rem;
+		width: -webkit-fit-content;
+		padding: 0.3rem;
+		border-radius: 8%;
+		background-color: white;
+	}
+}
+@media (min-width: 360px){
+    .task_title{
+    	margin: 1.5rem 0;
+    	font-size: 1.5rem;
+    	font-weight: 800;
+    	letter-spacing: 0.05rem;
+    }
+	.itemName{
+		width: 50%;
+		margin-right: 0.625rem;
+		font-size: 0.6em;
+		font-weight: 700;
+		vertical-align: middle;
+		text-align: right;
+		line-height: 1.8rem;
+	}
+	.nodeText{
+		display: inline-block;
+		font-size: 0.4rem;
+		width: -webkit-fit-content;
+		padding: 0.3rem;
+		border-radius: 8%;
+		background-color: white;
+	}
+	
+}
+@media (min-width: 400px){
+    .task_title{
+    	margin: 1.5rem 0;
+    	font-size: 1.6rem;
+    	font-weight: 800;
+    	letter-spacing: 0.05rem;
+    }
+	.itemName{
+		width: 50%;
+		margin-right: 0.625rem;
+		font-size: 0.6em;
+		font-weight: 700;
+		vertical-align: middle;
+		text-align: right;
+		line-height: 1.8rem;
+	}
+	.nodeText{
+		display: inline-block;
+		font-size: 0.5rem;
+		width: -webkit-fit-content;
+		padding: 0.3rem;
+		border-radius: 8%;
+		background-color: white;
+	}
+	
+}
+@media (min-width: 420px){
+    .task_title{
+    	margin: 1.5rem 0;
+    	font-size: 1.7rem;
+    	font-weight: 800;
+    	letter-spacing: 0.05rem;
+    }
+	.itemName{
+		width: 50%;
+		margin-right: 0.625rem;
+		font-size: 0.7em;
+		font-weight: 700;
+		vertical-align: middle;
+		text-align: right;
+		line-height: 1.8rem;
+	}
+	.nodeText{
+		display: inline-block;
+		font-size: 0.5rem;
+		width: -webkit-fit-content;
+		padding: 0.3rem;
+		border-radius: 8%;
+		background-color: white;
+	}
+	
+}
+
+
 
 .space{
 	width: 0.5rem;
@@ -56,6 +203,7 @@ body, html {
 	min-width: 10rem;
 	z-index: 2;
 	text-align: center;
+	overflow: hidden;
 }
 
 .itemBox{
@@ -74,18 +222,14 @@ body, html {
 	vertical-align: middle;
 }
 
-.itemName{
-	width: 50%;
-	margin-right: 0.625rem;
-	font-size: 0.5rem;
-	font-weight: 700;
-	vertical-align: middle;
-	text-align: right;
-	line-height: 1.8rem;
+.itemName span{
+	display: block;
 }
 
-.itemName span{
-	line-height: 1rem;
+@media screen and (max-width: 20rem){
+	.itemName span{
+		display: inline;
+	}
 }
 
 .inputBox{
@@ -151,16 +295,6 @@ body, html {
   width: 100%;
   text-align: center;
 }
-
-.nodeText{
-	display: inline-block;
-	font-size: 0.2rem;
-	width: -webkit-fit-content;
-	padding: 0.3rem;
-	border-radius: 8%;
-	background-color: white;
-}
-
 .fade-enter-active, .fade-leave-active {
     transition: opacity 2s
 }
