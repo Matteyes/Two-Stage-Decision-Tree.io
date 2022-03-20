@@ -13,9 +13,9 @@
 
 $(document).ready(function(){
 	$(".startButton").click(function(){
-		$(location).attr("href","https://mpiro.life/questions.html")
+		$(location).attr("href","https://mpiro.life/questions")
 	})
 	$(".languageButton").click(function(){
-		$(location).attr("href","mpiro_E.html")
+		$(location).attr("href","mpiro_E")
 	})
 })
