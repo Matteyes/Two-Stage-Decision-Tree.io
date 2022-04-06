@@ -2,7 +2,7 @@
 var treeTitle = new Vue({
 	el: '#treeTitle',
 	data: {
-		title:'Two-Stage Decision Tree'
+		title:'Two-Stage Decision Model'
 	}
 })
 
@@ -260,7 +260,7 @@ var task = new Vue({
 		tree1.initialization();
 		tree2.initialization();
 		if(isInput){
-			treeTitle.title = 'Decision-Making Process of TS-DT';
+			treeTitle.title = 'Decision-Making Process of TS-DM';
 			tree1.$set(tree1.nodes[0],'isTrue',true);
 			//tree1.nodes[0].isTrue = true;
 			//第一层 Adaptive < 75
