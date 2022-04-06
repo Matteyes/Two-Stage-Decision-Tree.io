@@ -206,29 +206,39 @@ var task = new Vue({
 		{
 			name: 'Gesell Developmental Scale:',
 			nameadd: 'Adaptive domain',
+			suggestT: true,
 			value: null
 		},
 		{
 			name: 'Gesell Developmental Scale:',
 			nameadd: 'Personal-social domain',
+			suggestT: true,
 			value: null
 		},
 		{
 			name: 'Gesell Developmental Scale:',
 			nameadd: 'Gross motor domain',
+			suggestT: true,
 			value: null
 		},
 		{
 			name: 'Gesell Developmental Scale:',
 			nameadd: 'Fine motor domain',
+			suggestT: true,
 			value: null
 		},
 		{
 			name: 'M-CHAT critical items',
 			nameadd: '',
+			suggestT: false,
 			value: null
 		}
 	]
+  },
+  computed:{
+	showSuggestText(){
+		return this.item.suggestT
+	}
   },
   methods:{
 	//重置数据

@@ -31,7 +31,8 @@
 					<div class="dis_flex inputW">
 						<div class="itemName"><span>{{item.name}}</span></div>
 						<label class="inputWrap">
-							<input class="inputBox" placeholder="Please Input the score" v-model="item.value" oninput="value=value.replace(/[^\d]/g,'')">
+							<input v-if="item.suggestT" class="inputBox" placeholder="Please input the score" v-model="item.value" oninput="value=value.replace(/[^\d]/g,'')">
+							<input v-else class="inputBox" placeholder="Please input the number" v-model="item.value" oninput="value=value.replace(/[^\d]/g,'')">
 						</label>
 					</div>
 					<div class="space2"></div>
