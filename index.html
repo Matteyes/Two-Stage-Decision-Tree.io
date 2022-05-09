@@ -29,11 +29,7 @@
 				<img class="pImg" :src="photo">
 				<p class="name">{{name}}</p>
 				<p v-for="position in positions" class="position">{{position.pos}}</p>
-				<p class="info">
-					<a> 邮箱 </a>/
-					<a> 电话 </a>/
-					<a> 主页 </a>
-				</p>
+				<p class="info">邮箱：{{email}}</p>
 			</li>
 			<li id="educationC" class="part">
 				<p class="title">{{title}}</p>
