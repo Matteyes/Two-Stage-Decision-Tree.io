@@ -1,0 +1,173 @@
+* {
+   margin: 0;
+   padding: 0;
+}
+body, html {
+   height:100%;
+}
+ul li{
+    list-style:none;
+}
+
+.dis_flex{
+	display: flex;
+}
+
+@media (min-width: 0){
+	.navBt{
+		background-color: black;
+		height: 4rem;
+		vertical-align: middle;
+		display: flex;
+	}
+	.navT{
+		height: 4rem;
+		line-height: 4rem;
+		font-weight: 600;
+		letter-spacing: 1px;
+		color: white;
+	}
+	.navImg{
+		width: 2rem;
+		height: 1.5rem;
+		padding: 1.25rem;
+	}
+	.navList{
+		background-color: white;
+		display: none;
+	}
+	.navList p{
+		display: none;
+	}
+	.navLi{
+		background-color: black;
+		color: white;
+		padding: 20px;
+		text-align: center;
+		letter-spacing: 2px;
+		font-weight: 600;
+		margin-top: 2px;
+	}
+	.navLi:active{
+		background-color: white;
+		color: #000000;
+	}
+	.part:nth-child(odd){
+		background-color: white;
+	}
+	.part:nth-child(even){
+		background-color: whitesmoke;
+	}
+	.content li p{
+		padding: 5px 10px;
+	}
+	.content li{
+		padding: 10px 0;
+	}
+	.title{
+		font-size: 25px;
+		font-weight: 600;
+		letter-spacing: 2px;
+		margin-bottom: 10px;
+		text-align: left;
+	}
+	#overviewC{
+		text-align: center;
+	}
+	.pImg{
+		width: 60%;
+		border-radius: 50%;
+		margin-top: 30px;
+	}
+	.name{
+		font-size: 30px;
+		letter-spacing: 5px;
+	}
+	.edu_wrap{
+		padding-left: 20px;
+	}
+	.edu_wrap li{
+		list-style: disc inside;
+		padding: 5px 0;
+	}
+	.eduEle{
+		margin-left: 30px;
+	}
+	.paper_wrap{
+		padding-left: 30px;
+	}
+	.paper_wrap li{
+		list-style: disc;
+	}
+}
+
+@media (min-width: 1000px){
+	body, html {
+	   overflow: hidden;
+	}
+	.navBt{
+		display: none;
+	}
+	.navList{
+		background-color: black;
+		display: block;
+		width: 150px;
+		color: white;
+		position: absolute;
+		margin-left: -450px;
+		left: 50%;
+		height: 100%;
+		overflow-y: scroll;
+	}
+	.navList::-webkit-scrollbar{
+		width:0;
+	}
+	.navList p{
+		text-align: center;
+		padding: 20px;
+		font-size: 28px;
+		margin-bottom: 100px;
+		display: block;
+	}
+	.content{
+		width: 850px;
+		margin: 0 auto;
+		height: 100%;
+		overflow-y: scroll;
+	}
+	.content::-webkit-scrollbar { 
+	    width:5px; 
+	    height:5px; 
+	    background-color:#F5F5F5; 
+	}
+	/* 滚动条上的滚动滑块. */
+	.content::-webkit-scrollbar-thumb { 
+	    background-color:darkgray; 
+	    border-radius: 50px;
+	}
+	/*  滚动条轨道. */
+	.content::-webkit-scrollbar-track { 
+	    -webkit-box-shadow:inset 0 0 6px rgba(0, 142, 255, 1); 
+	    box-shadow:inset 0 0 6px rgba(0, 142, 255, 1, 1); 
+	    background-color:#E7E3DF; 
+	}
+	/* 滚动条没有滑块的轨道部分 */
+	.content::-webkit-scrollbar-track-piece {
+	    background-color: #E7E3DF;
+	}
+	/* 当同时有垂直滚动条和水平滚动条时交汇的部分. */
+	.content::-webkit-scrollbar-corner {
+	    background:transparent;
+	}
+	.part{
+		margin-left: 125px;
+	}
+	.pImg{
+		width: 40%;
+		border-radius: 50%;
+		margin-top: 30px;
+	}
+	.navLi{
+	}
+}
+

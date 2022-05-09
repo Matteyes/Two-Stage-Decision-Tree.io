@@ -1,0 +1,309 @@
+var nav = new Vue({
+	el: '#introNav',
+	data: {
+		navBar:[
+			{
+				id:'overview',
+				title:'个人概况'
+			},{
+				id:'education',
+				title:'教育背景'
+			},{
+				id:'work',
+				title:'工作经历'
+			},{
+				id:'research',
+				title:'研究方向'
+			},{
+				id:'paper',
+				title:'发表论文'
+			},{
+				id:'project',
+				title:'科研项目'
+			},{
+				id:'honor',
+				title:'获得荣誉'
+			},{
+				id:'parttime',
+				title:'学术兼职'
+			}
+		]
+	}
+})
+
+var overview = new Vue({
+	el:'#overviewC',
+	data:{
+		id:'overviewC',
+		title:'个人概况',
+		photo:'./img/xxm.png',
+		name:'徐铣明',
+		age:'38',
+		nation:'汉',
+		positions:[
+			{
+				pos:'重庆医科大学副教授'
+			},{
+				pos:'重庆医科大学附属儿童医院大数据中心 PI'
+			},{
+				pos:'曾任南开大学统计与数据科学学院讲师，博导'
+			}
+		],
+		email:'ximing@hospital.cqmu.edu.cn',
+		tele:'18526547007',
+		page:'https://loop.frontiersin.org/people/815764/overview'
+	}
+})
+
+var education = new Vue({
+	el:'#educationC',
+	data:{
+		id:'educationC',
+		title:'教育背景',
+		education:[
+			{
+				time:'2002/09 至 2006/06:',
+				school:'南开大学数学学院统计学系',
+				qualification:'本科'
+			},{
+				time:'2006/09 至 2008/08：',
+				school:'加拿大渥太华大学数学与统计系',
+				qualification:'硕士'
+			},{
+				time:'2008/09 至 2012/06：',
+				school:'加拿大多伦多大学统计科学系',
+				qualification:'博士'
+			}
+		]
+	}
+})
+
+var work = new Vue({
+	el:'#workC',
+	data:{
+		id:'workC',
+		title:'工作经历',
+		work:[
+			{
+				time:'2012/09 至 2014/09：',
+				pos:'加拿大达尔豪斯大学数学与统计系博士后'
+			},{
+				time:'2014/09 至 2015/04：',
+				pos:'加拿大达尔豪斯大学研究助理'
+			},{
+				time:'2015/07 至 2021/08：',
+				pos:'南开大学统计与数据科学学院讲师，博士生导师'
+			}
+		]
+	}
+})
+
+var research = new Vue({
+	el:'#researchC',
+	data:{
+		id:'researchC',
+		title:'研究方向',
+		direction:[
+			{
+				research:'生物统计学（Biostatistics）'
+			},{
+				research:'微生物组数据分析（Metagenomics Data Analysis）'
+			},{
+				research:'复合似然函数方法与理论 （Composite Likelihood Inference）'
+			},{
+				research:'统计和机器学习在医学的应用 (Statistical and Machine Learning Methods in Medicine）'
+			}
+		]
+	}
+})
+
+var project = new Vue({
+	el:'#projectC',
+	data:{
+		id:'projectC',
+		title:'科研项目',
+		projects:[
+			{
+				info:'国家自然科学基金青年科学基金项目，11701294，微生物组数据的稳健统计推断，2018/01-2020/12, 24万元, 主持。'
+			},{
+				info:'南开大学百名青年学科带头人培养计划，ZB16008701, 基于基因数据的稳健统计方法，2015/12-2019/12, 50万元, 主持。'
+			}
+		]
+	}
+})
+
+var honor = new Vue({
+	el:'#honorC',
+	data:{
+		id:'honorC',
+		title:'获得荣誉',
+		honor:[
+			{
+				info:'2008：第3届巴西生物信息学论坛 (III Brazilian Symposium on Bioinformatics)最佳论文'
+			},{
+				info:'2010：加拿大统计年会学生奖学金（SSC Travel Award, Statistical Society of Canada）'
+			},{
+				info:'2011：加拿大安大略省研究生奖学金 (Ontario Graduate Scholarship)'
+			},{
+				info:'2011：多伦多大学统计系最佳博士奖 (Department of Statistics Doctoral Award）'
+			},{
+				info:'2013：国际数理统计学会青年研究者会议（15th IMS New Researchers Conference）'
+			}
+		]
+	}
+})
+
+var parttime = new Vue({
+	el:'#parttimeC',
+	data:{
+		id:'parttimeC',
+		title:'学术兼职',
+		parttime:[
+			{
+				info:'全国工业统计学教学研究会青年统计学家协会理事'
+			},{
+				info:'北京大数据协会，天津现场统计研究会理事'
+			},{
+				info:'国际期刊Frontiers in Genetics, Frontiers in Bioengineering and Biotechnology, Frontiers in Plant Science 审稿编辑，计算基因组学领域编委 (Review Editor on the Editorial Board of Computational Genomics).'
+			},{
+				info:'Annals of Applied Probability, Journal of Statistical Planning and Inference, Bernoulli      Journal, Canadian Journal of Statistics, Journal of Statistical Computation and Simulation，Computational Statistics等学术期刊审稿人.'
+			},{
+				info:'主持2010 年Joint Statistical Meeting, the contributed session “Asymptotics”; 组织了2018 ICSA–Canada Chapter Symposium, the invited session “Recent Development of Statistical Methods for Large Genomic Data” 和 2019 ICSA–Canada Chapter Symposium，the invited session “Stochastic Models for Dynamic Biological Data”.'
+			}
+		]
+	}
+})
+
+var paper = new Vue({
+	el:'#paperC',
+	data:{
+		id:'paperC',
+		title:'发表论文',
+		direction:[
+			{
+				name:'1. 统计学理论',
+				papers:[
+					{
+						info1:'',
+						name:'Xu, X.',
+						info2:' and Sankoff, D. (2008). Tests for gene clusters satisfying the generalized adjacency criterion. Lecture Notes in Computer Science, 5167, 152-160.'
+					},{
+						info1:'',
+						name:'Xu, X.',
+						info2:' and Reid, N. (2011). On the robustness of maximum composite likelihood estimate. Journal of Statistical Planning and Inference, 141, 3047-3954.'
+					},{
+						info1:'Costa, V., Dantas, S., Sankoff, D. and ',
+						name:'Xu, X.',
+						info2:' (2012). Gene clusters as intersections of powers of paths. Journal of the Brazilian Computer Society, 18, 129-136.'
+					},{
+						info1:'',
+						name:'Xu, X.',
+						info2:', Cantoni, E., Mills-Flemming, J. and Field, C. (2015).  Robust state space models for estimating fish stock maturities. Canadian Journal of Statistics, 43, 133-150.'
+					},{
+						info1:'',
+						name:'Xu, X.',
+						info2:' and Xu, L. (2020). Existence and asymptotic behaviour of positive solutions to a stochastic multispecies Holling type II model. Stat, 9: e266.'
+					},{
+						info1:'Aeberhard, W., Cantoni, E., Field, C., Künsch, H., Mills-Flemming, J., and ',
+						name:'Xu, X.',
+						info2:' (2021). Robust estimation for discrete-time state space models. Scandinavian Journal of Statistics, 48，1127-1147.'
+					}
+				]
+			},{
+				name:'2. 生物与医学统计',
+				papers:[
+					{
+						info1:'',
+						name:'Xu, X.',
+						info2:', Dunn, K. and Field, C. (2015). A robust ANOVA approach to phylogenetic analysis. Molecular Biology and Evolution, 32, 2186-2194. 影响因子：13.649.'
+					},{
+						info1:'Yang, J., Li, D., Yang, Z. …, ',
+						name:'Xu, X.',
+						info2:', et al. (2019). Establishing high-accuracy biomarkers for colorectal cancer by comparing fecal microbiomes in patients with healthy families. Gut Microbes, 11, 918-929. 影响因子：7.740  (指导博士生Yang Zhenyu为共同一作).'
+					},{
+						info1:'Dong, G., Zhang, J., Yang, Z. …, ',
+						name:'Xu, X.',
+						info2:', et al. (2019). The association of gut microbiota with idiopathic central precocious puberty in girls. Frontiers in Endocrinology, 10: 941. 影响因子：3.644  (指导博士生Yang Zhenyu为共同一作).'
+					},{
+						info1:'Huang, C. …, ',
+						name:'Xu, X.',
+						info2:', et. al. (2019). Distinct gut microbiota composition and functional category in children with cerebral palsy and epilepsy. Frontiers in Pediatrics，7: 394. 影响因子：2.634 (共同通讯).'
+					},{
+						info1:'Xu, XL., Xie, Z., Yang, Z., Li, D. and ',
+						name:'Xu, X.',
+						info2:' (2020). A t-SNE based classification approach to compositional microbiome data. Frontiers in Genetics, 11:620143. 影响因子：4.599 (共同通讯).'
+					},{
+						info1:'Ma, J., Xu, XL., Li, M., Zhang, Y.…, ',
+						name:'Xu, X.',
+						info2:', Wang, Y. (2021). Predictive models of aging of the human eye based on ocular anterior segment morphology. Journal of Biomedical Informatics, 120: 103855. 影响因子：6.317 (共同通讯).'
+					},{
+						info1:'Zeng, Q.,  Yang, Z., Wang, F., Li, D., .…, ',
+						name:'Xu, X.',
+						info2:', Dai, W. (2021). Association between metabolic status and gut microbiome in obese populations. Microbial Genomics. 7：000639. 影响因子：5.237 (共同通讯).'
+					}
+				]
+			},{
+				name:'3. 其它合作研究',
+				papers:[
+					{
+						info1:'Dai, W., et al. (2019). An integrated respiratory microbial gene catalogue to better understand the microbial aetiology of Mycoplasma pneumoniae pneumonia. GigaScience, 8: giz093.',
+						name: null,
+						info2: null
+					},{
+						info1:'Zhou, P., et al. (2019). Perinatal antibiotic exposure affects the transmission between maternal and neonatal microbiota and is associated with early-onset sepsis. Msphere, 5: e00984-19.',
+						name: null,
+						info2: null
+					},{
+						info1:'Li, D., et al. (2019). Intestinal Bacteroides sp. imbalance associated with the occurrence of childhood undernutrition in China. Frontiers in microbiology, 10:2635.',
+						name: null,
+						info2: null
+					},{
+						info1:'Zeng, Q., et al. (2019). Discrepant gut microbiota markers for the classification of obesity-related metabolic abnormalities. Scientific Reports, 9: 13424.',
+						name: null,
+						info2: null
+					},{
+						info1:'Li, H., et al. (2020). The prolonged disruption of a single-course amoxicillin on mice gut microbiota and resistome, and recovery by inulin. Environmental Pollution, 265: 114651.',
+						name: null,
+						info2: null
+					},{
+						info1:'万燕南，隋雅楠，',
+						name:'徐铣明',
+						info2:'，张站站，钟元峰，程茜 (2019). 出生体重不一致双胎0～4岁体格生长状况研究. 中国实用儿科杂志, 34: 689-693.'
+					},{
+						info1:'黄森忠， 魏凤英 ，彭志行， 靳祯， 王金杰， ',
+						name:'徐铣明',
+						info2:'， 张新岩， 徐建国 (2020). 常态化防控下新型冠状病毒肺炎新发疫情研判方法. 疾病监测, 8: 679-686.'
+					},{
+						info1:'魏凤英, 王金杰, ',
+						name:'徐铣明',
+						info2:', 高建召, 王博灵, 马驰宇, 彭志行, 靳祯, 黄森忠 (2020). 全球新型冠状病毒肺炎疫情发展趋势预测. 疾病监测, 6: 467-472.'
+					},{
+						info1:'高洁，徐雪丽，',
+						name:'徐铣明',
+						info2:'，韦秋宏，张站站，程茜 (2021). 真实世界不同出生体重早产儿体格生长规律的研究. 中华儿科杂志, 59(8):665-671.'
+					}
+				]
+			}
+		]
+	}
+})
+
+var isShowList = false
+
+$(document).ready(function(){
+	$(".navBt").click(function(){
+		if(isShowList){
+			$(".navList").css('display','none')
+			isShowList = false
+		}else{
+			$(".navList").css('display','block')
+			isShowList = true
+		}
+	})
+	$(".navLi").click(function(){
+		var id = "#"+$(this).attr('id')+"C"
+		var top = $(id).offset().top
+		$("html,body").animate({scrollTop:top}, 200);
+		$(".content").animate({scrollTop:top}, 200);
+	})
+})
