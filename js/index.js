@@ -45,8 +45,6 @@ var overview = new Vue({
 				pos:'重庆医科大学副教授'
 			},{
 				pos:'重庆医科大学附属儿童医院大数据中心 PI'
-			},{
-				pos:'曾任南开大学统计与数据科学学院讲师，博导'
 			}
 		],
 		email:'ximing@hospital.cqmu.edu.cn',
