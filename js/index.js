@@ -148,7 +148,7 @@ var paper = new Vue({
 					},{
 						info1:'[8] Huang, C. …, ',
 						name:'Xu, X.',
-						info2:', et. al. (2019). Distinct gut microbiota composition and functional category in children with cerebral palsy and epilepsy. Frontiers in Pediatrics，7: 394. (共同通讯).'
+						info2:', et. al. (2019). Distinct gut microbiota composition and functional category in children with cerebral palsy and epilepsy. Frontiers in Pediatrics，7: 394.'
 					},{
 						info1:'[9] ',
 						name:'Xu, X.',
