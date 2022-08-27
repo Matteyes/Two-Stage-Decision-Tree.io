@@ -17,15 +17,6 @@ var nav = new Vue({
 			},{
 				id:'paper',
 				title:'发表论文'
-			},{
-				id:'project',
-				title:'科研项目'
-			},{
-				id:'honor',
-				title:'获得荣誉'
-			},{
-				id:'parttime',
-				title:'学术兼职'
 			}
 		]
 	}
@@ -115,62 +106,7 @@ var research = new Vue({
 	}
 })
 
-var project = new Vue({
-	el:'#projectC',
-	data:{
-		id:'projectC',
-		title:'科研项目',
-		projects:[
-			{
-				info:'国家自然科学基金青年科学基金项目，11701294，微生物组数据的稳健统计推断，2018/01-2020/12, 24万元, 主持。'
-			},{
-				info:'南开大学百名青年学科带头人培养计划，ZB16008701, 基于基因数据的稳健统计方法，2015/12-2019/12, 50万元, 主持。'
-			}
-		]
-	}
-})
 
-var honor = new Vue({
-	el:'#honorC',
-	data:{
-		id:'honorC',
-		title:'获得荣誉',
-		honor:[
-			{
-				info:'2008：第3届巴西生物信息学论坛 (III Brazilian Symposium on Bioinformatics)最佳论文'
-			},{
-				info:'2010：加拿大统计年会学生奖学金（SSC Travel Award, Statistical Society of Canada）'
-			},{
-				info:'2011：加拿大安大略省研究生奖学金 (Ontario Graduate Scholarship)'
-			},{
-				info:'2011：多伦多大学统计系最佳博士奖 (Department of Statistics Doctoral Award）'
-			},{
-				info:'2013：国际数理统计学会青年研究者会议（15th IMS New Researchers Conference）'
-			}
-		]
-	}
-})
-
-var parttime = new Vue({
-	el:'#parttimeC',
-	data:{
-		id:'parttimeC',
-		title:'学术兼职',
-		parttime:[
-			{
-				info:'全国工业统计学教学研究会青年统计学家协会理事'
-			},{
-				info:'北京大数据协会，天津现场统计研究会理事'
-			},{
-				info:'国际期刊Frontiers in Genetics, Frontiers in Bioengineering and Biotechnology, Frontiers in Plant Science 审稿编辑，计算基因组学领域编委 (Review Editor on the Editorial Board of Computational Genomics).'
-			},{
-				info:'Annals of Applied Probability, Journal of Statistical Planning and Inference, Bernoulli      Journal, Canadian Journal of Statistics, Journal of Statistical Computation and Simulation，Computational Statistics等学术期刊审稿人.'
-			},{
-				info:'主持2010 年Joint Statistical Meeting, the contributed session “Asymptotics”; 组织了2018 ICSA–Canada Chapter Symposium, the invited session “Recent Development of Statistical Methods for Large Genomic Data” 和 2019 ICSA–Canada Chapter Symposium，the invited session “Stochastic Models for Dynamic Biological Data”.'
-			}
-		]
-	}
-})
 
 var paper = new Vue({
 	el:'#paperC',
@@ -182,103 +118,98 @@ var paper = new Vue({
 				name:'1. 统计学理论',
 				papers:[
 					{
-						info1:'',
+						info1:'[1] Aeberhard, W., Cantoni, E., Field, C., Künsch, H., Mills-Flemming, J., and ',
 						name:'Xu, X.',
-						info2:' and Sankoff, D. (2008). Tests for gene clusters satisfying the generalized adjacency criterion. Lecture Notes in Computer Science, 5167, 152-160.'
+						info2:' (2021). Robust estimation for discrete-time state space models. Scandinavian Journal of Statistics, 48，1127-1147.'
 					},{
-						info1:'',
+						info1:'[2] Ma, J., Xu, XL., Li, M., Zhang, Y.…, ',
 						name:'Xu, X.',
-						info2:' and Reid, N. (2011). On the robustness of maximum composite likelihood estimate. Journal of Statistical Planning and Inference, 141, 3047-3954.'
+						info2:', Wang, Y. (2021). Predictive models of aging of the human eye based on ocular anterior segment morphology. Journal of Biomedical Informatics, 120: 103855.'
 					},{
-						info1:'Costa, V., Dantas, S., Sankoff, D. and ',
+						info1:'[3] Zeng, Q.,  Yang, Z., Wang, F., Li, D., .…, ',
 						name:'Xu, X.',
-						info2:' (2012). Gene clusters as intersections of powers of paths. Journal of the Brazilian Computer Society, 18, 129-136.'
+						info2:', Dai, W. (2021). Association between metabolic status and gut microbiome in obese populations. Microbial Genomics. 7：000639.'
 					},{
-						info1:'',
-						name:'Xu, X.',
-						info2:', Cantoni, E., Mills-Flemming, J. and Field, C. (2015).  Robust state space models for estimating fish stock maturities. Canadian Journal of Statistics, 43, 133-150.'
-					},{
-						info1:'',
+						info1:'[4] ',
 						name:'Xu, X.',
 						info2:' and Xu, L. (2020). Existence and asymptotic behaviour of positive solutions to a stochastic multispecies Holling type II model. Stat, 9: e266.'
 					},{
-						info1:'Aeberhard, W., Cantoni, E., Field, C., Künsch, H., Mills-Flemming, J., and ',
+						info1:'[5] Xu, XL., Xie, Z., Yang, Z., Li, D. and ',
 						name:'Xu, X.',
-						info2:' (2021). Robust estimation for discrete-time state space models. Scandinavian Journal of Statistics, 48，1127-1147.'
-					}
+						info2:' (2020). A t-SNE based classification approach to compositional microbiome data. Frontiers in Genetics, 11:620143.'
+					},{
+						info1:'[6] Yang, J., Li, D., Yang, Z. …, ',
+						name:'Xu, X.',
+						info2:', et al. (2019). Establishing high-accuracy biomarkers for colorectal cancer by comparing fecal microbiomes in patients with healthy families. Gut Microbes, 11, 918-929. (指导博士生Yang Zhenyu为共同一作).'
+					},{
+						info1:'[7] Dong, G., Zhang, J., Yang, Z. …, ',
+						name:'Xu, X.',
+						info2:', et al. (2019). The association of gut microbiota with idiopathic central precocious puberty in girls. Frontiers in Endocrinology, 10: 941.(指导博士生Yang Zhenyu为共同一作).'
+					},{
+						info1:'[8] Huang, C. …, ',
+						name:'Xu, X.',
+						info2:', et. al. (2019). Distinct gut microbiota composition and functional category in children with cerebral palsy and epilepsy. Frontiers in Pediatrics，7: 394. (共同通讯).'
+					},{
+						info1:'[9] ',
+						name:'Xu, X.',
+						info2:', Cantoni, E., Mills-Flemming, J. and Field, C. (2015).  Robust state space models for estimating fish stock maturities. Canadian Journal of Statistics, 43, 133-150.'
+					},{
+						info1:'[10] ',
+						name:'Xu, X.',
+						info2:', Dunn, K. and Field, C. (2015). A robust ANOVA approach to phylogenetic analysis. Molecular Biology and Evolution, 32, 2186-2194.'
+					},{
+						info1:'[11] ',
+						name:'Xu, X.',
+						info2:' and Reid, N. (2011). On the robustness of maximum composite likelihood estimate. Journal of Statistical Planning and Inference, 141, 3047-3954.'
+					},{
+						info1:'[12] Costa, V., Dantas, S., Sankoff, D. and ',
+						name:'Xu, X.',
+						info2:' (2012). Gene clusters as intersections of powers of paths. Journal of the Brazilian Computer Society, 18, 129-136.'
+					},{
+						info1:'[13] ',
+						name:'Xu, X.',
+						info2:' and Sankoff, D. (2008). Tests for gene clusters satisfying the generalized adjacency criterion. Lecture Notes in Computer Science, 5167, 152-160.'
+					},
 				]
 			},{
-				name:'2. 生物与医学统计',
+				name:'2. 其它合作研究',
 				papers:[
 					{
-						info1:'',
-						name:'Xu, X.',
-						info2:', Dunn, K. and Field, C. (2015). A robust ANOVA approach to phylogenetic analysis. Molecular Biology and Evolution, 32, 2186-2194. 影响因子：13.649.'
-					},{
-						info1:'Yang, J., Li, D., Yang, Z. …, ',
-						name:'Xu, X.',
-						info2:', et al. (2019). Establishing high-accuracy biomarkers for colorectal cancer by comparing fecal microbiomes in patients with healthy families. Gut Microbes, 11, 918-929. 影响因子：7.740  (指导博士生Yang Zhenyu为共同一作).'
-					},{
-						info1:'Dong, G., Zhang, J., Yang, Z. …, ',
-						name:'Xu, X.',
-						info2:', et al. (2019). The association of gut microbiota with idiopathic central precocious puberty in girls. Frontiers in Endocrinology, 10: 941. 影响因子：3.644  (指导博士生Yang Zhenyu为共同一作).'
-					},{
-						info1:'Huang, C. …, ',
-						name:'Xu, X.',
-						info2:', et. al. (2019). Distinct gut microbiota composition and functional category in children with cerebral palsy and epilepsy. Frontiers in Pediatrics，7: 394. 影响因子：2.634 (共同通讯).'
-					},{
-						info1:'Xu, XL., Xie, Z., Yang, Z., Li, D. and ',
-						name:'Xu, X.',
-						info2:' (2020). A t-SNE based classification approach to compositional microbiome data. Frontiers in Genetics, 11:620143. 影响因子：4.599 (共同通讯).'
-					},{
-						info1:'Ma, J., Xu, XL., Li, M., Zhang, Y.…, ',
-						name:'Xu, X.',
-						info2:', Wang, Y. (2021). Predictive models of aging of the human eye based on ocular anterior segment morphology. Journal of Biomedical Informatics, 120: 103855. 影响因子：6.317 (共同通讯).'
-					},{
-						info1:'Zeng, Q.,  Yang, Z., Wang, F., Li, D., .…, ',
-						name:'Xu, X.',
-						info2:', Dai, W. (2021). Association between metabolic status and gut microbiome in obese populations. Microbial Genomics. 7：000639. 影响因子：5.237 (共同通讯).'
-					}
-				]
-			},{
-				name:'3. 其它合作研究',
-				papers:[
-					{
-						info1:'Dai, W., et al. (2019). An integrated respiratory microbial gene catalogue to better understand the microbial aetiology of Mycoplasma pneumoniae pneumonia. GigaScience, 8: giz093.',
-						name: null,
-						info2: null
-					},{
-						info1:'Zhou, P., et al. (2019). Perinatal antibiotic exposure affects the transmission between maternal and neonatal microbiota and is associated with early-onset sepsis. Msphere, 5: e00984-19.',
-						name: null,
-						info2: null
-					},{
-						info1:'Li, D., et al. (2019). Intestinal Bacteroides sp. imbalance associated with the occurrence of childhood undernutrition in China. Frontiers in microbiology, 10:2635.',
-						name: null,
-						info2: null
-					},{
-						info1:'Zeng, Q., et al. (2019). Discrepant gut microbiota markers for the classification of obesity-related metabolic abnormalities. Scientific Reports, 9: 13424.',
-						name: null,
-						info2: null
-					},{
-						info1:'Li, H., et al. (2020). The prolonged disruption of a single-course amoxicillin on mice gut microbiota and resistome, and recovery by inulin. Environmental Pollution, 265: 114651.',
-						name: null,
-						info2: null
-					},{
-						info1:'万燕南，隋雅楠，',
+						info1:'[1] 高洁，徐雪丽，',
 						name:'徐铣明',
-						info2:'，张站站，钟元峰，程茜 (2019). 出生体重不一致双胎0～4岁体格生长状况研究. 中国实用儿科杂志, 34: 689-693.'
+						info2:'，韦秋宏，张站站，程茜 (2021). 真实世界不同出生体重早产儿体格生长规律的研究. 中华儿科杂志, 59(8):665-671.'
 					},{
-						info1:'黄森忠， 魏凤英 ，彭志行， 靳祯， 王金杰， ',
-						name:'徐铣明',
-						info2:'， 张新岩， 徐建国 (2020). 常态化防控下新型冠状病毒肺炎新发疫情研判方法. 疾病监测, 8: 679-686.'
+						info1:'[2] Li, H., et al. (2020). The prolonged disruption of a single-course amoxicillin on mice gut microbiota and resistome, and recovery by inulin. Environmental Pollution, 265: 114651.',
+						name: null,
+						info2: null
 					},{
-						info1:'魏凤英, 王金杰, ',
+						info1:'[3] 魏凤英, 王金杰, ',
 						name:'徐铣明',
 						info2:', 高建召, 王博灵, 马驰宇, 彭志行, 靳祯, 黄森忠 (2020). 全球新型冠状病毒肺炎疫情发展趋势预测. 疾病监测, 6: 467-472.'
 					},{
-						info1:'高洁，徐雪丽，',
+						info1:'[4] 黄森忠， 魏凤英 ，彭志行， 靳祯， 王金杰， ',
 						name:'徐铣明',
-						info2:'，韦秋宏，张站站，程茜 (2021). 真实世界不同出生体重早产儿体格生长规律的研究. 中华儿科杂志, 59(8):665-671.'
+						info2:'， 张新岩， 徐建国 (2020). 常态化防控下新型冠状病毒肺炎新发疫情研判方法. 疾病监测, 8: 679-686.'
+					},{
+						info1:'[5] Dai, W., et al. (2019). An integrated respiratory microbial gene catalogue to better understand the microbial aetiology of Mycoplasma pneumoniae pneumonia. GigaScience, 8: giz093.',
+						name: null,
+						info2: null
+					},{
+						info1:'[6] Zhou, P., et al. (2019). Perinatal antibiotic exposure affects the transmission between maternal and neonatal microbiota and is associated with early-onset sepsis. Msphere, 5: e00984-19.',
+						name: null,
+						info2: null
+					},{
+						info1:'[7] Li, D., et al. (2019). Intestinal Bacteroides sp. imbalance associated with the occurrence of childhood undernutrition in China. Frontiers in microbiology, 10:2635.',
+						name: null,
+						info2: null
+					},{
+						info1:'[8] Zeng, Q., et al. (2019). Discrepant gut microbiota markers for the classification of obesity-related metabolic abnormalities. Scientific Reports, 9: 13424.',
+						name: null,
+						info2: null
+					},{
+						info1:'[9] 万燕南，隋雅楠，',
+						name:'徐铣明',
+						info2:'，张站站，钟元峰，程茜 (2019). 出生体重不一致双胎0～4岁体格生长状况研究. 中国实用儿科杂志, 34: 689-693.'
 					}
 				]
 			}
