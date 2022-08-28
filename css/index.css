@@ -92,6 +92,10 @@ ul li{
 	}
 	.eduEle{
 		margin-left: 30px;
+		display: inline-block;
+	}
+	.eduTeacher{
+		display: inline-block;
 	}
 	.paper_wrap{
 		padding-left: 30px;

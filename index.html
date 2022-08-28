@@ -36,7 +36,10 @@
 				<ul class="edu_wrap">
 					<li v-for="edu in education" class="education">
 						{{edu.qualification}} , {{edu.time}}
-						<p class="eduEle">{{edu.school}} </p>
+						<p>
+							<p class="eduEle">{{edu.school}} </p>
+							<p v-if="edu.isT" class="eduTeacher">导师：<a :href="edu.website">{{edu.teacher}}</a></p>
+						</p>
 					</li>
 				</ul>
 			</li>
@@ -45,7 +48,10 @@
 				<ul class="edu_wrap">
 					<li v-for="job in work">
 						{{job.time}}
-						<p class="eduEle">{{job.pos}} </p>
+						<p>
+							<p class="eduEle">{{job.pos}} </p>
+							<p v-if="job.isT" class="eduTeacher">导师：<a :href="job.website">{{job.teacher}}</a></p>
+						</p>
 					</li>
 				</ul>
 			</li>
@@ -60,9 +66,9 @@
 				<ul>
 					<li v-for="d in direction">
 						<!-- <p>{{d.name}}</p> -->
-						<ul v-for="paper in d.papers" class="paper_wrap">
+						<ul v-for="(paper, index) in d.papers" class="paper_wrap">
 							<li>
-								{{paper.info1}}<strong>{{paper.name}}</strong>{{paper.info2}}
+								[{{index+1}}] {{paper.info1}}<strong>{{paper.name}}</strong>{{paper.info2}}
 							</li>
 						</ul>
 					</li>

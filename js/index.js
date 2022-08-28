@@ -53,15 +53,22 @@ var education = new Vue({
 			{
 				time:'2002/09 至 2006/06:',
 				school:'南开大学数学学院统计学系',
-				qualification:'本科'
+				qualification:'本科',
+				isT:false
 			},{
 				time:'2006/09 至 2008/08：',
 				school:'加拿大渥太华大学数学与统计系',
-				qualification:'硕士'
+				qualification:'硕士',
+				teacher:'David Sankof',
+				website:'https://albuquerque.bioinformatics.uottawa.ca/',
+				isT:true
 			},{
 				time:'2008/09 至 2012/06：',
 				school:'加拿大多伦多大学统计科学系',
-				qualification:'博士'
+				qualification:'博士',
+				teacher:'Nancy Reid',
+				website:'https://www.utstat.utoronto.ca/reid/',
+				isT:true
 			}
 		]
 	}
@@ -75,13 +82,18 @@ var work = new Vue({
 		work:[
 			{
 				time:'2012/09 至 2014/09：',
-				pos:'加拿大达尔豪斯大学数学与统计系博士后'
+				pos:'加拿大达尔豪斯大学数学与统计系博士后',
+				teacher:'Chris Field',
+				website:'https://www.mathstat.dal.ca/~field/wiki/doku.php',
+				isT:true
 			},{
 				time:'2014/09 至 2015/04：',
-				pos:'加拿大达尔豪斯大学研究助理'
+				pos:'加拿大达尔豪斯大学研究助理',
+				isT:false
 			},{
 				time:'2015/07 至 2021/08：',
-				pos:'南开大学统计与数据科学学院讲师，博士生导师'
+				pos:'南开大学统计与数据科学学院讲师，博士生导师',
+				isT:false
 			}
 		]
 	}
@@ -118,91 +130,95 @@ var paper = new Vue({
 				name:'1. 统计学理论',
 				papers:[
 					{
-						info1:'[1] Aeberhard, W., Cantoni, E., Field, C., Künsch, H., Mills-Flemming, J., and ',
+						info1:'He, J.,  Hu, S., ',
+						name:'Xu, X.',
+						info2:' , et al. (2022).  Association of long-term exposure to PM2. 5 in workplace with fasting plasma glucose among asymptomatic adults: A multicenter study in North China. Environment International, 166: 107353.  (指导博士生Hu Songhua为共同一作)'
+					},{
+						info1:'Aeberhard, W., Cantoni, E., Field, C., Künsch, H., Mills-Flemming, J., and ',
 						name:'Xu, X.',
 						info2:' (2021). Robust estimation for discrete-time state space models. Scandinavian Journal of Statistics, 48，1127-1147.'
 					},{
-						info1:'[2] Ma, J., Xu, XL., Li, M., Zhang, Y.…, ',
+						info1:'Ma, J., Xu, XL., Li, M., Zhang, Y.…, ',
 						name:'Xu, X.',
 						info2:', Wang, Y. (2021). Predictive models of aging of the human eye based on ocular anterior segment morphology. Journal of Biomedical Informatics, 120: 103855.'
 					},{
-						info1:'[3] Zeng, Q.,  Yang, Z., Wang, F., Li, D., .…, ',
+						info1:'Zeng, Q.,  Yang, Z., Wang, F., Li, D., .…, ',
 						name:'Xu, X.',
-						info2:', Dai, W. (2021). Association between metabolic status and gut microbiome in obese populations. Microbial Genomics. 7：000639.'
+						info2:', Dai, W. (2021). Association between metabolic status and gut microbiome in obese populations. Microbial Genomics, 7：000639.'
 					},{
-						info1:'[4] ',
+						info1:'',
 						name:'Xu, X.',
 						info2:' and Xu, L. (2020). Existence and asymptotic behaviour of positive solutions to a stochastic multispecies Holling type II model. Stat, 9: e266.'
 					},{
-						info1:'[5] Xu, XL., Xie, Z., Yang, Z., Li, D. and ',
+						info1:'Xu, XL., Xie, Z., Yang, Z., Li, D. and ',
 						name:'Xu, X.',
 						info2:' (2020). A t-SNE based classification approach to compositional microbiome data. Frontiers in Genetics, 11:620143.'
 					},{
-						info1:'[6] Li, H., et al. (2020). The prolonged disruption of a single-course amoxicillin on mice gut microbiota and resistome, and recovery by inulin. Environmental Pollution, 265: 114651.',
+						info1:'Li, H., et al. (2020). The prolonged disruption of a single-course amoxicillin on mice gut microbiota and resistome, and recovery by inulin. Environmental Pollution, 265: 114651.',
 						name: null,
 						info2: null
 					},{
-						info1:'[7] Yang, J., Li, D., Yang, Z. …, ',
+						info1:'Yang, J., Li, D., Yang, Z. …, ',
 						name:'Xu, X.',
 						info2:', et al. (2019). Establishing high-accuracy biomarkers for colorectal cancer by comparing fecal microbiomes in patients with healthy families. Gut Microbes, 11, 918-929. (指导博士生Yang Zhenyu为共同一作).'
 					},{
-						info1:'[8] Dong, G., Zhang, J., Yang, Z. …, ',
+						info1:'Dong, G., Zhang, J., Yang, Z. …, ',
 						name:'Xu, X.',
 						info2:', et al. (2019). The association of gut microbiota with idiopathic central precocious puberty in girls. Frontiers in Endocrinology, 10: 941.(指导博士生Yang Zhenyu为共同一作).'
 					},{
-						info1:'[9] Huang, C. …, ',
+						info1:'Huang, C. …, ',
 						name:'Xu, X.',
 						info2:', et. al. (2019). Distinct gut microbiota composition and functional category in children with cerebral palsy and epilepsy. Frontiers in Pediatrics，7: 394.'
 					},{
-						info1:'[10] Dai, W., et al. (2019). An integrated respiratory microbial gene catalogue to better understand the microbial aetiology of Mycoplasma pneumoniae pneumonia. GigaScience, 8: giz093.',
+						info1:'Dai, W., et al. (2019). An integrated respiratory microbial gene catalogue to better understand the microbial aetiology of Mycoplasma pneumoniae pneumonia. GigaScience, 8: giz093.',
 						name: null,
 						info2: null
 					},{
-						info1:'[11] Zhou, P., et al. (2019). Perinatal antibiotic exposure affects the transmission between maternal and neonatal microbiota and is associated with early-onset sepsis. Msphere, 5: e00984-19.',
+						info1:'Zhou, P., et al. (2019). Perinatal antibiotic exposure affects the transmission between maternal and neonatal microbiota and is associated with early-onset sepsis. Msphere, 5: e00984-19.',
 						name: null,
 						info2: null
 					},{
-						info1:'[12] Li, D., et al. (2019). Intestinal Bacteroides sp. imbalance associated with the occurrence of childhood undernutrition in China. Frontiers in microbiology, 10:2635.',
+						info1:'Li, D., et al. (2019). Intestinal Bacteroides sp. imbalance associated with the occurrence of childhood undernutrition in China. Frontiers in microbiology, 10:2635.',
 						name: null,
 						info2: null
 					},{
-						info1:'[13] Zeng, Q., et al. (2019). Discrepant gut microbiota markers for the classification of obesity-related metabolic abnormalities. Scientific Reports, 9: 13424.',
+						info1:'Zeng, Q., et al. (2019). Discrepant gut microbiota markers for the classification of obesity-related metabolic abnormalities. Scientific Reports, 9: 13424.',
 						name: null,
 						info2: null
 					},{
-						info1:'[14] ',
+						info1:'',
 						name:'Xu, X.',
 						info2:', Cantoni, E., Mills-Flemming, J. and Field, C. (2015).  Robust state space models for estimating fish stock maturities. Canadian Journal of Statistics, 43, 133-150.'
 					},{
-						info1:'[15] ',
+						info1:'',
 						name:'Xu, X.',
 						info2:', Dunn, K. and Field, C. (2015). A robust ANOVA approach to phylogenetic analysis. Molecular Biology and Evolution, 32, 2186-2194.'
 					},{
-						info1:'[16] ',
+						info1:'',
 						name:'Xu, X.',
 						info2:' and Reid, N. (2011). On the robustness of maximum composite likelihood estimate. Journal of Statistical Planning and Inference, 141, 3047-3954.'
 					},{
-						info1:'[17] Costa, V., Dantas, S., Sankoff, D. and ',
+						info1:'Costa, V., Dantas, S., Sankoff, D. and ',
 						name:'Xu, X.',
 						info2:' (2012). Gene clusters as intersections of powers of paths. Journal of the Brazilian Computer Society, 18, 129-136.'
 					},{
-						info1:'[18] ',
+						info1:'',
 						name:'Xu, X.',
 						info2:' and Sankoff, D. (2008). Tests for gene clusters satisfying the generalized adjacency criterion. Lecture Notes in Computer Science, 5167, 152-160.'
 					},{
-						info1:'[19] 高洁，徐雪丽，',
+						info1:'高洁，徐雪丽，',
 						name:'徐铣明',
 						info2:'，韦秋宏，张站站，程茜 (2021). 真实世界不同出生体重早产儿体格生长规律的研究. 中华儿科杂志, 59(8):665-671.'
 					},{
-						info1:'[20] 魏凤英, 王金杰, ',
+						info1:'魏凤英, 王金杰, ',
 						name:'徐铣明',
 						info2:', 高建召, 王博灵, 马驰宇, 彭志行, 靳祯, 黄森忠 (2020). 全球新型冠状病毒肺炎疫情发展趋势预测. 疾病监测, 6: 467-472.'
 					},{
-						info1:'[21] 黄森忠， 魏凤英 ，彭志行， 靳祯， 王金杰， ',
+						info1:'黄森忠， 魏凤英 ，彭志行， 靳祯， 王金杰， ',
 						name:'徐铣明',
 						info2:'， 张新岩， 徐建国 (2020). 常态化防控下新型冠状病毒肺炎新发疫情研判方法. 疾病监测, 8: 679-686.'
 					},{
-						info1:'[22] 万燕南，隋雅楠，',
+						info1:'万燕南，隋雅楠，',
 						name:'徐铣明',
 						info2:'，张站站，钟元峰，程茜 (2019). 出生体重不一致双胎0～4岁体格生长状况研究. 中国实用儿科杂志, 34: 689-693.'
 					}
