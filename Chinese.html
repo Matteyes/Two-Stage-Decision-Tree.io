@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>XiMing Xu's Homepage</title>
+		<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+		<meta name="format-detection" content="telephone=yes" />
+		<meta name="msapplication-tap-highlight" content="no" />
+		<meta http-equiv="X-UA-Compatible" content="IE=Edge，chrome=1">
+		<link rel="stylesheet" type="text/css" href="./css/index.css" />
+		<script src="./js/jquery-3.6.0.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/v3.2.8/vue.global.prod.js" type="text/javascript" charset="utf-8"></script>
+		<script src="./js/v2.6.10/vue.min.js" type="text/javascript" charset="utf-8"></script>
+		
+	</head>
+	<body>
+		<div class="navBt">
+			<img class="navImg" src="./img/nav.png">
+			<div class="navT"><img class="nav_icon" src="./img/透明底logo.png"></div>
+		</div>
+		<div>
+			
+		</div>
+		<ul id="introNav" class="navList">
+			<p><img class="title_icon" src="./img/透明底logo.png"></p>
+			<li v-for="nav in navBar" class="navLi" :id="nav.id">{{nav.title}}</li>
+		</ul>
+		<ul id="introContent" class="content">
+			<li id="overviewC" class="part">
+				<img class="pImg" :src="photo">
+				<p class="name">{{name}}</p>
+				<p v-for="position in positions" class="position">{{position.pos}}</p>
+				<p class="info">邮箱：{{email}}</p>
+				<p class="info">
+					<a :href='github' target="_blank"><img class="a_icon" :src='github_src'></a>
+					<a :href='researchgate' target="_blank"><img class="a_icon" :src='researchgate_src'></a>
+					<a :href='scholar' target="_blank"><img class="a_icon" :src='scholar_src'></a>
+				</p>
+			</li>
+			<li id="educationC" class="part">
+				<p class="title">{{title}}</p>
+				<ul class="edu_wrap">
+					<li v-for="edu in education" class="education">
+						{{edu.qualification}} , {{edu.time}}
+						<p>
+							<p class="eduEle">{{edu.school}} </p>
+							<p v-if="edu.isT" class="eduTeacher">导师：<a :href="edu.website">{{edu.teacher}}</a></p>
+						</p>
+					</li>
+				</ul>
+			</li>
+			<li id="workC" class="part">
+				<p class="title">{{title}}</p>
+				<ul class="edu_wrap">
+					<li v-for="job in work">
+						{{job.time}}
+						<p>
+							<p class="eduEle">{{job.pos}} </p>
+							<p v-if="job.isT" class="eduTeacher">导师：<a :href="job.website">{{job.teacher}}</a></p>
+						</p>
+					</li>
+				</ul>
+			</li>
+			<li id="researchC" class="part">
+				<p class="title">{{title}}</p>
+				<ul class="edu_wrap">
+					<p v-for="d in direction">{{d.research}} </p>
+				</ul>
+			</li>
+			<li id="paperC" class="part">
+				<p class="title">{{title}}</p>
+				<ul>
+					<li v-for="d in direction">
+						<!-- <p>{{d.name}}</p> -->
+						<ul v-for="(paper, index) in d.papers" class="paper_wrap">
+							<li>
+								[{{index+1}}] {{paper.info1}}<strong>{{paper.name}}</strong>{{paper.info2}}
+							</li>
+						</ul>
+					</li>
+				</ul>
+			</li>
+		</ul>
+	
+		<script src="./js/Chinese.js" type="text/javascript" charset="UTF-8"></script>
+	</body>
+</html>

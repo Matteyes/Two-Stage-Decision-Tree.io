@@ -18,61 +18,108 @@
 	<body>
 		<div class="navBt">
 			<img class="navImg" src="./img/nav.png">
-			<div class="navT">XIMING</div>
+			<div class="navT"><img class="nav_icon" src="./img/透明底logo.png"></div>
+		</div>
+		<div>
+			
 		</div>
 		<ul id="introNav" class="navList">
-			<p>XIMING</p>
+			<p><img class="title_icon" src="./img/透明底logo.png"></p>
 			<li v-for="nav in navBar" class="navLi" :id="nav.id">{{nav.title}}</li>
 		</ul>
 		<ul id="introContent" class="content">
 			<li id="overviewC" class="part">
 				<img class="pImg" :src="photo">
 				<p class="name">{{name}}</p>
+				<p class="name">{{name2}}</p>
 				<p v-for="position in positions" class="position">{{position.pos}}</p>
-				<p class="info">邮箱：{{email}}</p>
+				<p class="info">Email: {{email}}</p>
+				<p class="info">
+					<a :href='github' target="_blank"><img class="a_icon" :src='github_src'></a>
+					<a :href='researchgate' target="_blank"><img class="a_icon" :src='researchgate_src'></a>
+					<a :href='scholar' target="_blank"><img class="a_icon" :src='scholar_src'></a>
+				</p>
 			</li>
 			<li id="educationC" class="part">
 				<p class="title">{{title}}</p>
-				<ul class="edu_wrap">
-					<li v-for="edu in education" class="education">
-						{{edu.qualification}} , {{edu.time}}
-						<p>
-							<p class="eduEle">{{edu.school}} </p>
-							<p v-if="edu.isT" class="eduTeacher">导师：<a :href="edu.website">{{edu.teacher}}</a></p>
-						</p>
-					</li>
-				</ul>
+				<p class="abContent">
+					I am an associate professor and PI at the Big Data Center for Children's Medical Care, 
+					<a href="https://www.chcmu.com/"> Children's Hospital of Chongqing Medical University</a>.
+					 Previously, I was an assistant professor at <a href="https://stat.nankai.edu.cn/">Nankai University</a>.
+					I received my Ph.D. in Statistics from the University of Toronto, and I was extremely fortunate to have 
+					<a href="https://www.utstat.utoronto.ca/reid/">Prof. Nancy Reid</a>  as my advisor for my thesis. After 
+					graduation I became a postdoctoral fellow at Dalhousie University (working with 
+					<a href="https://www.mathstat.dal.ca/~field/wiki/doku.php">Prof. Chris Field</a>) Before going to UofT, 
+					I got my bachelor's degree from Nankai University and master's degree from University of Ottawa under 
+					the supervision of <a href="https://albuquerque.bioinformatics.uottawa.ca/">Prof. David Sankoff</a>.
+				</p>
+				<p class="abContent">
+					My research interests lie primarily in Statistics and the development of statistical and machine learning
+					methods for analyzing biological and medical data, especially real-world data (RWD) in pediatrics and ecological 
+					(including micro-ecological) environmental data, collaborating extensively with pediatricians and biologists. 
+				</p>
 			</li>
-			<li id="workC" class="part">
-				<p class="title">{{title}}</p>
-				<ul class="edu_wrap">
-					<li v-for="job in work">
-						{{job.time}}
-						<p>
-							<p class="eduEle">{{job.pos}} </p>
-							<p v-if="job.isT" class="eduTeacher">导师：<a :href="job.website">{{job.teacher}}</a></p>
-						</p>
-					</li>
-				</ul>
-			</li>
-			<li id="researchC" class="part">
-				<p class="title">{{title}}</p>
-				<ul class="edu_wrap">
-					<p v-for="d in direction">{{d.research}} </p>
-				</ul>
-			</li>
+			
 			<li id="paperC" class="part">
 				<p class="title">{{title}}</p>
 				<ul>
 					<li v-for="d in direction">
 						<!-- <p>{{d.name}}</p> -->
-						<ul v-for="(paper, index) in d.papers" class="paper_wrap">
-							<li>
+						<ul  class="paper_wrap">
+							<li v-for="(paper, index) in d.papers">
 								[{{index+1}}] {{paper.info1}}<strong>{{paper.name}}</strong>{{paper.info2}}
 							</li>
 						</ul>
 					</li>
 				</ul>
+			</li>
+			<li id="decisionC" class="part">
+				<p class="title">{{title}}</p>
+				<ul>
+					<li v-for="(p, index) in program">
+						<p>
+							{{index+1}}. <a :href="p.website">{{p.description}}</a>
+						</p>
+					</li>
+				</ul>
+			</li>
+			<li id="peopleC" class="part">
+				<p class="title">{{title}}</p>
+				<ul>
+					<p class="stitle">Current Students</p>
+					<p class="people" v-for="p in current">{{p.person}} </p>
+					<p class="stitle">Former Students</p>
+					<p class="people">Libai Xu (PhD student, graduated: 2020 ), Postdoctoral fellow at 
+						<a href="https://www.utm.utoronto.ca/math-cs-stats/people/libai-xu"> University of Toronto </a>
+					</p>
+					<p class="people">Xueli Xu (PhD student, graduated: 2021), Postdoctoral fellow at
+						<a href="https://jiewwwang.github.io/lab/people.html#Postdoc"> Guangzhou Institute of Biomedicine and Health (GIBH), Chinese Academy of Sciences </a>
+					</p>
+					<p class="people">Siyu Chen (Master student, graduated: 2019), PhD student at the Nuffield Department of Medicine, University of Oxford. </p>
+					<p class="people">Zhenyu Yang (PhD student at Nankai), now a fourth-year PhD student in Statistics at Nankai University</p>
+					<p class="people">Songhua Hu (PhD student at Nankai), now a third-year PhD student in Statistics at Nankai University </p>
+					<p class="people">Ying Cui (Undergraduate RA, graduated: 2017 ), PhD student in the Department of Biostatistics and Bioinformatics at 
+						<a href="https://www.cuiyingbeicheng.org/"> Emory University </a>
+					</p>
+					<p class="people">Yongkai Chen (Undergraduate RA, graduated: 2019 ), PhD student in the Department of Statistics at 
+						<a href="https://statcyk.github.io/">University of Georgia</a> 
+					</p>
+					<p class="people">Yu Lu (Undergraduate RA, graduated: 2020 ), PhD student in Biostatistics at Johns Hopkins University</p>
+					<p class="people">Zhongming Xie (Undergraduate RA, graduated: 2022), M.S. in Biostatistics at University of California, Berkeley</p>
+				</ul>
+			</li>
+			<li id="consultingC" class="part">
+				<p class="title">{{title}}</p>
+				<p class="text_just">
+					At the Children’s Hospital of Chongqing Medical University (CHCMU), I provide consulting services to clinical researchers on study 
+					design and statistical methodology, as well as R programming workshops. Prior to joining CHCMU, I founded the Nankai Data Analytics
+					 and Consulting Service (<a href="nkdacs.com">NKDACS</a>)  
+				</p>
+			</li>
+			<li class="part final">
+				<p>
+					If you are interested in what I am doing and looking for a research internship, please feel free to contact me at ximing@hospital.cqmu.edu.cn. 
+				</p>
 			</li>
 		</ul>
 	

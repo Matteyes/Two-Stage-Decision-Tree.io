@@ -4,6 +4,9 @@
 }
 body, html {
    height:100%;
+   /* background-image: url(../img/bg.jpeg); */
+   background-size: cover;
+   opacity: 1;
 }
 ul li{
     list-style:none;
@@ -12,13 +15,20 @@ ul li{
 .dis_flex{
 	display: flex;
 }
+a{
+	text-decoration: none;
+}
 
 @media (min-width: 0){
 	.navBt{
-		background-color: black;
+		background-color: rgb(28,120,135);
 		height: 4rem;
 		vertical-align: middle;
 		display: flex;
+	}
+	.nav_icon{
+		height: 60%;
+		margin-top: 11px;
 	}
 	.navT{
 		height: 4rem;
@@ -40,7 +50,7 @@ ul li{
 		display: none;
 	}
 	.navLi{
-		background-color: black;
+		
 		color: white;
 		padding: 20px;
 		text-align: center;
@@ -48,11 +58,24 @@ ul li{
 		font-weight: 600;
 		margin-top: 2px;
 	}
+	.navLi:nth-child(odd){
+		background-color: rgb(28,120,135);
+	}
+	.navLi:nth-child(even){
+		background-color: rgb(147,190,190);
+	}
+	.navLi:hover{
+		cursor: pointer;
+	}
 	.navLi:active{
 		background-color: white;
 		color: #000000;
 	}
+	.part a{
+		color:  rgb(58,163,195);
+	}
 	.part:nth-child(odd){
+		/* background-color: white; */
 		background-color: white;
 	}
 	.part:nth-child(even){
@@ -83,6 +106,11 @@ ul li{
 		font-size: 30px;
 		letter-spacing: 5px;
 	}
+	.abContent{
+		letter-spacing: 1px;
+		line-height: 140%;
+		text-align: justify;
+	}
 	.edu_wrap{
 		padding-left: 20px;
 	}
@@ -103,6 +131,30 @@ ul li{
 	.paper_wrap li{
 		list-style: disc;
 	}
+	.a_icon{
+		width: 30px;
+		margin: 0 10px;
+	}
+	.stitle{
+		font-weight: 800;
+		font-size: 1.2rem;
+	}
+	.people{
+		margin-left: 20px;
+	}
+	.final{
+		color: orangered;
+		padding: 20px 20px;
+		font-weight: 800;
+		letter-spacing: 1px;
+		text-align: justify;
+		margin-bottom: 1.25rem;
+	}
+	.text_just{
+		letter-spacing: 1px;
+		line-height: 140%;
+		text-align: justify;
+	}
 }
 
 @media (min-width: 1000px){
@@ -113,10 +165,11 @@ ul li{
 		display: none;
 	}
 	.navList{
-		background-color: black;
+		/* background-color: white; */
 		display: block;
 		width: 150px;
 		color: white;
+		font-weight: 600;
 		position: absolute;
 		margin-left: -450px;
 		left: 50%;
@@ -132,6 +185,12 @@ ul li{
 		font-size: 28px;
 		margin-bottom: 100px;
 		display: block;
+		/* background-color: rgb(28,120,135); */
+		/* border-radius: 0 0 15px 15px; */
+	}
+	.title_icon{
+		width: 120%;
+		margin-left: -10%;
 	}
 	.content{
 		width: 850px;
@@ -172,6 +231,10 @@ ul li{
 		margin-top: 30px;
 	}
 	.navLi{
+		margin-top: 10px;
+		border-radius: 10px 0 0 10px;
+	}
+	.wrap{
 	}
 }
 

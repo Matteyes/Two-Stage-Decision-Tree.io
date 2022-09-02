@@ -4,22 +4,19 @@ var nav = new Vue({
 		navBar:[
 			{
 				id:'overview',
-				title:'Home'
+				title:'个人概况'
 			},{
 				id:'education',
-				title:'About me'
+				title:'教育背景'
+			},{
+				id:'work',
+				title:'工作经历'
+			},{
+				id:'research',
+				title:'研究方向'
 			},{
 				id:'paper',
-				title:'Publications '
-			},{
-				id:'decision',
-				title:'Decision Aids'
-			},{
-				id:'people',
-				title:'People'
-			},{
-				id:'consulting',
-				title:'Consulting'
+				title:'发表论文'
 			}
 		]
 	}
@@ -29,17 +26,16 @@ var overview = new Vue({
 	el:'#overviewC',
 	data:{
 		id:'overviewC',
-		title:'Home',
+		title:'个人概况',
 		photo:'./img/xxm.png',
-		name:'Ximing XU',
-		name2:'(徐铣明)',
+		name:'徐铣明',
 		age:'38',
 		nation:'汉',
 		positions:[
 			{
-				pos:"Big Data Center for Children's Medical Care"
+				pos:'重庆医科大学副教授'
 			},{
-				pos:"Children's Hospital of Chongqing Medical University"
+				pos:'重庆医科大学附属儿童医院大数据中心 PI'
 			}
 		],
 		email:'ximing@hospital.cqmu.edu.cn',
@@ -58,54 +54,71 @@ var education = new Vue({
 	el:'#educationC',
 	data:{
 		id:'educationC',
-		title:'About Me',
+		title:'教育背景',
 		education:[
-		]
-	}
-})
-
-var consulting = new Vue({
-	el:'#consultingC',
-	data:{
-		id:'consultingC',
-		title:'Consulting',
-		content:[
-		]
-	}
-})
-
-var program = new Vue({
-	el:'#decisionC',
-	data:{
-		id:'decisionC',
-		title:'Decision Aids',
-		program:[
 			{
-				description:'A two-stage decision model for early Identification of autism Spectrum disorder by combining behavioral and developmental scales',
-				website:'https://pediatricstats.com/tsdm'
+				time:'2002/09 至 2006/06:',
+				school:'南开大学数学学院统计学系',
+				qualification:'本科',
+				isT:false
 			},{
-				description:'Modified PIRO: A Prognostic Scale for Children with CAP',
-				website:'https://mpiro.life/'
+				time:'2006/09 至 2008/08：',
+				school:'加拿大渥太华大学数学与统计系',
+				qualification:'硕士',
+				teacher:'David Sankof',
+				website:'https://albuquerque.bioinformatics.uottawa.ca/',
+				isT:true
+			},{
+				time:'2008/09 至 2012/06：',
+				school:'加拿大多伦多大学统计科学系',
+				qualification:'博士',
+				teacher:'Nancy Reid',
+				website:'https://www.utstat.utoronto.ca/reid/',
+				isT:true
 			}
 		]
 	}
 })
 
-var people = new Vue({
-	el:'#peopleC',
+var work = new Vue({
+	el:'#workC',
 	data:{
-		id:'peopleC',
-		title:'People',
-		current:[
+		id:'workC',
+		title:'工作经历',
+		work:[
 			{
-				person:'Mengwei Ding, MSc in Applied Statistics (2022-present)'
+				time:'2012/09 至 2014/09：',
+				pos:'加拿大达尔豪斯大学数学与统计系博士后',
+				teacher:'Chris Field',
+				website:'https://www.mathstat.dal.ca/~field/wiki/doku.php',
+				isT:true
 			},{
-				person:'Yanqin Wang, MD in Pediatrics （2021-present, co-supervised with Prof. Qiu Li）'
+				time:'2014/09 至 2015/04：',
+				pos:'加拿大达尔豪斯大学研究助理',
+				isT:false
+			},{
+				time:'2015/07 至 2021/08：',
+				pos:'南开大学统计与数据科学学院讲师，博士生导师',
+				isT:false
 			}
-		],
-		former:[
+		]
+	}
+})
+
+var research = new Vue({
+	el:'#researchC',
+	data:{
+		id:'researchC',
+		title:'研究方向',
+		direction:[
 			{
-				person:''
+				research:'生物统计学（Biostatistics）'
+			},{
+				research:'微生物组数据分析（Metagenomics Data Analysis）'
+			},{
+				research:'复合似然函数方法与理论 （Composite Likelihood Inference）'
+			},{
+				research:'统计和机器学习在医学的应用 (Statistical and Machine Learning Methods in Medicine）'
 			}
 		]
 	}
@@ -117,7 +130,7 @@ var paper = new Vue({
 	el:'#paperC',
 	data:{
 		id:'paperC',
-		title:'Publications',
+		title:'发表论文',
 		direction:[
 			{
 				name:'1. 统计学理论',
@@ -125,15 +138,15 @@ var paper = new Vue({
 					{
 						info1:'He, J.,  Hu, S., ',
 						name:'Xu, X.',
-						info2:' , et al. (2022).  Association of long-term exposure to PM2. 5 in workplace with fasting plasma glucose among asymptomatic adults: A multicenter study in North China. Environment International, 166: 107353.  (PhD student Songhua Hu is the co-first author)'
+						info2:' , et al. (2022).  Association of long-term exposure to PM2. 5 in workplace with fasting plasma glucose among asymptomatic adults: A multicenter study in North China. Environment International, 166: 107353.  (指导博士生Hu Songhua为共同一作)'
 					},{
 						info1:'Aeberhard, W., Cantoni, E., Field, C., Künsch, H., Mills-Flemming, J., and ',
 						name:'Xu, X.',
-						info2:' (2021). Robust estimation for discrete-time state space models. Scandinavian Journal of Statistics, 48，1127-1147. (Authors are alphabetically ordered)'
+						info2:' (2021). Robust estimation for discrete-time state space models. Scandinavian Journal of Statistics, 48，1127-1147.'
 					},{
 						info1:'Ma, J., Xu, XL., Li, M., Zhang, Y.…, ',
 						name:'Xu, X.',
-						info2:', Wang, Y. (2021). Predictive models of aging of the human eye based on ocular anterior segment morphology. Journal of Biomedical Informatics, 120: 103855. (PhD student Xueli Xu is the co-first author)'
+						info2:', Wang, Y. (2021). Predictive models of aging of the human eye based on ocular anterior segment morphology. Journal of Biomedical Informatics, 120: 103855.'
 					},{
 						info1:'Zeng, Q.,  Yang, Z., Wang, F., Li, D., .…, ',
 						name:'Xu, X.',
@@ -145,7 +158,7 @@ var paper = new Vue({
 					},{
 						info1:'Xu, XL., Xie, Z., Yang, Z., Li, D. and ',
 						name:'Xu, X.',
-						info2:' (2020). A t-SNE based classification approach to compositional microbiome data. Frontiers in Genetics, 11:620143. (PhD student Xueli Xu is the first author)'
+						info2:' (2020). A t-SNE based classification approach to compositional microbiome data. Frontiers in Genetics, 11:620143.'
 					},{
 						info1:'Li, H., et al. (2020). The prolonged disruption of a single-course amoxicillin on mice gut microbiota and resistome, and recovery by inulin. Environmental Pollution, 265: 114651.',
 						name: null,
@@ -153,11 +166,11 @@ var paper = new Vue({
 					},{
 						info1:'Yang, J., Li, D., Yang, Z. …, ',
 						name:'Xu, X.',
-						info2:', et al. (2019). Establishing high-accuracy biomarkers for colorectal cancer by comparing fecal microbiomes in patients with healthy families. Gut Microbes, 11, 918-929. (PhD student Zhenyu Yang is the co-first author).'
+						info2:', et al. (2019). Establishing high-accuracy biomarkers for colorectal cancer by comparing fecal microbiomes in patients with healthy families. Gut Microbes, 11, 918-929. (指导博士生Yang Zhenyu为共同一作).'
 					},{
 						info1:'Dong, G., Zhang, J., Yang, Z. …, ',
 						name:'Xu, X.',
-						info2:', et al. (2019). The association of gut microbiota with idiopathic central precocious puberty in girls. Frontiers in Endocrinology, 10: 941.(PhD student Zhenyu Yang is the co-first author).'
+						info2:', et al. (2019). The association of gut microbiota with idiopathic central precocious puberty in girls. Frontiers in Endocrinology, 10: 941.(指导博士生Yang Zhenyu为共同一作).'
 					},{
 						info1:'Huang, C. …, ',
 						name:'Xu, X.',
@@ -197,7 +210,7 @@ var paper = new Vue({
 					},{
 						info1:'',
 						name:'Xu, X.',
-						info2:' and Sankoff, D. (2008). Tests for gene clusters satisfying the generalized adjacency criterion. Lecture Notes in Computer Science, 5167, 152-160. (This paper was chosen as the first best full paper of the 3rd Brazilian Symposium on Bioinformatics)'
+						info2:' and Sankoff, D. (2008). Tests for gene clusters satisfying the generalized adjacency criterion. Lecture Notes in Computer Science, 5167, 152-160.'
 					},{
 						info1:'高洁，徐雪丽，',
 						name:'徐铣明',
