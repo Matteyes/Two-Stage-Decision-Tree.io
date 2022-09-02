@@ -30,7 +30,7 @@ var overview = new Vue({
 	data:{
 		id:'overviewC',
 		title:'Home',
-		photo:'./img/xxm.png',
+		photo:'./img/xxm1.png',
 		name:'Ximing XU',
 		name2:'(徐铣明)',
 		age:'38',
