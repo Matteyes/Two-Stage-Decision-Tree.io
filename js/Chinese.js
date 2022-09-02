@@ -114,7 +114,7 @@ var research = new Vue({
 			{
 				research:'生物统计学（Biostatistics）'
 			},{
-				research:'微生物组数据分析（Metagenomics Data Analysis）'
+				research:'微生物组数据分析（Microbiome Data Analysis）'
 			},{
 				research:'复合似然函数方法与理论 （Composite Likelihood Inference）'
 			},{
@@ -138,15 +138,15 @@ var paper = new Vue({
 					{
 						info1:'He, J.,  Hu, S., ',
 						name:'Xu, X.',
-						info2:' , et al. (2022).  Association of long-term exposure to PM2. 5 in workplace with fasting plasma glucose among asymptomatic adults: A multicenter study in North China. Environment International, 166: 107353.  (指导博士生Hu Songhua为共同一作)'
+						info2:' , et al. (2022).  Association of long-term exposure to PM2. 5 in workplace with fasting plasma glucose among asymptomatic adults: A multicenter study in North China. Environment International, 166: 107353.  (PhD student Songhua Hu is the co-first author)'
 					},{
 						info1:'Aeberhard, W., Cantoni, E., Field, C., Künsch, H., Mills-Flemming, J., and ',
 						name:'Xu, X.',
-						info2:' (2021). Robust estimation for discrete-time state space models. Scandinavian Journal of Statistics, 48，1127-1147.'
+						info2:' (2021). Robust estimation for discrete-time state space models. Scandinavian Journal of Statistics, 48，1127-1147. (Authors are alphabetically ordered)'
 					},{
 						info1:'Ma, J., Xu, XL., Li, M., Zhang, Y.…, ',
 						name:'Xu, X.',
-						info2:', Wang, Y. (2021). Predictive models of aging of the human eye based on ocular anterior segment morphology. Journal of Biomedical Informatics, 120: 103855.'
+						info2:', Wang, Y. (2021). Predictive models of aging of the human eye based on ocular anterior segment morphology. Journal of Biomedical Informatics, 120: 103855. (PhD student Xueli Xu is the co-first author)'
 					},{
 						info1:'Zeng, Q.,  Yang, Z., Wang, F., Li, D., .…, ',
 						name:'Xu, X.',
@@ -158,7 +158,7 @@ var paper = new Vue({
 					},{
 						info1:'Xu, XL., Xie, Z., Yang, Z., Li, D. and ',
 						name:'Xu, X.',
-						info2:' (2020). A t-SNE based classification approach to compositional microbiome data. Frontiers in Genetics, 11:620143.'
+						info2:' (2020). A t-SNE based classification approach to compositional microbiome data. Frontiers in Genetics, 11:620143. (PhD student Xueli Xu is the first author)'
 					},{
 						info1:'Li, H., et al. (2020). The prolonged disruption of a single-course amoxicillin on mice gut microbiota and resistome, and recovery by inulin. Environmental Pollution, 265: 114651.',
 						name: null,
@@ -166,11 +166,11 @@ var paper = new Vue({
 					},{
 						info1:'Yang, J., Li, D., Yang, Z. …, ',
 						name:'Xu, X.',
-						info2:', et al. (2019). Establishing high-accuracy biomarkers for colorectal cancer by comparing fecal microbiomes in patients with healthy families. Gut Microbes, 11, 918-929. (指导博士生Yang Zhenyu为共同一作).'
+						info2:', et al. (2019). Establishing high-accuracy biomarkers for colorectal cancer by comparing fecal microbiomes in patients with healthy families. Gut Microbes, 11, 918-929. (PhD student Zhenyu Yang is the co-first author).'
 					},{
 						info1:'Dong, G., Zhang, J., Yang, Z. …, ',
 						name:'Xu, X.',
-						info2:', et al. (2019). The association of gut microbiota with idiopathic central precocious puberty in girls. Frontiers in Endocrinology, 10: 941.(指导博士生Yang Zhenyu为共同一作).'
+						info2:', et al. (2019). The association of gut microbiota with idiopathic central precocious puberty in girls. Frontiers in Endocrinology, 10: 941.(PhD student Zhenyu Yang is the co-first author).'
 					},{
 						info1:'Huang, C. …, ',
 						name:'Xu, X.',
@@ -184,7 +184,7 @@ var paper = new Vue({
 						name: null,
 						info2: null
 					},{
-						info1:'Li, D., et al. (2019). Intestinal Bacteroides sp. imbalance associated with the occurrence of childhood undernutrition in China. Frontiers in microbiology, 10:2635.',
+						info1:'Li, D., et al. (2019). Intestinal Bacteroides sp. imbalance associated with the occurrence of childhood undernutrition in China. Frontiers in Microbiology, 10:2635.',
 						name: null,
 						info2: null
 					},{
@@ -210,7 +210,7 @@ var paper = new Vue({
 					},{
 						info1:'',
 						name:'Xu, X.',
-						info2:' and Sankoff, D. (2008). Tests for gene clusters satisfying the generalized adjacency criterion. Lecture Notes in Computer Science, 5167, 152-160.'
+						info2:' and Sankoff, D. (2008). Tests for gene clusters satisfying the generalized adjacency criterion. Lecture Notes in Computer Science, 5167, 152-160. (This paper was chosen as the first best full paper of the 3rd Brazilian Symposium on Bioinformatics)'
 					},{
 						info1:'高洁，徐雪丽，',
 						name:'徐铣明',
