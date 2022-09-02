@@ -171,7 +171,7 @@ var paper = new Vue({
 						name: null,
 						info2: null
 					},{
-						info1:'Li, D., et al. (2019). Intestinal Bacteroides sp. imbalance associated with the occurrence of childhood undernutrition in China. Frontiers in microbiology, 10:2635.',
+						info1:'Li, D., et al. (2019). Intestinal Bacteroides sp. imbalance associated with the occurrence of childhood undernutrition in China. Frontiers in Microbiology, 10:2635.',
 						name: null,
 						info2: null
 					},{
