@@ -189,8 +189,8 @@ a{
 		/* border-radius: 0 0 15px 15px; */
 	}
 	.title_icon{
-		width: 120%;
-		margin-left: -10%;
+		width: 180px;
+		margin-left: -30%; 
 	}
 	.content{
 		width: 850px;
