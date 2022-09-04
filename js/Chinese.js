@@ -27,7 +27,7 @@ var overview = new Vue({
 	data:{
 		id:'overviewC',
 		title:'个人概况',
-		photo:'./img/xxm1.png',
+		photo:'./img/xxm3.jpg',
 		name:'徐铣明',
 		age:'38',
 		nation:'汉',
