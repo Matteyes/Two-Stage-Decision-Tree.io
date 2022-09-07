@@ -123,6 +123,30 @@ var paper = new Vue({
 				name:'1. 统计学理论',
 				papers:[
 					{
+						info1:'(2022+) A note on information bias and efficiency of composite likelihood. Statistica Sinica, to appear. ',
+						name: null,
+						info2: null
+					},{
+						info1:'(2022+) Long-term effects of vitamin D on exacerbation rate, health care utilization and lung function in children with asthma. Annals of Translational Medicine, to appear.',
+						name: null,
+						info2: null
+					},{
+						info1:null,
+						name: null,
+						info2:'(2022+) Characteristics of wild bird resistomes and dissemination of antibiotic resistance genes in interconnected bird-habitat systems revealed by similarity of bla',
+						sub: 'TEM',
+						info3: ' polymorphic sequences. Environmental Science & Technology, to appear.'
+					},{
+						info1:'(2022+) Type O blood, the MCHC, and the reticulocyte count impact the early recurrence of primary warm-antibody autoimmune hemolytic anemia in children: a retrospective cohort analysis. Frontiers in Pediatrics, to appear. ',
+						name: null,
+						info2: null
+					},{
+						info1:'Li, Y., ',
+						name:'Xu, X.',
+						info2:', Guo, Z., et al. (2022). Neonatal Streptococcus pneumoniae infection induces long-lasting dysbiosis of the gut microbiota in a mouse model. Frontiers in Microbiogy ',
+						adress:'https://doi.org/10.3389/fmicb.2022.961684',
+						aname:'available online'
+					},{
 						info1:'He, J.,  Hu, S., ',
 						name:'Xu, X.',
 						info2:' , et al. (2022).  Association of long-term exposure to PM2. 5 in workplace with fasting plasma glucose among asymptomatic adults: A multicenter study in North China. Environment International, 166: 107353.  (PhD student Songhua Hu is the co-first author)'
