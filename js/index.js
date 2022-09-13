@@ -20,6 +20,9 @@ var nav = new Vue({
 			},{
 				id:'consulting',
 				title:'Consulting'
+			},{
+				id:'miscellaneous',
+				title:'Miscellaneous'
 			}
 		]
 	}
@@ -86,6 +89,24 @@ var program = new Vue({
 			},{
 				description:'Modified PIRO: A Prognostic Scale for Children with CAP',
 				website:'https://mpiro.life/'
+			}
+		]
+	}
+})
+
+var program = new Vue({
+	el:'#miscellaneousC',
+	data:{
+		id:'miscellaneousC',
+		title:'Miscellaneous',
+		papers:[
+			{
+				info1:'Translated the wonderful story',
+				info2:'Statistics and the Ontario Lottery Retailer Scandal',
+				website1:'https://pediatricstats.com/tsdm',
+				info3:'by Prof. Jeffrey Rosenthal into',
+				info4:'Chinese',
+				website2:'http://probability.ca/jeff/ftpdir/lotteryChinese.pdf'
 			}
 		]
 	}

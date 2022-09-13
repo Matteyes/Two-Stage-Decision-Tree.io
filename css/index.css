@@ -232,6 +232,7 @@ a{
 	}
 	.navLi{
 		margin-top: 10px;
+		font-size: 14px;
 		border-radius: 10px 0 0 10px;
 	}
 	.wrap{

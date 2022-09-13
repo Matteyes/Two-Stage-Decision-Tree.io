@@ -128,7 +128,24 @@
 					 and Consulting Service (<a href="https://nkdacs.com">NKDACS</a>)  
 				</p>
 			</li>
-
+			<li id="miscellaneousC" class="part">
+				<p class="title">{{title}}</p>
+				<ul>
+					<ul  class="paper_wrap">
+						<li v-for="(paper, index) in papers">
+							<!-- [{{index+2}}] -->
+							{{paper.info1}}
+							<strong v-if="paper.website1">
+								(<a :href="paper.website1"> {{paper.info2}} </a>)
+							</strong>
+							{{paper.info3}}
+							<strong v-if="paper.website2">
+								<a :href="paper.website2"> {{paper.info4}} </a>.
+							</strong>
+						</li>
+					</ul>
+				</ul>
+			</li>
 				
 
 		</ul>
