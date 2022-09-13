@@ -94,7 +94,7 @@ var program = new Vue({
 	}
 })
 
-var program = new Vue({
+var miscellaneous = new Vue({
 	el:'#miscellaneousC',
 	data:{
 		id:'miscellaneousC',
@@ -103,7 +103,7 @@ var program = new Vue({
 			{
 				info1:'Translated the wonderful story',
 				info2:'Statistics and the Ontario Lottery Retailer Scandal',
-				website1:'https://pediatricstats.com/tsdm',
+				website1:'http://probability.ca/lotteryscandal/',
 				info3:'by Prof. Jeffrey Rosenthal into',
 				info4:'Chinese',
 				website2:'http://probability.ca/jeff/ftpdir/lotteryChinese.pdf'
