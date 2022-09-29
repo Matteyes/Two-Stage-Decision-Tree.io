@@ -73,8 +73,9 @@
 								{{paper.info2}}<sub v-if="paper.sub">{{paper.sub}}</sub>
 								{{paper.info3}}
 								<strong v-if="paper.aname">
-									(<a :href="paper.address"> {{paper.aname}} </a>)
+									<a :href="paper.site"> {{paper.aname}} </a>
 								</strong>
+								{{paper.append}}
 							</li>
 						</ul>
 					</li>
