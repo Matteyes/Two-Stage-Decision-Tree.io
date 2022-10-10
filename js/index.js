@@ -233,7 +233,7 @@ var paper = new Vue({
 					},{
 						info1:'',
 						name:'Xu, X.',
-						info2:', Dunn, K. and Field, C. (2015). A robust ANOVA approach to phylogenetic analysis. Molecular Biology and Evolution, 32, 2186-2194.'
+						info2:', Dunn, K. and Field, C. (2015). A robust ANOVA approach to estimating a phylogeny from multiple genes. Molecular Biology and Evolution, 32, 2186-2194.'
 					},{
 						info1:'',
 						name:'Xu, X.',
