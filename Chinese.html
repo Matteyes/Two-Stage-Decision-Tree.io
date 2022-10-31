@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta charset="utf-8">
-		<title>XiMing Xu's Homepage</title>
+		<title>Ximing Xu's Homepage</title>
 		<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 		<meta name="apple-mobile-web-app-capable" content="yes" />
 		<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
@@ -73,6 +73,7 @@
 				<p class="title">{{title}}</p>
 				<ul>
 					<li v-for="d in direction">
+						<!-- <p>{{d.name}}</p> -->
 						<ul  class="paper_wrap">
 							<li v-for="(paper, index) in d.papers">
 								<!-- [{{index+2}}] -->
@@ -81,8 +82,9 @@
 								{{paper.info2}}<sub v-if="paper.sub">{{paper.sub}}</sub>
 								{{paper.info3}}
 								<strong v-if="paper.aname">
-									(<a :href="paper.address"> {{paper.aname}} </a>)
+									<a :href="paper.site"> {{paper.aname}} </a>
 								</strong>
+								{{paper.append}}
 							</li>
 						</ul>
 					</li>

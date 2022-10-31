@@ -130,15 +130,18 @@ var paper = new Vue({
 	el:'#paperC',
 	data:{
 		id:'paperC',
-		title:'发表论文',
+		title:'Publications',
 		direction:[
 			{
 				name:'1. 统计学理论',
 				papers:[
 					{
-						info1:'(2022+) A note on information bias and efficiency of composite likelihood. Statistica Sinica, to appear. ',
+						info1:'(2022+) A note on information bias and efficiency of composite likelihood. Statistica Sinica, the preprint is',
 						name: null,
-						info2: null
+						info2: null,
+						site:'https://www3.stat.sinica.edu.tw/ss_newpaper/SS-2022-0167_na.pdf',
+						aname:'available online',
+						append: '( DOI: 10.5705/ss.202022.0167 ).'
 					},{
 						info1:'(2022+) Long-term effects of vitamin D on exacerbation rate, health care utilization and lung function in children with asthma. Annals of Translational Medicine, to appear.',
 						name: null,
@@ -157,8 +160,8 @@ var paper = new Vue({
 						info1:'Li, Y., ',
 						name:'Xu, X.',
 						info2:', Guo, Z., et al. (2022). Neonatal Streptococcus pneumoniae infection induces long-lasting dysbiosis of the gut microbiota in a mouse model. Frontiers in Microbiogy ',
-						adress:'https://doi.org/10.3389/fmicb.2022.961684',
-						aname:'available online'
+						site:'https://doi.org/10.3389/fmicb.2022.961684',
+						aname:'( available online )'
 					},{
 						info1:'He, J.,  Hu, S., ',
 						name:'Xu, X.',
@@ -222,7 +225,7 @@ var paper = new Vue({
 					},{
 						info1:'',
 						name:'Xu, X.',
-						info2:', Dunn, K. and Field, C. (2015). A robust ANOVA approach to phylogenetic analysis. Molecular Biology and Evolution, 32, 2186-2194.'
+						info2:', Dunn, K. and Field, C. (2015). A robust ANOVA approach to estimating a phylogeny from multiple genes. Molecular Biology and Evolution, 32, 2186-2194.'
 					},{
 						info1:'',
 						name:'Xu, X.',
