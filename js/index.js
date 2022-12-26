@@ -144,32 +144,38 @@ var paper = new Vue({
 				name:'1. 统计学理论',
 				papers:[
 					{
-						info1:'(2022+) A note on information bias and efficiency of composite likelihood. Statistica Sinica, the preprint is',
-						name: null,
-						info2: null,
+						info1:'Xu, L., Reid, N., ',
+						name: 'Xu, X.',
+						info2: '(2023+). A note on information bias and efficiency of composite likelihood. Statistica Sinica, the preprint is ',
 						site:'https://www3.stat.sinica.edu.tw/ss_newpaper/SS-2022-0167_na.pdf',
 						aname:'available online',
-						append: '( DOI: 10.5705/ss.202022.0167 ).'
+						append: '(DOI: 10.5705/ss.202022.0167).'
 					},{
-						info1:'(2022+) Long-term effects of vitamin D on exacerbation rate, health care utilization and lung function in children with asthma. Annals of Translational Medicine, to appear.',
-						name: null,
-						info2: null
+						info1:'Xiao, L., ',
+						name: 'Xu, X.',
+						info2: ' et al. (2023+). Low total cholesterol predicts early death in children with hemophagocytic lymphohistiocytosis. Frontiers in Pediatrics, 10: 1006817.'
+					},{
+						info1:'Wei, Q., Cao, H., Shi, Y., ',
+						name: 'Xu, X.',
+						info2: ' Li, T. (2022). Machine learning based on eye-tracking data to identify Autism Spectrum Disorder: A systematic review and meta-analysis. Journal of Biomedical Informatics, 137: 104254.'
+					},{
+						info1:'Li, Q., Zhou, Q.,…, ',
+						name: 'Xu, X.',
+						info2: ' Luo, Z. (2022). Long-term effects of vitamin D on exacerbation rate, health care utilization and lung function in children with asthma. Annals of Translational Medicine, 10 (20): 1094.'
 					},{
 						info1:null,
 						name: null,
-						info2:'(2022+) Characteristics of wild bird resistomes and dissemination of antibiotic resistance genes in interconnected bird-habitat systems revealed by similarity of bla',
+						info2:'Luo, Y., Tan, L., et al. (2022). Characteristics of wild bird resistomes and dissemination of antibiotic resistance genes in interconnected bird-habitat systems revealed by similarity of bla',
 						sub: 'TEM',
-						info3: ' polymorphic sequences. Environmental Science & Technology, to appear.'
+						info3: ' polymorphic sequences. Environmental Science & Technology, 56 (21), 15084-15095.'
 					},{
-						info1:'(2022+) Type O blood, the MCHC, and the reticulocyte count impact the early recurrence of primary warm-antibody autoimmune hemolytic anemia in children: a retrospective cohort analysis. Frontiers in Pediatrics, to appear. ',
-						name: null,
-						info2: null
+						info1:'Li, J., An, X., ',
+						name: 'Xu, X.',
+						info2: ' et al. (2022). Type O blood, the MCHC, and the reticulocyte count impact the early recurrence of primary warm-antibody autoimmune hemolytic anemia in children: a retrospective cohort analysis. Frontiers in Pediatrics, 10: 881064.'
 					},{
 						info1:'Li, Y., ',
 						name:'Xu, X.',
-						info2:', Guo, Z., et al. (2022). Neonatal Streptococcus pneumoniae infection induces long-lasting dysbiosis of the gut microbiota in a mouse model. Frontiers in Microbiogy ',
-						site:'https://doi.org/10.3389/fmicb.2022.961684',
-						aname:'( available online )'
+						info2:' Guo, Z., et al. (2022). Neonatal Streptococcus pneumoniae infection induces long-lasting dysbiosis of the gut microbiota in a mouse model. Frontiers in Microbiology, 13: 961684.'
 					},{
 						info1:'He, J.,  Hu, S., ',
 						name:'Xu, X.',
