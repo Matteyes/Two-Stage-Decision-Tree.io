@@ -207,21 +207,21 @@ var paper = new Vue({
 					},{
 						info1:'Yang, J., Li, D., Yang, Z. …, ',
 						name:'Xu, X.',
-						info2:', et al. (2019). Establishing high-accuracy biomarkers for colorectal cancer by comparing fecal microbiomes in patients with healthy families. Gut Microbes, 11, 918-929. (PhD student Zhenyu Yang is the co-first author).'
+						info2:', et al. (2020). Establishing high-accuracy biomarkers for colorectal cancer by comparing fecal microbiomes in patients with healthy families. Gut Microbes, 11, 918-929. (PhD student Zhenyu Yang is the co-first author).'
 					},{
 						info1:'Dong, G., Zhang, J., Yang, Z. …, ',
 						name:'Xu, X.',
-						info2:', et al. (2019). The association of gut microbiota with idiopathic central precocious puberty in girls. Frontiers in Endocrinology, 10: 941.(PhD student Zhenyu Yang is the co-first author).'
+						info2:', et al. (2020). The association of gut microbiota with idiopathic central precocious puberty in girls. Frontiers in Endocrinology, 10: 941.(PhD student Zhenyu Yang is the co-first author).'
+					},{
+						info1:'Zhou, P., et al. (2020). Perinatal antibiotic exposure affects the transmission between maternal and neonatal microbiota and is associated with early-onset sepsis. Msphere, 5: e00984-19.',
+						name: null,
+						info2: null
 					},{
 						info1:'Huang, C. …, ',
 						name:'Xu, X.',
 						info2:', et. al. (2019). Distinct gut microbiota composition and functional category in children with cerebral palsy and epilepsy. Frontiers in Pediatrics，7: 394.'
 					},{
 						info1:'Dai, W., et al. (2019). An integrated respiratory microbial gene catalogue to better understand the microbial aetiology of Mycoplasma pneumoniae pneumonia. GigaScience, 8: giz093.',
-						name: null,
-						info2: null
-					},{
-						info1:'Zhou, P., et al. (2019). Perinatal antibiotic exposure affects the transmission between maternal and neonatal microbiota and is associated with early-onset sepsis. Msphere, 5: e00984-19.',
 						name: null,
 						info2: null
 					},{
