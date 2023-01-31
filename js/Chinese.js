@@ -143,17 +143,21 @@ var paper = new Vue({
 						aname:'available online',
 						append: '(DOI: 10.5705/ss.202022.0167).'
 					},{
+						info1:'Wei, Q., Xu, XL., ',
+						name: 'Xu, X.',
+						info2: ', Cheng, Q. (2023). Early identification of autism spectrum disorder by multi-instrument fusion: A clinically applicable machine learning approach. Psychiatry Research, 320: 115050.'
+					},{
 						info1:'Xiao, L., ',
 						name: 'Xu, X.',
-						info2: ' et al. (2023+). Low total cholesterol predicts early death in children with hemophagocytic lymphohistiocytosis. Frontiers in Pediatrics, 10: 1006817.'
+						info2: ', et al. (2023). Low total cholesterol predicts early death in children with hemophagocytic lymphohistiocytosis. Frontiers in Pediatrics, 10: 1006817.'
 					},{
 						info1:'Wei, Q., Cao, H., Shi, Y., ',
 						name: 'Xu, X.',
-						info2: ' Li, T. (2022). Machine learning based on eye-tracking data to identify Autism Spectrum Disorder: A systematic review and meta-analysis. Journal of Biomedical Informatics, 137: 104254.'
+						info2: ', Li, T. (2022). Machine learning based on eye-tracking data to identify Autism Spectrum Disorder: A systematic review and meta-analysis. Journal of Biomedical Informatics, 137: 104254.'
 					},{
 						info1:'Li, Q., Zhou, Q.,…, ',
 						name: 'Xu, X.',
-						info2: ' Luo, Z. (2022). Long-term effects of vitamin D on exacerbation rate, health care utilization and lung function in children with asthma. Annals of Translational Medicine, 10 (20): 1094.'
+						info2: ', Luo, Z. (2022). Long-term effects of vitamin D on exacerbation rate, health care utilization and lung function in children with asthma. Annals of Translational Medicine, 10 (20): 1094.'
 					},{
 						info1:null,
 						name: null,
@@ -163,15 +167,15 @@ var paper = new Vue({
 					},{
 						info1:'Li, J., An, X., ',
 						name: 'Xu, X.',
-						info2: ' et al. (2022). Type O blood, the MCHC, and the reticulocyte count impact the early recurrence of primary warm-antibody autoimmune hemolytic anemia in children: a retrospective cohort analysis. Frontiers in Pediatrics, 10: 881064.'
+						info2: ', et al. (2022). Type O blood, the MCHC, and the reticulocyte count impact the early recurrence of primary warm-antibody autoimmune hemolytic anemia in children: a retrospective cohort analysis. Frontiers in Pediatrics, 10: 881064.'
 					},{
 						info1:'Li, Y., ',
 						name:'Xu, X.',
-						info2:' Guo, Z., et al. (2022). Neonatal Streptococcus pneumoniae infection induces long-lasting dysbiosis of the gut microbiota in a mouse model. Frontiers in Microbiology, 13: 961684.'
+						info2:', Guo, Z., et al. (2022). Neonatal Streptococcus pneumoniae infection induces long-lasting dysbiosis of the gut microbiota in a mouse model. Frontiers in Microbiology, 13: 961684.'
 					},{
 						info1:'He, J.,  Hu, S., ',
 						name:'Xu, X.',
-						info2:' , et al. (2022).  Association of long-term exposure to PM2. 5 in workplace with fasting plasma glucose among asymptomatic adults: A multicenter study in North China. Environment International, 166: 107353.  (PhD student Songhua Hu is the co-first author)'
+						info2:', et al. (2022).  Association of long-term exposure to PM2. 5 in workplace with fasting plasma glucose among asymptomatic adults: A multicenter study in North China. Environment International, 166: 107353.  (PhD student Songhua Hu is the co-first author)'
 					},{
 						info1:'Aeberhard, W., Cantoni, E., Field, C., Künsch, H., Mills-Flemming, J., and ',
 						name:'Xu, X.',
