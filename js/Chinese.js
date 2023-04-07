@@ -249,6 +249,10 @@ var paper = new Vue({
 						name:'Xu, X.',
 						info2:' and Sankoff, D. (2008). Tests for gene clusters satisfying the generalized adjacency criterion. Lecture Notes in Computer Science, 5167, 152-160. (This paper was chosen as the first best full paper of the 3rd Brazilian Symposium on Bioinformatics)'
 					},{
+						info1:'王言覃 , 张拔群 , 李秋 , ',
+						name:'徐铣明',
+						info2:' (2023). 真实世界研究在儿科人群中的应用现状与挑战. 中华儿科杂志, 61(04): 377-380.'
+					},{
 						info1:'高洁，徐雪丽，',
 						name:'徐铣明',
 						info2:'，韦秋宏，张站站，程茜 (2021). 真实世界不同出生体重早产儿体格生长规律的研究. 中华儿科杂志, 59(8):665-671.'

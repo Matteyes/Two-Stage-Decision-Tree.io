@@ -187,7 +187,7 @@ var paper = new Vue({
 					},{
 						info1:'Aeberhard, W., Cantoni, E., Field, C., Künsch, H., Mills-Flemming, J., and ',
 						name:'Xu, X.',
-						info2:' (2021). Robust estimation for discrete-time state space models. Scandinavian Journal of Statistics, 48，1127-1147. (Authors are alphabetically ordered)'
+						info2:' (2021). Robust estimation for discrete-time state space models. Scandinavian Journal of Statistics, 48, 1127-1147. (Authors are alphabetically ordered)'
 					},{
 						info1:'Ma, J., Xu, XL., Li, M., Zhang, Y.…, ',
 						name:'Xu, X.',
@@ -223,7 +223,7 @@ var paper = new Vue({
 					},{
 						info1:'Huang, C. …, ',
 						name:'Xu, X.',
-						info2:', et. al. (2019). Distinct gut microbiota composition and functional category in children with cerebral palsy and epilepsy. Frontiers in Pediatrics，7: 394.'
+						info2:', et. al. (2019). Distinct gut microbiota composition and functional category in children with cerebral palsy and epilepsy. Frontiers in Pediatrics, 7: 394.'
 					},{
 						info1:'Dai, W., et al. (2019). An integrated respiratory microbial gene catalogue to better understand the microbial aetiology of Mycoplasma pneumoniae pneumonia. GigaScience, 8: giz093.',
 						name: null,
@@ -257,21 +257,25 @@ var paper = new Vue({
 						name:'Xu, X.',
 						info2:' and Sankoff, D. (2008). Tests for gene clusters satisfying the generalized adjacency criterion. Lecture Notes in Computer Science, 5167, 152-160. (This paper was chosen as the first best full paper of the 3rd Brazilian Symposium on Bioinformatics)'
 					},{
-						info1:'高洁，徐雪丽，',
+						info1:'王言覃 , 张拔群 , 李秋 , ',
 						name:'徐铣明',
-						info2:'，韦秋宏，张站站，程茜 (2021). 真实世界不同出生体重早产儿体格生长规律的研究. 中华儿科杂志, 59(8):665-671.'
+						info2:' (2023). 真实世界研究在儿科人群中的应用现状与挑战. 中华儿科杂志, 61(04): 377-380.'
+					},{
+						info1:'高洁, 徐雪丽, ',
+						name:'徐铣明',
+						info2:', 韦秋宏, 张站站, 程茜 (2021). 真实世界不同出生体重早产儿体格生长规律的研究. 中华儿科杂志, 59(8):665-671.'
 					},{
 						info1:'魏凤英, 王金杰, ',
 						name:'徐铣明',
 						info2:', 高建召, 王博灵, 马驰宇, 彭志行, 靳祯, 黄森忠 (2020). 全球新型冠状病毒肺炎疫情发展趋势预测. 疾病监测, 6: 467-472.'
 					},{
-						info1:'黄森忠， 魏凤英 ，彭志行， 靳祯， 王金杰， ',
+						info1:'黄森忠,  魏凤英 , 彭志行,  靳祯,  王金杰,  ',
 						name:'徐铣明',
-						info2:'， 张新岩， 徐建国 (2020). 常态化防控下新型冠状病毒肺炎新发疫情研判方法. 疾病监测, 8: 679-686.'
+						info2:',  张新岩,  徐建国 (2020). 常态化防控下新型冠状病毒肺炎新发疫情研判方法. 疾病监测, 8: 679-686.'
 					},{
-						info1:'万燕南，隋雅楠，',
+						info1:'万燕南, 隋雅楠, ',
 						name:'徐铣明',
-						info2:'，张站站，钟元峰，程茜 (2019). 出生体重不一致双胎0～4岁体格生长状况研究. 中国实用儿科杂志, 34: 689-693.'
+						info2:', 张站站, 钟元峰, 程茜 (2019). 出生体重不一致双胎0～4岁体格生长状况研究. 中国实用儿科杂志, 34: 689-693.'
 					}
 				]
 			}
