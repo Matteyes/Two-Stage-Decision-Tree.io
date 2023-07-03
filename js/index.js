@@ -163,10 +163,6 @@ var paper = new Vue({
 						name: 'Xu, X.',
 						info2: ', Li, T. (2022). Machine learning based on eye-tracking data to identify Autism Spectrum Disorder: A systematic review and meta-analysis. Journal of Biomedical Informatics, 137: 104254.'
 					},{
-						info1:'Li, Q., Zhou, Q.,…, ',
-						name: 'Xu, X.',
-						info2: ', Luo, Z. (2022). Long-term effects of vitamin D on exacerbation rate, health care utilization and lung function in children with asthma. Annals of Translational Medicine, 10 (20): 1094.'
-					},{
 						info1:null,
 						name: null,
 						info2:'Luo, Y., Tan, L., et al. (2022). Characteristics of wild bird resistomes and dissemination of antibiotic resistance genes in interconnected bird-habitat systems revealed by similarity of bla',
