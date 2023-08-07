@@ -19,6 +19,16 @@ a{
 	text-decoration: none;
 }
 
+.text-align-justify {
+text-align: justify;
+text-justify: inter-word;
+}
+
+.hyphen {
+hyphens: auto;
+text-align: justify;
+}
+
 @media (min-width: 0){
 	.navBt{
 		background-color: rgb(28,120,135);
@@ -127,6 +137,7 @@ a{
 	}
 	.paper_wrap{
 		padding-left: 30px;
+		padding-right: 10px;
 	}
 	.paper_wrap li{
 		list-style: disc;

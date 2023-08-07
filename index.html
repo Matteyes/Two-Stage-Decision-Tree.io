@@ -66,7 +66,7 @@
 					<li v-for="d in direction">
 						<!-- <p>{{d.name}}</p> -->
 						<ul  class="paper_wrap">
-							<li v-for="(paper, index) in d.papers">
+							<li v-for="(paper, index) in d.papers" class="text-align-justify">
 								<!-- [{{index+2}}] -->
 								{{paper.info1}}
 								<strong v-if="paper.name">{{paper.name}}</strong>
