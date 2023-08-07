@@ -144,9 +144,13 @@ var paper = new Vue({
 				name:'1. 统计学理论',
 				papers:[
 					{
+						info1:'Wei, Q., Cui, Y., Wei, B., Cheng, Q., ',
+						name: 'Xu, X.',
+						info2: ' (2023). Evaluating the performance of ChatGPT in differential diagnosis of neurodevelopmental disorders: A pediatricians-machine comparison. Psychiatry Research, 327: 115351.'
+					},{
 						info1:'Xu, L., Reid, N., ',
 						name: 'Xu, X.',
-						info2: '(2023+). A note on information bias and efficiency of composite likelihood. Statistica Sinica, the preprint is ',
+						info2: ' (2023+). A note on information bias and efficiency of composite likelihood. Statistica Sinica, the preprint is ',
 						site:'https://www3.stat.sinica.edu.tw/ss_newpaper/SS-2022-0167_na.pdf',
 						aname:'available online',
 						append: '(DOI: 10.5705/ss.202022.0167).'
