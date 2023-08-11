@@ -194,15 +194,13 @@ text-align: justify;
 		text-align: center;
 		font-size: 28px;
 		margin-bottom: 100px;
-		padding-bottom: 0.3125rem;
+		padding-top: 20px;
 		display: block;
-		background-color: rgb(28,120,135);
 		/* background-color: rgb(28,120,135); */
-		border-radius: 0 0 15px 15px;
 	}
 	.title_icon{
-		width: 280px;
-		margin-left: -32%; 
+		width: 170px;
+		margin-left: -10%;
 	}
 	.content{
 		width: 850px;
