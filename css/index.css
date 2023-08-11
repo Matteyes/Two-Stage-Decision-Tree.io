@@ -37,8 +37,8 @@ text-align: justify;
 		display: flex;
 	}
 	.nav_icon{
-		height: 60%;
-		margin-top: 11px;
+		height: 80%;
+		margin-top: 10px;
 	}
 	.navT{
 		height: 4rem;
@@ -192,16 +192,17 @@ text-align: justify;
 	}
 	.navList p{
 		text-align: center;
-		padding: 20px;
 		font-size: 28px;
 		margin-bottom: 100px;
+		padding-bottom: 0.3125rem;
 		display: block;
+		background-color: rgb(28,120,135);
 		/* background-color: rgb(28,120,135); */
-		/* border-radius: 0 0 15px 15px; */
+		border-radius: 0 0 15px 15px;
 	}
 	.title_icon{
-		width: 180px;
-		margin-left: -30%; 
+		width: 280px;
+		margin-left: -32%; 
 	}
 	.content{
 		width: 850px;
