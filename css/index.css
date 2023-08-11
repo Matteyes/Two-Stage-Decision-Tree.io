@@ -116,6 +116,9 @@ text-align: justify;
 		font-size: 30px;
 		letter-spacing: 5px;
 	}
+	.logo_img{
+		width: 40%;
+	}
 	.abContent{
 		letter-spacing: 1px;
 		line-height: 140%;
@@ -193,7 +196,7 @@ text-align: justify;
 	.navList p{
 		text-align: center;
 		font-size: 28px;
-		margin-bottom: 100px;
+		margin-bottom: 160px;
 		padding-top: 20px;
 		display: block;
 		/* background-color: rgb(28,120,135); */
@@ -239,6 +242,9 @@ text-align: justify;
 		width: 40%;
 		border-radius: 50%;
 		margin-top: 30px;
+	}
+	.logo_img{
+		width: 30%;
 	}
 	.navLi{
 		margin-top: 10px;
