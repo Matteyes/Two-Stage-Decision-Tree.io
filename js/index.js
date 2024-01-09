@@ -107,6 +107,10 @@ var miscellaneous = new Vue({
 				info3:'by Prof. Jeffrey Rosenthal into',
 				info4:'Chinese',
 				website2:'http://probability.ca/jeff/ftpdir/lotteryChinese.pdf'
+			},{
+				info1:'MIMIC数据库简介&下载与安装教程',
+				info2:'Website',
+				website1:'./MIMIC.html',
 			}
 		]
 	}
