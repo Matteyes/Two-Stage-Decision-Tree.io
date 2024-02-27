@@ -162,7 +162,7 @@ var paper = new Vue({
 					},{
 						info1:"Hu, S., ",
 						name: "Xu, X.",
-						info2: ", Li, C., et al. (2023). Long-term exposure to ambient ozone at workplace is positively and non-linearly associated with incident hypertension and blood pressure: longitudinal evidence from the Beijing-Tianjin-Hebei medical examination cohort. BMC Public Health, 23: 2011."
+						info2: ", Li, C., et al. (2023). Long-term exposure to ambient ozone at workplace is positively and non-linearly associated with incident hypertension and blood pressure: longitudinal evidence from the Beijing-Tianjin-Hebei medical examination cohort. BMC Public Health, 23: 2011.(PhD student Songhua Hu is the first author)"
 					},{
 						info1:'Wei, Q., Cui, Y., Wei, B., Cheng, Q., ',
 						name: 'Xu, X.',
