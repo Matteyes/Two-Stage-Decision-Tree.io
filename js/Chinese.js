@@ -136,17 +136,35 @@ var paper = new Vue({
 				name:'1. 统计学理论',
 				papers:[
 					{
+						info1:"Xu, L., Reid, N., ",
+						name: "Xu, X.",
+						info2: " (2023). A note on information bias and efficiency of composite likelihood. Statistica Sinica, 2023, 34: 523-526."
+					},{
+						info1:"Xu, L., Kong, D., Wang, L., Gu, H., Kenney, T., ",
+						name: "Xu, X.",
+						info2: " (2023). Proportional stochastic generalized Lotka-Volterra model with an application to learning microbial community structures. Applied Mathematics and Computation, 448: 127932."
+					},{
+						info1:"Wei, Q., Wang, Y., Yao, Z., Cui, Y., Wei, B., Li, T., ",
+						name: "Xu, X.",
+						info2: " (2023). Evaluation of ChatGPT’s performance in providing treatment recommendations for pediatric diseases. Pediatric Discovery, 1(3), e42."
+					},{
+						info1:"Hu, S., ",
+						name: "Xu, X.",
+						info2: ", Li, C., et al. (2023). Long-term exposure to ambient ozone at workplace is positively and non-linearly associated with incident hypertension and blood pressure: longitudinal evidence from the Beijing-Tianjin-Hebei medical examination cohort. BMC Public Health, 23: 2011."
+					},{
 						info1:'Wei, Q., Cui, Y., Wei, B., Cheng, Q., ',
 						name: 'Xu, X.',
 						info2: ' (2023). Evaluating the performance of ChatGPT in differential diagnosis of neurodevelopmental disorders: A pediatricians-machine comparison. Psychiatry Research, 327: 115351.'
-					},{
-						info1:'Xu, L., Reid, N., ',
-						name: 'Xu, X.',
-						info2: ' (2023+). A note on information bias and efficiency of composite likelihood. Statistica Sinica, the preprint is ',
-						site:'https://www3.stat.sinica.edu.tw/ss_newpaper/SS-2022-0167_na.pdf',
-						aname:'available online',
-						append: '(DOI: 10.5705/ss.202022.0167).'
-					},{
+					},
+					// {
+					// 	info1:'Xu, L., Reid, N., ',
+					// 	name: 'Xu, X.',
+					// 	info2: ' (2023+). A note on information bias and efficiency of composite likelihood. Statistica Sinica, the preprint is ',
+					// 	site:'https://www3.stat.sinica.edu.tw/ss_newpaper/SS-2022-0167_na.pdf',
+					// 	aname:'available online',
+					// 	append: '(DOI: 10.5705/ss.202022.0167).'
+					// }
+					{
 						info1:'Wei, Q., Xu, XL., ',
 						name: 'Xu, X.',
 						info2: ', Cheng, Q. (2023). Early identification of autism spectrum disorder by multi-instrument fusion: A clinically applicable machine learning approach. Psychiatry Research, 320: 115050.'
