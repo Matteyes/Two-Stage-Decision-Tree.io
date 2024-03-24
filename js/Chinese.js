@@ -136,6 +136,14 @@ var paper = new Vue({
 				name:'1. 统计学理论',
 				papers:[
 					{
+						info1:"Wei, Q., Xiao, Y., Yang, T., ..., ",
+						name: "Xu, X.",
+						info2: ", Li, T. (2024). Predicting Autism Spectrum Disorder Using Maternal Risk Factors: A Multi-Center Machine Learning Study. Psychiatry Research, 115789."
+					},{
+						info1:"Wei, Q., Yao, Z., Cui, Y., Wei, B., Jin, Z., ",
+						name: "Xu, X.",
+						info2: ". (2024). Evaluation of ChatGPT-generated medical responses: A systematic review and meta-analysis. Journal of Biomedical Informatics, 104620."
+					},{
 						info1:"Xu, L., Reid, N., ",
 						name: "Xu, X.",
 						info2: " (2023). A note on information bias and efficiency of composite likelihood. Statistica Sinica, 2023, 34: 523-526."
