@@ -126,6 +126,8 @@ var people = new Vue({
 				person:'Mengwei Ding, MSc in Applied Statistics (2022-present)'
 			},{
 				person:'Yanqin Wang, MD in Pediatrics （2021-present, co-supervised with Prof. Qiu Li）'
+			},{
+				person:'Wei Qiuhong, MD in Pediatrics （2021-2024, co-supervised with Prof. Tingyu Li）'
 			}
 		],
 		former:[
