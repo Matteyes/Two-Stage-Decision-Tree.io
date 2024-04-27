@@ -127,7 +127,7 @@ var people = new Vue({
 			},{
 				person:'Yanqin Wang, MD in Pediatrics （2021-present, co-supervised with Prof. Qiu Li）'
 			},{
-				person:'Wei Qiuhong, MD in Pediatrics （2021-2024, co-supervised with Prof. Tingyu Li）'
+				person:'Qiuhong Wei, MD in Pediatrics （2021-2024, co-supervised with Prof. Tingyu Li）'
 			}
 		],
 		former:[
