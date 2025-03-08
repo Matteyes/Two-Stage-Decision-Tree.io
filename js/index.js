@@ -150,13 +150,23 @@ var paper = new Vue({
 				name:'1. 统计学理论',
 				papers:[
 					{
+						info1:"Wei, Q., Dong, W.,..., ",
+						name: "Xu, X.",
+						info2: ", Li, T. (2024).Early identification of autism spectrum disorder based on machine learning with eye-tracking data. Journal of Affective Disorders. 358, 326-334."
+					},
+					{
+						info1:"Zhu, Z., Liu, L., Du, M., Ye, M., ",
+						name: "Xu, X.",
+						info2: ", Xu, Y. (2024). Pediatric Sedation Assessment and Management System (PSAMS) for Pediatric Sedation in China: Development and Implementation Report. JMIR Medical Informatics. 12(1), e53427."
+					},
+					{
 						info1:"Wei, Q., Xiao, Y., Yang, T., ..., ",
 						name: "Xu, X.",
-						info2: ", Li, T. (2024). Predicting Autism Spectrum Disorder Using Maternal Risk Factors: A Multi-Center Machine Learning Study. Psychiatry Research, 115789."
+						info2: ", Li, T. (2024). Predicting Autism Spectrum Disorder Using Maternal Risk Factors: A Multi-Center Machine Learning Study. Psychiatry Research, 334: 115789."
 					},{
 						info1:"Wei, Q., Yao, Z., Cui, Y., Wei, B., Jin, Z., ",
 						name: "Xu, X.",
-						info2: ". (2024). Evaluation of ChatGPT-generated medical responses: A systematic review and meta-analysis. Journal of Biomedical Informatics, 104620."
+						info2: ". (2024). Evaluation of ChatGPT-generated medical responses: A systematic review and meta-analysis. Journal of Biomedical Informatics, 151:104620."
 					},{
 						info1:"Xu, L., Reid, N., ",
 						name: "Xu, X.",
