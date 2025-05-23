@@ -1,0 +1,85 @@
+<!DOCTYPE html><html lang="zh"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>时间序列基础模型</title>
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"/>
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script><style>
+        .bg-primary { background-color: transparent; }
+        .text-accent { color: #FF9900; }
+        .text-secondary { color: #66CCFF; }
+        .time-series-line {
+            position: relative;
+            height: 3px;
+            background: linear-gradient(90deg, #66CCFF, #FF9900);
+            width: 60%;
+            margin: 30px auto;
+            animation: pulse 3s infinite;
+        }
+        .time-series-point {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: #FF9900;
+            top: -4px;
+            transform: translateX(-50%);
+        }
+        @keyframes pulse {
+            0% { opacity: 0.7; }
+            50% { opacity: 1; }
+            100% { opacity: 0.7; }
+        }
+    </style>
+</head>
+<body class="h-screen w-screen flex items-center justify-center">
+<div class="w-[1280px] h-[720px] bg-primary relative overflow-hidden border border-white-800/20 rounded-lg">
+<!-- Background pattern -->
+<div class="absolute inset-0 opacity-10">
+<div class="grid grid-cols-10 grid-rows-10 h-full">
+<div class="col-span-full row-span-full flex items-center justify-center">
+<i class="fas fa-heartbeat text-9xl text-white"></i>
+</div>
+</div>
+</div>
+<!-- Content container -->
+<div class="relative z-10 h-full flex flex-col items-center justify-center px-16 py-12">
+<!-- Icon row -->
+<div class="flex justify-center space-x-16 mb-10">
+<i class="fas fa-chart-line text-secondary text-6xl"></i>
+<i class="fas fa-brain text-secondary text-6xl"></i>
+<i class="fas fa-hospital text-secondary text-6xl"></i>
+</div>
+<!-- Main title -->
+<h1 class="text-white text-6xl font-bold text-center leading-tight mt-4">
+                时间序列基础模型
+            </h1>
+<!-- Animated time series line -->
+<div class="time-series-line">
+<div class="time-series-point" style="left: 10%"></div>
+<div class="time-series-point" style="left: 30%"></div>
+<div class="time-series-point" style="left: 50%"></div>
+<div class="time-series-point" style="left: 70%"></div>
+<div class="time-series-point" style="left: 90%"></div>
+</div>
+<!-- Subtitle -->
+<h2 class="text-accent text-4xl font-semibold text-center mt-4 mb-8">
+                原理与深度神经网络模型比较
+            </h2>
+<!-- Target audience -->
+<div class="bg-white bg-opacity-10 rounded-lg px-10 py-4 mt-6">
+<p class="text-white text-xl text-center">
+<i class="fas fa-user-md mr-2"></i> 徐铣明 
+                </p>
+</div>
+<!-- Bottom information -->
+<div class="absolute bottom-12 left-0 right-0 flex justify-center">
+<div class="flex items-center space-x-2 text-gray-300 text-xl">
+<i class="far fa-calendar-alt"></i>
+<span>2025-05-24</span>
+</div>
+</div>
+</div>
+</div>
+
+</body></html>

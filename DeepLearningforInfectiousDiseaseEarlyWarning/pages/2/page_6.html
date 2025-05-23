@@ -1,0 +1,192 @@
+<!DOCTYPE html><html lang="zh"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>多任务处理：一模型多用途</title>
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"/>
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script><style>
+        /* .bg-primary { background-color: #003366; } */
+        .bg-secondary { background-color: #66CCFF; }
+        .text-accent { color: #FF9900; }
+        .border-accent { border-color: #FF9900; }
+        .slide-content {
+            min-height: 727px;
+            width: 1280px;
+            
+        }
+        .task-card {
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+        .task-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+        }
+        .slide-number {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            font-size: 14px;
+            color: #ffffff;
+            opacity: 0.7;
+        }
+        .central-model {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            background: radial-gradient(circle, #66CCFF 0%, #003366 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 30px rgba(102, 204, 255, 0.5);
+            z-index: 10;
+        }
+        .connector {
+            position: absolute;
+            background-color: rgba(255, 255, 255, 0.2);
+            z-index: 1;
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen">
+<div class="slide-content bg-primary relative">
+<!-- Header -->
+<div class="pt-10 pb-4 px-16">
+<h1 class="text-white text-6xl font-bold pb-4 border-b-8 border-green-400 inline-block">多任务处理能力，一模型多用途</h1>
+</div>
+<!-- Brief Introduction -->
+<div class="px-16 pt-4">
+<div class="bg-white bg-opacity-10 rounded-lg p-4 mb-6">
+<!-- <h3 class="text-accent font-bold text-2xl mb-3">多任务处理能力，一模型多用途</h3> -->
+<p class="text-white text-lg">时间序列基础模型通过统一的预训练框架，能够同时应对多种时间序列分析任务，大大提高了模型的实用性和普适性。</p>
+<!-- <p class="text-white text-lg">可解释性增强：提高模型决策过程的透明度和可解释性</p> -->
+<!-- <p class="text-white text-lg">隐私保护：开发更安全的联邦学习和差分隐私技术</p> -->
+</div>
+</div>
+<!-- Tasks Hub Visualization -->
+<div class="relative flex justify-center items-center mt-15 mb-25" style="height: 450px;">
+<!-- Central Model Node -->
+<div class="central-model">
+<div class="text-center">
+<i class="fas fa-brain text-white text-5xl mb-2"></i>
+<div class="text-white font-bold text-lg">Time Series Foundation Model</div>
+</div>
+</div>
+<!-- Task Cards in Circular Layout -->
+<div class="absolute inset-0" id="task-container"></div>
+</div>
+<!-- Slide Number -->
+<div class="mt-4 flex justify-between items-center text-blue-300 text-lg">
+<div>6/14</div>
+<div class="text-center">时间序列基础模型</div>
+<div class="flex items-center">
+<i class="fas fa-brain mr-2"></i>
+<i class="fas fa-virus mr-2"></i>
+<i class="fas fa-chart-line"></i>
+</div>
+</div>
+</div>
+<script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const tasks = [
+                { 
+                    id: 1, 
+                    name: "预测任务", 
+                    icon: "fa-chart-line",
+                    description: "单步预测、多步预测、概率预测" 
+                },
+                { 
+                    id: 2, 
+                    name: "分类任务", 
+                    icon: "fa-tags",
+                    description: "时间序列分类、事件检测" 
+                },
+                { 
+                    id: 3, 
+                    name: "异常检测", 
+                    icon: "fa-exclamation-triangle",
+                    description: "点异常、子序列异常" 
+                },
+                { 
+                    id: 4, 
+                    name: "缺失值填补", 
+                    icon: "fa-puzzle-piece",
+                    description: "插值、多变量填补" 
+                },
+                { 
+                    id: 5, 
+                    name: "时间序列聚类", 
+                    icon: "fa-object-group",
+                    description: "相似序列分组、模式发现" 
+                },
+                { 
+                    id: 6, 
+                    name: "时间序列生成", 
+                    icon: "fa-wand-magic-sparkles",
+                    description: "生成合成时间序列、数据增强" 
+                },
+                { 
+                    id: 7, 
+                    name: "因果推断", 
+                    icon: "fa-diagram-project",
+                    description: "识别因果关系、量化干预效应" 
+                }
+            ];
+
+            const container = d3.select("#task-container");
+            const centerX = 640;
+            const centerY = 225;
+            const radius = 220;
+
+            // Create connector lines
+            tasks.forEach((task, i) => {
+                const angle = (i * (2 * Math.PI / tasks.length));
+                const x = centerX + radius * Math.cos(angle);
+                const y = centerY + radius * Math.sin(angle);
+                
+                // Calculate line position
+                const lineLength = Math.sqrt(Math.pow(x - centerX, 2) + Math.pow(y - centerY, 2));
+                const lineAngle = Math.atan2(y - centerY, x - centerX) * (180 / Math.PI);
+                
+                container.append("div")
+                    .attr("class", "connector")
+                    .style("width", (lineLength - 90) + "px")
+                    .style("height", "3px")
+                    .style("left", (centerX + 90 * Math.cos(angle)) + "px")
+                    .style("top", (centerY + 90 * Math.sin(angle)) + "px")
+                    .style("transform", `rotate(${lineAngle}deg)`)
+                    .style("transform-origin", "left center");
+            });
+
+            // Create task cards
+            tasks.forEach((task, i) => {
+                const angle = (i * (2 * Math.PI / tasks.length));
+                const x = centerX + radius * Math.cos(angle);
+                const y = centerY + radius * Math.sin(angle);
+                
+                const card = container.append("div")
+                    .attr("class", "task-card bg-white bg-opacity-10 rounded-lg p-4 absolute")
+                    .style("width", "180px")
+                    .style("left", (x - 90) + "px")
+                    .style("top", (y - 60) + "px");
+                
+                card.append("div")
+                    .attr("class", "flex items-center justify-center mb-2")
+                    .append("div")
+                    .attr("class", "h-12 w-12 rounded-full bg-secondary flex items-center justify-center")
+                    .append("i")
+                    .attr("class", `fas ${task.icon} text-primary text-2xl`);
+                
+                card.append("h3")
+                    .attr("class", "text-accent font-bold text-lg mb-1 text-center")
+                    .text(task.name);
+                
+                card.append("p")
+                    .attr("class", "text-white text-sm text-center")
+                    .text(task.description);
+            });
+        });
+    </script>
+
+</body></html>

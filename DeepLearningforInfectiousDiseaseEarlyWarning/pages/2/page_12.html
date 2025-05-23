@@ -1,0 +1,129 @@
+<!DOCTYPE html><html lang="zh"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>医疗应用：医疗资源管理优化</title>
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"/>
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script><style>
+        /* .bg-primary { background-color: #003366; } */
+        .bg-secondary { background-color: #66CCFF; }
+        .text-accent { color: #FF9900; }
+        .border-accent { border-color: #FF9900; }
+        .slide-content {
+            min-height: 720px;
+            width: 1280px;
+            
+        }
+        .resource-card {
+            transition: all 0.3s ease;
+        }
+        .resource-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
+        }
+        .icon-circle {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen">
+<div class="slide-content bg-primary relative">
+<!-- Header -->
+<div class="pt-10 pb-4 px-16">
+<h1 class="text-white text-6xl font-bold pb-4 border-b-8 border-green-400 inline-block">医疗应用：医疗资源管理优化</h1>
+</div>
+<!-- Introduction -->
+<div class="px-16 pt-6">
+<div class="bg-white bg-opacity-10 rounded-lg p-5 mb-6">
+<p class="text-white text-lg">
+                    Time Series Foundation Model能够同时处理多个相关时间序列（如患者入院率、平均住院时间、手术室使用率等），为医疗资源需求提供全面预测，优化资源配置和使用效率。
+                </p>
+</div>
+</div>
+<!-- Resource Management Applications -->
+<div class="px-16 grid grid-cols-2 gap-6">
+<!-- Bed Usage Prediction -->
+<div class="resource-card bg-white bg-opacity-10 rounded-lg p-5 flex items-start">
+<div class="mr-4">
+<div class="icon-circle bg-secondary">
+<i class="fas fa-bed text-primary text-4xl"></i>
+</div>
+</div>
+<div>
+<h3 class="text-accent font-bold text-2xl mb-2">床位使用预测</h3>
+<p class="text-white text-lg">
+                        基于历史数据、季节性因素和疾病流行趋势，预测未来床位需求，优化床位分配，减少患者等待时间。
+                    </p>
+</div>
+</div>
+<!-- Operating Room Scheduling -->
+<div class="resource-card bg-white bg-opacity-10 rounded-lg p-5 flex items-start">
+<div class="mr-4">
+<div class="icon-circle bg-secondary">
+<i class="fas fa-procedures text-primary text-4xl"></i>
+</div>
+</div>
+<div>
+<h3 class="text-accent font-bold text-2xl mb-2">手术室调度</h3>
+<p class="text-white text-lg">
+                        分析手术类型、持续时间和紧急程度等因素，提供更精确的手术室使用时间预测，提高手术室利用效率。
+                    </p>
+</div>
+</div>
+<!-- Medical Equipment Demand -->
+<div class="resource-card bg-white bg-opacity-10 rounded-lg p-5 flex items-start">
+<div class="mr-4">
+<div class="icon-circle bg-secondary">
+<i class="fas fa-x-ray text-primary text-4xl"></i>
+</div>
+</div>
+<div>
+<h3 class="text-accent font-bold text-2xl mb-2">医疗设备需求预测</h3>
+<p class="text-white text-lg">
+                        对高值医疗设备（如CT、MRI）的使用需求进行预测，协助医院在设备采购和维护方面做出更明智的决策。
+                    </p>
+</div>
+</div>
+<!-- Human Resource Allocation -->
+<div class="resource-card bg-white bg-opacity-10 rounded-lg p-5 flex items-start">
+<div class="mr-4">
+<div class="icon-circle bg-secondary">
+<i class="fas fa-user-md text-primary text-4xl"></i>
+</div>
+</div>
+<div>
+<h3 class="text-accent font-bold text-2xl mb-2">人力资源调配</h3>
+<p class="text-white text-lg">
+                        预测不同科室、不同时段的人力需求，优化医护人员的排班和调度，提高人力资源利用效率。
+                    </p>
+</div>
+</div>
+</div>
+<!-- Benefits Summary -->
+<div class="px-16 mt-6">
+<div class="bg-secondary bg-opacity-20 rounded-lg p-4 flex items-center">
+<i class="fas fa-lightbulb text-accent text-3xl mr-4"></i>
+<p class="text-white text-lg">
+                    这些应用不仅可以提高医疗资源的使用效率，还能降低运营成本，提升患者满意度，为医疗机构创造更大价值。
+                </p>
+</div>
+</div>
+<!-- Slide Number -->
+<div class="mt-4 flex justify-between items-center text-blue-300 text-lg">
+<div>12/14</div>
+<div class="text-center">时间序列基础模型</div>
+<div class="flex items-center">
+<i class="fas fa-brain mr-2"></i>
+<i class="fas fa-virus mr-2"></i>
+<i class="fas fa-chart-line"></i>
+</div>
+</div>
+</div>
+
+</body></html>

@@ -1,0 +1,233 @@
+<!DOCTYPE html><html lang="zh"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>目录</title>
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"/>
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script><style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap');
+        body {
+            width: 1280px;
+            height: 720px;
+            font-family: 'Noto Sans SC', sans-serif;
+            background: transparent !important;
+            overflow: hidden;
+        }
+        .neural-network {
+            position: absolute;
+            opacity: 0.08;
+            z-index: 0;
+        }
+        .neural-node {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.7);
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.5);
+        }
+        .neural-connection {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.3);
+            transform-origin: top left;
+        }
+        .content-item {
+            transition: all 0.3s ease;
+            padding: 0.15rem 0 !important;
+        }
+        .content-item:hover {
+            transform: translateX(5px);
+        }
+        .section-card {
+            padding: 1.25rem !important;
+            margin-bottom: 0.75rem !important;
+        }
+        .section-title {
+            margin-bottom: 0.5rem !important;
+        }
+        .content-list {
+            gap: 0.25rem !important;
+        }
+        .content-item span {
+            font-size: 0.95rem !important;
+        }
+        .content-item i {
+            font-size: 0.95rem !important;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-blue-900 to-blue-700 text-white h-screen w-screen flex items-center justify-center">
+<div class="absolute inset-0 overflow-hidden">
+<!-- Neural Network Background -->
+<div class="neural-network w-full h-full">
+<!-- Nodes -->
+<div class="neural-node w-3 h-3" style="top: 15%; left: 10%;"></div>
+<div class="neural-node w-4 h-4" style="top: 35%; left: 8%;"></div>
+<div class="neural-node w-3 h-3" style="top: 65%; left: 12%;"></div>
+<div class="neural-node w-5 h-5" style="top: 25%; left: 88%;"></div>
+<div class="neural-node w-3 h-3" style="top: 50%; left: 92%;"></div>
+<div class="neural-node w-4 h-4" style="top: 75%; left: 90%;"></div>
+<!-- Connections -->
+<div class="neural-connection w-1 h-25" style="top: 17%; left: 11%; transform: rotate(25deg);"></div>
+<div class="neural-connection w-1 h-35" style="top: 37%; left: 9%; transform: rotate(-30deg);"></div>
+<div class="neural-connection w-1 h-30" style="top: 27%; left: 89%; transform: rotate(45deg);"></div>
+<div class="neural-connection w-1 h-32" style="top: 52%; left: 93%; transform: rotate(-25deg);"></div>
+</div>
+</div>
+<div class="relative z-10 w-full h-full max-w-screen-xl mx-auto px-8 py-6 flex flex-col">
+<!-- Header -->
+<div class="mb-4">
+<h1 class="text-4xl font-bold text-white">目录</h1>
+<div class="w-32 h-1 bg-green-400 mt-2"></div>
+</div>
+<!-- Content -->
+<div class="flex flex-grow">
+<!-- Left Column -->
+<div class="w-1/2 pr-4">
+<div class="bg-blue-800/40 backdrop-blur-sm rounded-xl section-card shadow-lg border border-blue-600/30">
+<h2 class="text-xl font-semibold text-blue-200 section-title flex items-center">
+<i class="fas fa-clock text-red-400 mr-3"></i>
+                        时间序列
+                    </h2>
+<ul class="space-y-4">
+<li class="content-item flex items-center">
+<span class="text-blue-300 w-10 text-lg">01</span>
+<i class="fas fa-database text-blue-300 mr-3 text-lg"></i>
+<span class="text-lg">什么是时间序列数据？</span>
+</li>
+<li class="content-item flex items-center">
+<span class="text-blue-300 w-10 text-lg">02</span>
+<i class="fas fa-chart-line text-blue-300 mr-3 text-lg"></i>
+<span class="text-lg">时间序列预测的意义</span>
+</li>
+</ul>
+</div>
+<div class="bg-blue-800/40 backdrop-blur-sm rounded-xl section-card shadow-lg border border-blue-600/30">
+<h2 class="text-xl font-semibold text-blue-200 section-title flex items-center">
+<i class="fas fa-lightbulb text-yellow-400 mr-3"></i>
+                        引言与概念
+                    </h2>
+<ul class="space-y-4">
+<li class="content-item flex items-center">
+<span class="text-blue-300 w-10 text-lg">03</span>
+<i class="fas fa-chart-line text-blue-300 mr-3 text-lg"></i>
+<span class="text-lg">传染病预警的挑战与机遇</span>
+</li>
+<li class="content-item flex items-center">
+<span class="text-blue-300 w-10 text-lg">04</span>
+<i class="fas fa-brain text-blue-300 mr-3 text-lg"></i>
+<span class="text-lg">什么是深度学习预警模型？</span>
+</li>
+</ul>
+</div>
+<div class="bg-blue-800/40 backdrop-blur-sm rounded-xl section-card shadow-lg border border-blue-600/30">
+<h2 class="text-xl font-semibold text-blue-200 section-title flex items-center">
+<i class="fas fa-cogs text-green-400 mr-3"></i>
+                        深度学习原理与架构
+                    </h2>
+<ul class="space-y-4">
+<li class="content-item flex items-center">
+<span class="text-blue-300 w-10 text-lg">05</span>
+<i class="fas fa-project-diagram text-blue-300 mr-3 text-lg"></i>
+<span class="text-lg">深度学习预警模型的核心原理</span>
+</li>
+<li class="content-item flex items-center">
+<span class="text-blue-300 w-10 text-lg">06</span>
+<i class="fas fa-network-wired text-blue-300 mr-3 text-lg"></i>
+<span class="text-lg">常用的深度学习网络结构</span>
+</li>
+</ul>
+</div>
+<div class="bg-blue-800/40 backdrop-blur-sm rounded-xl section-card shadow-lg border border-blue-600/30">
+<h2 class="text-xl font-semibold text-blue-200 section-title flex items-center">
+<i class="fas fa-balance-scale text-orange-400 mr-3"></i>
+                        模型对比分析
+                    </h2>
+<ul class="space-y-4">
+<li class="content-item flex items-center">
+<span class="text-blue-300 w-10 text-lg">07</span>
+<i class="fas fa-robot text-blue-300 mr-3 text-lg"></i>
+<span class="text-lg">深度学习 vs 传统机器学习</span>
+</li>
+<li class="content-item flex items-center">
+<span class="text-blue-300 w-10 text-lg">08</span>
+<i class="fas fa-chart-bar text-blue-300 mr-3 text-lg"></i>
+<span class="text-lg">深度学习 vs ARIMA统计模型</span>
+</li>
+<li class="content-item flex items-center">
+<span class="text-blue-300 w-10 text-lg">09</span>
+<i class="fas fa-virus text-blue-300 mr-3 text-lg"></i>
+<span class="text-lg">深度学习 vs SEIR传播动力学模型</span>
+</li>
+</ul>
+</div>
+</div>
+<!-- Right Column -->
+<div class="w-1/2 pl-4">
+<div class="bg-blue-800/40 backdrop-blur-sm rounded-xl section-card shadow-lg border border-blue-600/30">
+<h2 class="text-xl font-semibold text-blue-200 section-title flex items-center">
+<i class="fas fa-flask text-purple-400 mr-3"></i>
+                        实际应用案例
+                    </h2>
+<ul class="space-y-4">
+<li class="content-item flex items-center">
+<span class="text-blue-300 w-10 text-lg">10</span>
+<i class="fas fa-database text-blue-300 mr-3 text-lg"></i>
+<span class="text-lg">案例一：多源数据整合预警</span>
+</li>
+<li class="content-item flex items-center">
+<span class="text-blue-300 w-10 text-lg">11</span>
+<i class="fas fa-chart-line text-blue-300 mr-3 text-lg"></i>
+<span class="text-lg">案例二：流感趋势精准预测</span>
+</li>
+<li class="content-item flex items-center">
+<span class="text-blue-300 w-10 text-lg">12</span>
+<i class="fas fa-desktop text-blue-300 mr-3 text-lg"></i>
+<span class="text-lg">案例三：智能化预警平台实践</span>
+</li>
+</ul>
+</div>
+<div class="bg-blue-800/40 backdrop-blur-sm rounded-xl section-card shadow-lg border border-blue-600/30">
+<h2 class="text-xl font-semibold text-blue-200 section-title flex items-center">
+<i class="fas fa-tools text-yellow-500 mr-3"></i>
+                        实施与挑战
+                    </h2>
+<ul class="space-y-4">
+<li class="content-item flex items-center">
+<span class="text-blue-300 w-10 text-lg">13</span>
+<i class="fas fa-code-branch text-blue-300 mr-3 text-lg"></i>
+<span class="text-lg">构建深度学习预警模型的步骤</span>
+</li>
+<li class="content-item flex items-center">
+<span class="text-blue-300 w-10 text-lg">14</span>
+<i class="fas fa-exclamation-triangle text-blue-300 mr-3 text-lg"></i>
+<span class="text-lg">实施挑战与应对策略</span>
+</li>
+</ul>
+</div>
+<div class="bg-blue-800/40 backdrop-blur-sm rounded-xl section-card shadow-lg border border-blue-600/30">
+<h2 class="text-xl font-semibold text-blue-200 section-title flex items-center">
+<i class="fas fa-rocket text-green-400 mr-3"></i>
+                        未来发展与资源
+                    </h2>
+<ul class="space-y-4">
+<li class="content-item flex items-center">
+<span class="text-blue-300 w-10 text-lg">15</span>
+<i class="fas fa-lightbulb text-blue-300 mr-3 text-lg"></i>
+<span class="text-lg">未来展望与建议</span>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<!-- Footer -->
+<div class="mt-2 flex justify-between items-center text-blue-300 text-sm">
+<!-- <div>2/17</div> -->
+<div class="text-center">基于深度学习的传染病预警模型构建与应用</div>
+<div class="flex items-center">
+<i class="fas fa-brain mr-1"></i>
+<i class="fas fa-virus mr-1"></i>
+<i class="fas fa-chart-line"></i>
+</div>
+</div>
+</div>
+
+</body></html>

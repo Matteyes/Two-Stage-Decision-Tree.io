@@ -1,0 +1,169 @@
+<!DOCTYPE html><html lang="zh"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>传染病预警的挑战与机遇</title>
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"/>
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script><style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap');
+        body {
+    width:1280px;
+    height:720px;
+            font-family: 'Noto Sans SC', sans-serif;
+            background: transparent !important;
+    overflow: hidden; /* 防止出现滚动条 */
+        }
+        .neural-network {
+            position: absolute;
+            opacity: 0.08;
+            z-index: 0;
+        }
+        .neural-node {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.7);
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.5);
+        }
+        .neural-connection {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.3);
+            transform-origin: top left;
+        }
+        .challenge-card, .opportunity-card {
+            transition: all 0.3s ease;
+        }
+        .challenge-card:hover, .opportunity-card:hover {
+            transform: translateY(-5px);
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-blue-900 to-blue-700 text-white h-screen w-screen flex items-center justify-center overflow-hidden">
+<div class="absolute inset-0 overflow-hidden">
+<!-- Neural Network Background -->
+<div class="neural-network w-full h-full">
+<!-- Nodes -->
+<div class="neural-node w-3 h-3" style="top: 20%; left: 15%;"></div>
+<div class="neural-node w-4 h-4" style="top: 40%; left: 18%;"></div>
+<div class="neural-node w-3 h-3" style="top: 60%; left: 12%;"></div>
+<div class="neural-node w-5 h-5" style="top: 30%; left: 85%;"></div>
+<div class="neural-node w-3 h-3" style="top: 55%; left: 88%;"></div>
+<div class="neural-node w-4 h-4" style="top: 75%; left: 82%;"></div>
+<!-- Connections -->
+<div class="neural-connection w-1 h-25" style="top: 22%; left: 16%; transform: rotate(25deg);"></div>
+<div class="neural-connection w-1 h-25" style="top: 42%; left: 19%; transform: rotate(-30deg);"></div>
+<div class="neural-connection w-1 h-30" style="top: 32%; left: 86%; transform: rotate(45deg);"></div>
+<div class="neural-connection w-1 h-25" style="top: 57%; left: 89%; transform: rotate(-25deg);"></div>
+</div>
+</div>
+<div class="relative z-10 w-full h-full max-w-screen-xl mx-auto px-16 py-12 flex flex-col">
+<div class="mb-12">
+<h1 class="text-6xl font-bold text-white pb-4 border-b-8 border-green-400 inline-block">传染病预警的挑战与机遇</h1>
+</div>
+<div class="flex flex-grow gap-12">
+<div class="w-1/2">
+<div class="bg-blue-800/40 backdrop-blur-sm rounded-xl p-10 shadow-lg border border-blue-600/30 mb-8">
+<h2 class="text-3xl font-semibold text-blue-200 mb-6 flex items-center">
+<i class="fas fa-exclamation-triangle text-orange-400 mr-4"></i>
+                        面临的挑战
+                    </h2>
+<div class="space-y-6">
+<div class="challenge-card bg-blue-900/50 rounded-lg p-6 border-l-4 border-orange-400">
+<div class="flex items-start">
+<div class="bg-orange-400/20 p-3 rounded-full mr-4">
+<i class="fas fa-database text-orange-400 text-2xl"></i>
+</div>
+<div>
+<h3 class="text-2xl font-medium text-blue-100">数据复杂性</h3>
+<p class="text-xl text-blue-200 mt-2">传染病监测数据来源多样，包括病例报告、人口流动、气象数据等，形成海量异构数据</p>
+</div>
+</div>
+</div>
+<div class="challenge-card bg-blue-900/50 rounded-lg p-6 border-l-4 border-orange-400">
+<div class="flex items-start">
+<div class="bg-orange-400/20 p-3 rounded-full mr-4">
+<i class="fas fa-project-diagram text-orange-400 text-2xl"></i>
+</div>
+<div>
+<h3 class="text-2xl font-medium text-blue-100">非线性关系</h3>
+<p class="text-xl text-blue-200 mt-2">疾病传播受多因素影响，各因素间存在复杂的非线性关系，传统模型难以准确捕捉</p>
+</div>
+</div>
+</div>
+<div class="challenge-card bg-blue-900/50 rounded-lg p-4 border-l-4 border-orange-400">
+<div class="flex items-start">
+<div class="bg-orange-400/20 p-3 rounded-full mr-4">
+<i class="fas fa-clock text-orange-400 text-2xl"></i>
+</div>
+<div>
+<h3 class="text-2xl font-medium text-blue-100">时效性要求</h3>
+<p class="text-xl text-blue-200 mt-2">传染病防控要求及时预警，需要模型能够快速处理实时数据并给出准确预测</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="w-1/2">
+<div class="bg-blue-800/40 backdrop-blur-sm rounded-xl p-10 shadow-lg border border-blue-600/30 mb-8">
+<h2 class="text-3xl font-semibold text-blue-200 mb-6 flex items-center">
+<i class="fas fa-lightbulb text-green-400 mr-4"></i>
+                        深度学习带来的机遇
+                    </h2>
+<div class="space-y-6">
+<div class="opportunity-card bg-blue-900/50 rounded-lg p-6 border-l-4 border-green-400">
+<div class="flex items-start">
+<div class="bg-green-400/20 p-3 rounded-full mr-4">
+<i class="fas fa-brain text-green-400 text-2xl"></i>
+</div>
+<div>
+<h3 class="text-2xl font-medium text-blue-100">自动特征学习</h3>
+<p class="text-xl text-blue-200 mt-2">深度学习能从原始数据中自动提取特征，减少人工干预，发现人类难以识别的模式</p>
+</div>
+</div>
+</div>
+<div class="opportunity-card bg-blue-900/50 rounded-lg p-6 border-l-4 border-green-400">
+<div class="flex items-start">
+<div class="bg-green-400/20 p-3 rounded-full mr-4">
+<i class="fas fa-sitemap text-green-400 text-2xl"></i>
+</div>
+<div>
+<h3 class="text-2xl font-medium text-blue-100">捕捉非线性关系</h3>
+<p class="text-xl text-blue-200 mt-2">多层神经网络结构能有效捕捉数据中的复杂非线性关系，提高预测准确性</p>
+</div>
+</div>
+</div>
+<div class="opportunity-card bg-blue-900/50 rounded-lg p-6 border-l-4 border-green-400">
+<div class="flex items-start">
+<div class="bg-green-400/20 p-3 rounded-full mr-4">
+<i class="fas fa-puzzle-piece text-green-400 text-2xl"></i>
+</div>
+<div>
+<h3 class="text-2xl font-medium text-blue-100">多源数据整合</h3>
+<p class="text-xl text-blue-200 mt-2">深度学习能有效整合多源异构数据，从病例报告、人口流动、气象数据等提取综合信息</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="mt-8 bg-blue-800/60 backdrop-blur-sm rounded-lg p-6 border border-blue-500/30">
+<p class="text-center text-xl text-blue-100">
+<i class="fas fa-quote-left text-green-400 mr-3"></i>
+                深度学习技术为解决传染病预警中的复杂挑战提供了新的可能性，使更准确、及时的预警成为可能
+                <i class="fas fa-quote-right text-green-400 ml-3"></i>
+</p>
+</div>
+<div class="mt-6 flex justify-between items-center text-blue-300 text-lg">
+<div>3/15</div>
+<div class="text-center">基于深度学习的传染病预警模型构建与应用</div>
+<div class="flex items-center">
+<i class="fas fa-brain mr-2"></i>
+<i class="fas fa-virus mr-2"></i>
+<i class="fas fa-chart-line"></i>
+</div>
+</div>
+</div>
+</div>
+
+</body></html>

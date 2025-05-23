@@ -1,0 +1,198 @@
+<!DOCTYPE html><html lang="zh"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>深度学习预警模型的核心原理</title>
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"/>
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script><style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap');
+        body {
+    width:1280px;
+    height:720px;
+            font-family: 'Noto Sans SC', sans-serif;
+            background: transparent !important;
+    overflow: hidden; /* 防止出现滚动条 */
+        }
+        .neural-network {
+            position: absolute;
+            opacity: 0.08;
+            z-index: 0;
+        }
+        .neural-node {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.7);
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.5);
+        }
+        .neural-connection {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.3);
+            transform-origin: top left;
+        }
+        .process-step {
+            transition: all 0.3s ease;
+        }
+        .process-step:hover {
+            transform: translateY(-5px);
+        }
+        .arrow-animate {
+            animation: arrowPulse 2s infinite;
+        }
+        @keyframes arrowPulse {
+            0% { opacity: 0.3; }
+            50% { opacity: 1; }
+            100% { opacity: 0.3; }
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-blue-900 to-blue-700 text-white h-screen w-screen flex items-center justify-center overflow-hidden">
+<div class="absolute inset-0 overflow-hidden">
+<!-- Neural Network Background -->
+<div class="neural-network w-full h-full">
+<!-- Nodes -->
+<div class="neural-node w-3 h-3" style="top: 15%; left: 10%;"></div>
+<div class="neural-node w-4 h-4" style="top: 35%; left: 8%;"></div>
+<div class="neural-node w-3 h-3" style="top: 65%; left: 12%;"></div>
+<div class="neural-node w-5 h-5" style="top: 25%; left: 88%;"></div>
+<div class="neural-node w-3 h-3" style="top: 50%; left: 92%;"></div>
+<div class="neural-node w-4 h-4" style="top: 75%; left: 90%;"></div>
+<!-- Connections -->
+<div class="neural-connection w-1 h-25" style="top: 17%; left: 11%; transform: rotate(25deg);"></div>
+<div class="neural-connection w-1 h-35" style="top: 37%; left: 9%; transform: rotate(-30deg);"></div>
+<div class="neural-connection w-1 h-30" style="top: 27%; left: 89%; transform: rotate(45deg);"></div>
+<div class="neural-connection w-1 h-32" style="top: 52%; left: 93%; transform: rotate(-25deg);"></div>
+</div>
+</div>
+<div class="relative z-10 w-full h-full max-w-[80%] mx-auto px-16 py-12 flex flex-col">
+<div class="mb-12">
+<h1 class="text-6xl font-bold text-white pb-4 border-b-8 border-green-400 inline-block">深度学习预警模型的核心优势</h1>
+</div>
+<!-- Main Content -->
+<div class="flex-grow flex flex-col justify-center">
+<div class="flex justify-between items-center mb-8">
+<!-- Process Flow Steps -->
+<div class="flex justify-between w-full">
+<!-- Step 1: Data Input -->
+<div class="process-step bg-blue-800/60 backdrop-blur-sm rounded-xl p-8 border border-blue-500/30 shadow-lg w-64">
+<div class="h-20 w-20 rounded-full bg-blue-600/50 flex items-center justify-center mx-auto mb-4">
+<i class="fas fa-database text-4xl text-blue-200"></i>
+</div>
+<h3 class="text-2xl font-semibold text-center text-blue-200 mb-3">1. 数据输入</h3>
+<p class="text-xl text-center text-blue-300">收集多源异构数据（病例报告、人口流动、气象数据等）</p>
+</div>
+<!-- Arrow 1 -->
+<div class="flex items-center">
+<i class="fas fa-chevron-right text-2xl text-green-400 arrow-animate"></i>
+</div>
+<!-- Step 2: Feature Extraction -->
+<div class="process-step bg-blue-800/60 backdrop-blur-sm rounded-xl p-8 border border-blue-500/30 shadow-lg w-64">
+<div class="h-20 w-20 rounded-full bg-blue-600/50 flex items-center justify-center mx-auto mb-4">
+<i class="fas fa-filter text-4xl text-blue-200"></i>
+</div>
+<h3 class="text-2xl font-semibold text-center text-blue-200 mb-3">2. 特征提取</h3>
+<p class="text-xl text-center text-blue-300">多层神经网络自动从原始数据中提取有效特征</p>
+</div>
+<!-- Arrow 2 -->
+<div class="flex items-center">
+<i class="fas fa-chevron-right text-2xl text-green-400 arrow-animate"></i>
+</div>
+<!-- Step 3: Non-linear Mapping -->
+<div class="process-step bg-blue-800/60 backdrop-blur-sm rounded-xl p-8 border border-blue-500/30 shadow-lg w-64">
+<div class="h-20 w-20 rounded-full bg-blue-600/50 flex items-center justify-center mx-auto mb-4">
+<i class="fas fa-project-diagram text-4xl text-blue-200"></i>
+</div>
+<h3 class="text-2xl font-semibold text-center text-blue-200 mb-3">3. 非线性映射</h3>
+<p class="text-xl text-center text-blue-300">通过激活函数引入非线性，捕捉数据中的复杂模式</p>
+</div>
+<!-- Arrow 3 -->
+<div class="flex items-center">
+<i class="fas fa-chevron-right text-2xl text-green-400 arrow-animate"></i>
+</div>
+<!-- Step 4: Model Training -->
+<div class="process-step bg-blue-800/60 backdrop-blur-sm rounded-xl p-8 border border-blue-500/30 shadow-lg w-64">
+<div class="h-20 w-20 rounded-full bg-blue-600/50 flex items-center justify-center mx-auto mb-4">
+<i class="fas fa-cogs text-4xl text-blue-200"></i>
+</div>
+<h3 class="text-2xl font-semibold text-center text-blue-200 mb-3">4. 模型训练</h3>
+<p class="text-xl text-center text-blue-300">利用大量历史数据，优化网络参数</p>
+</div>
+<!-- Arrow 4 -->
+<div class="flex items-center">
+<i class="fas fa-chevron-right text-2xl text-green-400 arrow-animate"></i>
+</div>
+<!-- Step 5: Prediction Output -->
+<div class="process-step bg-blue-800/60 backdrop-blur-sm rounded-xl p-8 border border-blue-500/30 shadow-lg w-64">
+<div class="h-20 w-20 rounded-full bg-blue-600/50 flex items-center justify-center mx-auto mb-4">
+<i class="fas fa-chart-line text-4xl text-blue-200"></i>
+</div>
+<h3 class="text-2xl font-semibold text-center text-blue-200 mb-3">5. 预测输出</h3>
+<p class="text-xl text-center text-blue-300">对新数据进行传染病风险预测和预警</p>
+</div>
+</div>
+</div>
+<!-- Explanation Box -->
+<div class="bg-blue-900/70 backdrop-blur-sm rounded-xl p-8 border border-blue-600/30 shadow-lg mt-6">
+<h3 class="text-2xl font-semibold text-blue-200 mb-4 flex items-center">
+<i class="fas fa-lightbulb text-yellow-400 mr-3"></i>
+                    深度学习预警模型的核心优势
+                </h3>
+<div class="grid grid-cols-3 gap-6">
+<div class="flex items-start">
+<i class="fas fa-check-circle text-green-400 mt-1 mr-3"></i>
+<p class="text-xl text-blue-100">自动特征学习，减少人工干预</p>
+</div>
+<div class="flex items-start">
+<i class="fas fa-check-circle text-green-400 mt-1 mr-3"></i>
+<p class="text-xl text-blue-100">捕捉复杂非线性关系</p>
+</div>
+<div class="flex items-start">
+<i class="fas fa-check-circle text-green-400 mt-1 mr-3"></i>
+<p class="text-xl text-blue-100">处理多源异构数据</p>
+</div>
+<div class="flex items-start">
+<i class="fas fa-check-circle text-green-400 mt-1 mr-3"></i>
+<p class="text-xl text-blue-100">适应性强，可持续学习</p>
+</div>
+<div class="flex items-start">
+<i class="fas fa-check-circle text-green-400 mt-1 mr-3"></i>
+<p class="text-xl text-blue-100">提高预警准确性和及时性</p>
+</div>
+<div class="flex items-start">
+<i class="fas fa-check-circle text-green-400 mt-1 mr-3"></i>
+<p class="text-xl text-blue-100">支持预测结果可视化</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer -->
+<div class="mt-6 flex justify-between items-center text-blue-300 text-lg">
+<div>5/15</div>
+<div class="text-center">基于深度学习的传染病预警模型构建与应用</div>
+<div class="flex items-center">
+<i class="fas fa-brain mr-2"></i>
+<i class="fas fa-virus mr-2"></i>
+<i class="fas fa-chart-line"></i>
+</div>
+</div>
+</div>
+<script>
+        // Add some subtle animation to the neural nodes
+        document.querySelectorAll('.neural-node').forEach(node => {
+            // Random subtle pulsing effect
+            const randomDuration = 2 + Math.random() * 3;
+            node.style.animation = `pulse ${randomDuration}s infinite alternate`;
+            
+            // Create CSS animation
+            const style = document.createElement('style');
+            style.innerHTML = `
+                @keyframes pulse {
+                    0% { opacity: 0.3; transform: scale(0.8); }
+                    100% { opacity: 0.9; transform: scale(1.2); }
+                }
+            `;
+            document.head.appendChild(style);
+        });
+    </script>
+
+</body></html>

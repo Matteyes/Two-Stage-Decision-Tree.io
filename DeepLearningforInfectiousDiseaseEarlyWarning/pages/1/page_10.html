@@ -1,0 +1,258 @@
+<!DOCTYPE html><html lang="zh"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>案例一：多源数据整合预警</title>
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"/>
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script><style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap');
+        body {
+    width:1280px;
+    height:734px;
+            font-family: 'Noto Sans SC', sans-serif;
+            background: transparent !important;
+    overflow: hidden; /* 防止出现滚动条 */
+        }
+        .neural-network {
+            position: absolute;
+            opacity: 0.05;
+            z-index: 0;
+        }
+        .neural-node {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.7);
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.5);
+        }
+        .neural-connection {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.3);
+            transform-origin: top left;
+        }
+        .data-source {
+            transition: all 0.3s ease;
+        }
+        .data-source:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+        }
+        .benefit-item {
+            transition: all 0.3s ease;
+        }
+        .benefit-item:hover {
+            transform: translateX(5px);
+        }
+        .flow-arrow {
+            position: absolute;
+            width: 0;
+            height: 0;
+            border-top: 15px solid transparent;
+            border-bottom: 15px solid transparent;
+            border-left: 20px solid rgba(59, 130, 246, 0.6);
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-blue-900 to-blue-700 text-white h-screen w-screen flex items-center justify-center overflow-hidden">
+<div class="absolute inset-0 overflow-hidden">
+<!-- Neural Network Background -->
+<div class="neural-network w-full h-full">
+<!-- Nodes -->
+<div class="neural-node w-3 h-3" style="top: 15%; left: 10%;"></div>
+<div class="neural-node w-4 h-4" style="top: 35%; left: 8%;"></div>
+<div class="neural-node w-3 h-3" style="top: 65%; left: 12%;"></div>
+<div class="neural-node w-5 h-5" style="top: 25%; left: 88%;"></div>
+<div class="neural-node w-3 h-3" style="top: 50%; left: 92%;"></div>
+<div class="neural-node w-4 h-4" style="top: 75%; left: 90%;"></div>
+<!-- Connections -->
+<div class="neural-connection w-1 h-25" style="top: 17%; left: 11%; transform: rotate(25deg);"></div>
+<div class="neural-connection w-1 h-35" style="top: 37%; left: 9%; transform: rotate(-30deg);"></div>
+<div class="neural-connection w-1 h-30" style="top: 27%; left: 89%; transform: rotate(45deg);"></div>
+<div class="neural-connection w-1 h-32" style="top: 52%; left: 93%; transform: rotate(-25deg);"></div>
+</div>
+</div>
+<div class="relative z-10 w-full h-full max-w-[80%] mx-auto px-12 py-8 flex flex-col">
+<!-- Header -->
+<div class="mb-8">
+<h1 class="text-6xl font-bold text-white pb-4 border-b-8 border-green-400 inline-block">案例一：多源数据整合预警</h1>
+</div>
+<!-- Main Content -->
+<div class="flex flex-grow">
+<!-- Left: Data Flow Diagram -->
+<div class="w-7/12 pr-6 flex flex-col">
+<p class="text-lg text-blue-200 mb-8 mt-4">深度学习能有效整合多源异构数据，提供更准确的传染病风险预警：</p>
+<!-- Data Sources -->
+<div class="flex justify-between mb-20">
+<div class="data-source bg-blue-800/60 backdrop-blur-sm p-4 rounded-lg shadow-lg border border-blue-500/30 w-[22%] text-center">
+<div class="bg-blue-600/60 rounded-full w-12 h-12 flex items-center justify-center mx-auto mb-2">
+<i class="fas fa-hospital text-3xl text-blue-200"></i>
+</div>
+<h3 class="text-lg font-semibold mb-1">医疗数据</h3>
+<p class="text-base text-blue-300">病例报告、监测数据</p>
+</div>
+<div class="data-source bg-green-800/60 backdrop-blur-sm p-4 rounded-lg shadow-lg border border-green-500/30 w-[22%] text-center">
+<div class="bg-green-600/60 rounded-full w-12 h-12 flex items-center justify-center mx-auto mb-2">
+<i class="fas fa-subway text-3xl text-green-200"></i>
+</div>
+<h3 class="text-lg font-semibold mb-1">交通数据</h3>
+<p class="text-base text-green-300">人口流动、交通网络</p>
+</div>
+<div class="data-source bg-yellow-800/60 backdrop-blur-sm p-4 rounded-lg shadow-lg border border-yellow-500/30 w-[22%] text-center">
+<div class="bg-yellow-600/60 rounded-full w-12 h-12 flex items-center justify-center mx-auto mb-2">
+<i class="fas fa-cloud-sun text-3xl text-yellow-200"></i>
+</div>
+<h3 class="text-lg font-semibold mb-1">气象数据</h3>
+<p class="text-base text-yellow-300">温度、湿度、气候变化</p>
+</div>
+<div class="data-source bg-purple-800/60 backdrop-blur-sm p-4 rounded-lg shadow-lg border border-purple-500/30 w-[22%] text-center">
+<div class="bg-purple-600/60 rounded-full w-12 h-12 flex items-center justify-center mx-auto mb-2">
+<i class="fas fa-comments text-3xl text-purple-200"></i>
+</div>
+<h3 class="text-lg font-semibold mb-1">社交媒体</h3>
+<p class="text-base text-purple-300">舆情数据、关键词监测</p>
+</div>
+</div>
+<!-- Processing Flow -->
+<div class="relative flex justify-center items-center mb-8">
+<!-- Arrows pointing down -->
+<!-- <div class="flex justify-between w-full mb-4 px-10">
+<div class="w-5 h-14 relative">
+<div class="absolute inset-0 border-l-2 border-b-2 border-blue-400/60 rounded-bl-lg"></div>
+<div class="absolute bottom-0 left-0 w-2 h-2 bg-blue-400 rounded-full"></div>
+</div>
+<div class="w-5 h-14 relative">
+<div class="absolute inset-0 border-l-2 border-b-2 border-green-400/60 rounded-bl-lg"></div>
+<div class="absolute bottom-0 left-0 w-2 h-2 bg-green-400 rounded-full"></div>
+</div>
+<div class="w-5 h-14 relative">
+<div class="absolute inset-0 border-r-2 border-b-2 border-yellow-400/60 rounded-br-lg"></div>
+<div class="absolute bottom-0 right-0 w-2 h-2 bg-yellow-400 rounded-full"></div>
+</div>
+<div class="w-5 h-14 relative">
+<div class="absolute inset-0 border-r-2 border-b-2 border-purple-400/60 rounded-br-lg"></div>
+<div class="absolute bottom-0 right-0 w-2 h-2 bg-purple-400 rounded-full"></div>
+</div>
+</div> -->
+<!-- Deep Learning Model -->
+<div class="bg-gradient-to-br from-blue-900/80 to-blue-700/80 backdrop-blur-sm p-6 rounded-xl shadow-xl border border-blue-500/40 w-3/4">
+<h3 class="text-center font-bold text-2xl mb-8">多模态深度学习模型</h3>
+<div class="flex justify-around mb-2">
+<div class="text-center">
+<div class="w-10 h-10 bg-blue-600/60 rounded-md flex items-center justify-center mx-auto">
+<i class="fas fa-filter text-blue-200"></i>
+</div>
+<p class="text-base mt-1">数据预处理</p>
+</div>
+<div class="text-center">
+<div class="w-10 h-10 bg-blue-600/60 rounded-md flex items-center justify-center mx-auto">
+<i class="fas fa-code-branch text-blue-200"></i>
+</div>
+<p class="text-base mt-1">特征提取</p>
+</div>
+<div class="text-center">
+<div class="w-10 h-10 bg-blue-600/60 rounded-md flex items-center justify-center mx-auto">
+<i class="fas fa-network-wired text-blue-200"></i>
+</div>
+<p class="text-base mt-1">模式学习</p>
+</div>
+<div class="text-center">
+<div class="w-10 h-10 bg-blue-600/60 rounded-md flex items-center justify-center mx-auto">
+<i class="fas fa-cogs text-blue-200"></i>
+</div>
+<p class="text-base mt-1">整合分析</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Output -->
+<div class="flex justify-center">
+<!-- Arrow pointing down -->
+<div class="w-8 h-12 mb-4 flex justify-center">
+<div class="w-0 h-0 border-l-[15px] border-l-transparent border-r-[15px] border-r-transparent border-t-[20px] border-t-blue-500/60"></div>
+</div>
+</div>
+<div class="flex justify-center">
+<div class="bg-gradient-to-br from-orange-700/70 to-red-700/70 backdrop-blur-sm p-4 rounded-lg shadow-lg border border-orange-500/40 w-2/3 text-center">
+<h3 class="text-xl font-semibold mb-8">传染病风险评估与预警</h3>
+<div class="flex justify-around">
+<div class="text-center">
+<div class="w-10 h-10 bg-orange-600/60 rounded-full flex items-center justify-center mx-auto">
+<i class="fas fa-map-marker-alt text-orange-200"></i>
+</div>
+<p class="text-base mt-1">区域风险</p>
+</div>
+<div class="text-center">
+<div class="w-10 h-10 bg-orange-600/60 rounded-full flex items-center justify-center mx-auto">
+<i class="fas fa-chart-line text-orange-200"></i>
+</div>
+<p class="text-base mt-1">传播趋势</p>
+</div>
+<div class="text-center">
+<div class="w-10 h-10 bg-orange-600/60 rounded-full flex items-center justify-center mx-auto">
+<i class="fas fa-bell text-orange-200"></i>
+</div>
+<p class="text-base mt-1">预警信息</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Right: Benefits and Description -->
+<div class="w-5/12 pl-6">
+<div class="bg-blue-800/40 backdrop-blur-sm p-6 rounded-xl shadow-lg border border-blue-600/30 h-full flex flex-col">
+<h3 class="text-2xl font-semibold text-blue-200 mb-4 flex items-center">
+<i class="fas fa-star text-yellow-400 mr-2"></i>
+多源数据整合的优势
+</h3>
+<div class="space-y-4 flex-grow">
+<div class="benefit-item flex items-start">
+<div class="w-10 h-10 bg-green-700/60 rounded-full flex items-center justify-center mr-3 shrink-0">
+<i class="fas fa-bullseye text-green-200"></i>
+</div>
+<div>
+<h4 class="text-xl font-semibold text-green-300">提高预警的敏感性和特异性</h4>
+<p class="text-lg text-blue-200">多源数据提供全面信息，减少误报和漏报，更准确地识别疫情风险。</p>
+</div>
+</div>
+<div class="benefit-item flex items-start">
+<div class="w-10 h-10 bg-blue-700/60 rounded-full flex items-center justify-center mr-3 shrink-0">
+<i class="fas fa-search text-blue-200"></i>
+</div>
+<div>
+<h4 class="text-xl font-semibold text-blue-300">识别潜在的疫情输入风险</h4>
+<p class="text-lg text-blue-200">结合人口流动和病例数据，及早发现跨区域传播风险，预防疫情扩散。</p>
+</div>
+</div>
+<div class="benefit-item flex items-start">
+<div class="w-10 h-10 bg-purple-700/60 rounded-full flex items-center justify-center mr-3 shrink-0">
+<i class="fas fa-chart-pie text-purple-200"></i>
+</div>
+<div>
+<h4 class="text-xl font-semibold text-purple-300">为精准防控提供数据支持</h4>
+<p class="text-lg text-blue-200">针对不同地区、不同人群的风险特征，制定差异化防控策略。</p>
+</div>
+</div>
+</div>
+<div class="bg-blue-700/50 p-4 rounded-lg mt-6">
+<h4 class="text-xl font-semibold flex items-center text-orange-300">
+<i class="fas fa-lightbulb text-yellow-400 mr-2"></i>
+实践应用
+</h4>
+<p class="text-lg text-blue-200">山东省"数智疾控"系统整合医疗、交通、气象等多源数据，利用深度学习模型实时分析疾病动态，捕捉季节性和地区差异，为临床医生和疾控工作者提供精准预警。</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer -->
+<div class="mt-auto flex justify-between items-center text-blue-300 text-lg">
+<div>10/15</div>
+<div class="text-center">基于深度学习的传染病预警模型构建与应用</div>
+<div class="flex items-center">
+<i class="fas fa-brain mr-2"></i>
+<i class="fas fa-virus mr-2"></i>
+<i class="fas fa-chart-line"></i>
+</div>
+</div>
+</div>
+
+</body></html>

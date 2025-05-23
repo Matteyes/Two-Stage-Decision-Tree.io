@@ -1,0 +1,207 @@
+<!DOCTYPE html><html lang="zh"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>案例三：智能化预警平台实践</title>
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"/>
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script><style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap');
+        body {
+    width:1280px;
+    height:720px;
+            font-family: 'Noto Sans SC', sans-serif;
+            background: transparent !important;
+    overflow: hidden; /* 防止出现滚动条 */
+        }
+        .neural-network {
+            position: absolute;
+            opacity: 0.08;
+            z-index: 0;
+        }
+        .neural-node {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.7);
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.5);
+        }
+        .neural-connection {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.3);
+            transform-origin: top left;
+        }
+        .layer-item {
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        .layer-item:hover {
+            transform: translateY(-5px);
+        }
+        .layer-connector {
+            position: absolute;
+            width: 2px;
+            background: linear-gradient(to bottom, #60a5fa, #34d399);
+            left: 50%;
+            z-index: -1;
+        }
+        .feature-item {
+            transition: all 0.3s ease;
+        }
+        .feature-item:hover {
+            transform: translateX(5px);
+            background-color: rgba(37, 99, 235, 0.4);
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-blue-900 to-blue-700 text-white h-screen w-screen flex items-center justify-center overflow-hidden">
+<div class="absolute inset-0 overflow-hidden">
+<!-- Neural Network Background -->
+<div class="neural-network w-full h-full">
+<!-- Nodes -->
+<div class="neural-node w-3 h-3" style="top: 15%; left: 10%;"></div>
+<div class="neural-node w-4 h-4" style="top: 35%; left: 8%;"></div>
+<div class="neural-node w-3 h-3" style="top: 65%; left: 12%;"></div>
+<div class="neural-node w-5 h-5" style="top: 25%; left: 88%;"></div>
+<div class="neural-node w-3 h-3" style="top: 50%; left: 92%;"></div>
+<div class="neural-node w-4 h-4" style="top: 75%; left: 90%;"></div>
+<!-- Connections -->
+<div class="neural-connection w-1 h-25" style="top: 17%; left: 11%; transform: rotate(25deg);"></div>
+<div class="neural-connection w-1 h-35" style="top: 37%; left: 9%; transform: rotate(-30deg);"></div>
+<div class="neural-connection w-1 h-30" style="top: 27%; left: 89%; transform: rotate(45deg);"></div>
+<div class="neural-connection w-1 h-32" style="top: 52%; left: 93%; transform: rotate(-25deg);"></div>
+</div>
+</div>
+<div class="relative z-10 w-full h-full max-w-screen-xl mx-auto px-12 py-8 flex flex-col">
+<!-- Header -->
+<div class="mb-8">
+<h1 class="text-6xl font-bold text-white pb-4 border-b-8 border-green-400 inline-block">案例三：智能化预警平台实践</h1>
+</div>
+<!-- Main Content -->
+<div class="flex flex-grow">
+<!-- Left Column: System Architecture -->
+<div class="w-1/2 pr-6 flex flex-col justify-center">
+<h2 class="text-2xl font-semibold text-blue-200 mb-4 flex items-center">
+<i class="fas fa-building text-yellow-400 mr-2"></i>
+山东省"数智疾控"系统
+</h2>
+<div class="relative">
+<!-- System Architecture Layers -->
+<div class="layer-connector top-[65px] h-[400px]"></div>
+<div class="layer-item bg-blue-800/50 backdrop-blur-sm rounded-lg p-4 border border-blue-600/30 shadow-lg mb-4 flex items-center">
+<div class="w-12 h-12 rounded-full bg-blue-600 flex items-center justify-center mr-4 flex-shrink-0">
+<i class="fas fa-database text-white text-xl"></i>
+</div>
+<div>
+<h3 class="text-xl font-semibold text-blue-100">数据采集层</h3>
+<p class="text-lg text-blue-200">收集医疗记录、交通数据、气象数据、社交媒体数据等</p>
+</div>
+</div>
+<div class="layer-item bg-blue-800/50 backdrop-blur-sm rounded-lg p-4 border border-blue-600/30 shadow-lg mb-4 flex items-center">
+<div class="w-12 h-12 rounded-full bg-green-600 flex items-center justify-center mr-4 flex-shrink-0">
+<i class="fas fa-cogs text-white text-xl"></i>
+</div>
+<div>
+<h3 class="text-xl font-semibold text-blue-100">数据处理层</h3>
+<p class="text-lg text-blue-200">数据清洗、标准化、特征提取和预处理</p>
+</div>
+</div>
+<div class="layer-item bg-blue-800/50 backdrop-blur-sm rounded-lg p-4 border border-blue-600/30 shadow-lg mb-4 flex items-center">
+<div class="w-12 h-12 rounded-full bg-purple-600 flex items-center justify-center mr-4 flex-shrink-0">
+<i class="fas fa-brain text-white text-xl"></i>
+</div>
+<div>
+<h3 class="text-xl font-semibold text-blue-100">AI分析层</h3>
+<p class="text-lg text-blue-200">深度学习模型进行疾病动态分析和预测</p>
+</div>
+</div>
+<div class="layer-item bg-blue-800/50 backdrop-blur-sm rounded-lg p-4 border border-blue-600/30 shadow-lg mb-4 flex items-center">
+<div class="w-12 h-12 rounded-full bg-orange-600 flex items-center justify-center mr-4 flex-shrink-0">
+<i class="fas fa-chart-line text-white text-xl"></i>
+</div>
+<div>
+<h3 class="text-xl font-semibold text-blue-100">应用服务层</h3>
+<p class="text-lg text-blue-200">预警生成、决策支持、疫情分析报告</p>
+</div>
+</div>
+<div class="layer-item bg-blue-800/50 backdrop-blur-sm rounded-lg p-4 border border-blue-600/30 shadow-lg flex items-center">
+<div class="w-12 h-12 rounded-full bg-blue-500 flex items-center justify-center mr-4 flex-shrink-0">
+<i class="fas fa-desktop text-white text-xl"></i>
+</div>
+<div>
+<h3 class="text-xl font-semibold text-blue-100">用户界面层</h3>
+<p class="text-lg text-blue-200">交互式仪表盘、预警通知、移动应用</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column: System Features -->
+<div class="w-1/2 pl-6 flex flex-col justify-center">
+<h2 class="text-2xl font-semibold text-blue-200 mb-4 flex items-center">
+<i class="fas fa-lightbulb text-orange-400 mr-2"></i>
+深度学习赋能预警平台
+</h2>
+<div class="bg-blue-800/40 backdrop-blur-sm rounded-xl p-6 shadow-lg border border-blue-600/30 mb-6">
+<h3 class="text-2xl font-semibold text-blue-100 mb-4">系统核心功能</h3>
+<div class="space-y-4">
+<div class="feature-item flex items-start p-3 rounded-lg">
+<div class="w-10 h-10 rounded-full bg-green-500/30 flex items-center justify-center mr-3 flex-shrink-0">
+<i class="fas fa-bolt text-green-400"></i>
+</div>
+<div>
+<h4 class="text-xl font-semibold text-blue-100">实时分析疾病动态</h4>
+<p class="text-lg text-blue-200">深度学习算法持续分析监测数据，实时更新风险评估</p>
+</div>
+</div>
+<div class="feature-item flex items-start p-3 rounded-lg">
+<div class="w-10 h-10 rounded-full bg-blue-500/30 flex items-center justify-center mr-3 flex-shrink-0">
+<i class="fas fa-calendar-alt text-blue-400"></i>
+</div>
+<div>
+<h4 class="text-xl font-semibold text-blue-100">捕捉季节性和地区差异</h4>
+<p class="text-lg text-blue-200">识别不同地区的传染病模式和季节性变化特征</p>
+</div>
+</div>
+<div class="feature-item flex items-start p-3 rounded-lg">
+<div class="w-10 h-10 rounded-full bg-purple-500/30 flex items-center justify-center mr-3 flex-shrink-0">
+<i class="fas fa-bell text-purple-400"></i>
+</div>
+<div>
+<h4 class="text-xl font-semibold text-blue-100">提供精准预警</h4>
+<p class="text-lg text-blue-200">基于多源数据分析，生成精准的疾病风险预警</p>
+</div>
+</div>
+<div class="feature-item flex items-start p-3 rounded-lg">
+<div class="w-10 h-10 rounded-full bg-orange-500/30 flex items-center justify-center mr-3 flex-shrink-0">
+<i class="fas fa-clipboard-check text-orange-400"></i>
+</div>
+<div>
+<h4 class="text-xl font-semibold text-blue-100">决策支持</h4>
+<p class="text-lg text-blue-200">为临床医生和疾控工作者提供数据支持，提高防控效率</p>
+</div>
+</div>
+</div>
+</div>
+<div class="bg-gradient-to-r from-blue-600/30 to-green-600/30 backdrop-blur-sm rounded-lg p-4 border border-blue-500/20 shadow-lg">
+<div class="flex items-center">
+<div class="w-12 h-12 rounded-full bg-blue-600/50 flex items-center justify-center mr-4 flex-shrink-0">
+<i class="fas fa-quote-left text-white text-xl"></i>
+</div>
+<p class="text-lg text-blue-100 italic">
+通过智能化预警平台，临床医生和疾控工作者可以更快速、准确地获取疫情信息，提高防控效率。
+</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer -->
+<div class="mt-auto flex justify-between items-center text-blue-300 text-lg">
+<div>12/15</div>
+<div class="text-center">基于深度学习的传染病预警模型构建与应用</div>
+<div class="flex items-center">
+<i class="fas fa-brain mr-2"></i>
+<i class="fas fa-virus mr-2"></i>
+<i class="fas fa-chart-line"></i>
+</div>
+</div>
+</div>
+
+</body></html>

@@ -1,0 +1,252 @@
+<!DOCTYPE html><html lang="zh"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>时间序列基础模型的核心原理</title>
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"/>
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script><style>
+        /* .bg-primary { background-color: #003366; } */
+        .bg-secondary { background-color: #66CCFF; }
+        .text-accent { color: #FF9900; }
+        .border-accent { border-color: #FF9900; }
+        .slide-content {
+            min-height: 724px;
+            width: 1280px;
+            
+        }
+        .principle-card {
+            transition: all 0.3s ease;
+        }
+        .principle-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+        }
+        .slide-number {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            font-size: 14px;
+            color: #ffffff;
+            opacity: 0.7;
+        }
+        #model-visualization {
+            height: 160px;
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen">
+<div class="slide-content bg-primary relative">
+<!-- Header -->
+<div class="pt-10 pb-4 px-16">
+<h1 class="text-white text-6xl font-bold pb-4 border-b-8 border-green-400 inline-block">时间序列基础模型的核心原理</h1>
+</div>
+<!-- Main Content -->
+<div class="px-16 py-4">
+<!-- Model Visualization -->
+<div class="bg-white bg-opacity-10 rounded-lg p-4 mb-6">
+<div class="relative" id="model-visualization">
+<!-- D3.js visualization will be inserted here -->
+</div>
+</div>
+<!-- Core Principles -->
+<div class="grid grid-cols-2 gap-6">
+<!-- Principle 1: Large-scale Pre-training -->
+<div class="principle-card bg-white bg-opacity-10 rounded-lg p-5">
+<div class="flex items-center mb-3">
+<div class="h-12 w-12 rounded-full bg-secondary flex items-center justify-center mr-4">
+<i class="fas fa-database text-primary text-2xl"></i>
+</div>
+<h3 class="text-accent font-bold text-2xl">大规模预训练</h3>
+</div>
+<p class="text-white text-lg">
+    通过在海量多样化的时间序列数据上进行预训练，模型学习通用的时间模式和特征。这些数据可能来自不同领域，如金融、气象、医疗等，包含各种时间尺度和特征。
+</p>
+</div>
+<!-- Principle 2: Self-supervised Learning -->
+<div class="principle-card bg-white bg-opacity-10 rounded-lg p-5">
+<div class="flex items-center mb-3">
+<div class="h-12 w-12 rounded-full bg-secondary flex items-center justify-center mr-4">
+<i class="fas fa-brain text-primary text-2xl"></i>
+</div>
+<h3 class="text-accent font-bold text-2xl">自监督学习</h3>
+</div>
+<p class="text-white text-lg">
+    模型采用自监督学习策略，如掩码预测任务。通过随机遮蔽输入序列中的某些时间步或特征，训练模型去预测这些被遮蔽的部分，从而学习时间序列的内在结构和依赖关系。
+</p>
+</div>
+<!-- Principle 3: Transformer Architecture -->
+<div class="principle-card bg-white bg-opacity-10 rounded-lg p-5">
+<div class="flex items-center mb-3">
+<div class="h-12 w-12 rounded-full bg-secondary flex items-center justify-center mr-4">
+<i class="fas fa-network-wired text-primary text-2xl"></i>
+</div>
+<h3 class="text-accent font-bold text-2xl">Transformer架构</h3>
+</div>
+<p class="text-white text-lg">
+    大多数时间序列基础模型采用Transformer或其变体作为骨干网络。Transformer的自注意力机制能够有效捕捉长距离依赖，适合处理复杂的时间序列数据。模型通过堆叠多层编码器，提取高层次的时间特征表示。
+</p>
+</div>
+<!-- Principle 4: Transfer Learning Capability -->
+<div class="principle-card bg-white bg-opacity-10 rounded-lg p-5">
+<div class="flex items-center mb-3">
+<div class="h-12 w-12 rounded-full bg-secondary flex items-center justify-center mr-4">
+<i class="fas fa-exchange-alt text-primary text-2xl"></i>
+</div>
+<h3 class="text-accent font-bold text-2xl">迁移学习能力</h3>
+</div>
+<p class="text-white text-lg">
+    预训练后的模型能够快速适应新的任务和领域，实现零样本或少样本学习。通过微调少量参数，模型可以保留通用知识同时针对特定任务进行优化，特别适合医疗等数据稀缺的领域。
+</p>
+</div>
+</div>
+</div>
+<!-- Slide Number -->
+<div class="mt-4 flex justify-between items-center text-blue-300 text-lg">
+<div>3/14</div>
+<div class="text-center">时间序列基础模型</div>
+<div class="flex items-center">
+<i class="fas fa-brain mr-2"></i>
+<i class="fas fa-virus mr-2"></i>
+<i class="fas fa-chart-line"></i>
+</div>
+</div>
+</div>
+<script>
+        // D3.js visualization for Time Series Foundation Model concept
+        document.addEventListener("DOMContentLoaded", function() {
+            const width = document.getElementById("model-visualization").clientWidth;
+            const height = document.getElementById("model-visualization").clientHeight;
+            
+            const svg = d3.select("#model-visualization")
+                .append("svg")
+                .attr("width", width)
+                .attr("height", height);
+            
+            // Draw input data representation
+            const inputX = 100;
+            const inputWidth = 200;
+            svg.append("rect")
+                .attr("x", inputX)
+                .attr("y", height/2 - 40)
+                .attr("width", inputWidth)
+                .attr("height", 80)
+                .attr("rx", 5)
+                .attr("fill", "#66CCFF")
+                .attr("opacity", 0.7);
+            
+            svg.append("text")
+                .attr("x", inputX + inputWidth/2)
+                .attr("y", height/2 + 5)
+                .attr("text-anchor", "middle")
+                .attr("fill", "#003366")
+                .attr("font-weight", "bold")
+                .text("多源时间序列数据");
+            
+            // Draw model representation
+            const modelX = inputX + inputWidth + 80;
+            const modelWidth = 200;
+            svg.append("rect")
+                .attr("x", modelX)
+                .attr("y", height/2 - 50)
+                .attr("width", modelWidth)
+                .attr("height", 100)
+                .attr("rx", 10)
+                .attr("fill", "#003366")
+                .attr("stroke", "#FF9900")
+                .attr("stroke-width", 3);
+            
+            svg.append("text")
+                .attr("x", modelX + modelWidth/2)
+                .attr("y", height/2 + 5)
+                .attr("text-anchor", "middle")
+                .attr("fill", "white")
+                .attr("font-weight", "bold")
+                .text("预训练基础模型");
+            
+            // Draw output representations
+            const outputX = modelX + modelWidth + 80;
+            const outputY = height/2;
+            const outputRadius = 80;
+            const outputs = [
+                { name: "预测", icon: "\uf200", angle: -45 },
+                { name: "分类", icon: "\uf0ca", angle: 0 },
+                { name: "异常检测", icon: "\uf071", angle: 45 }
+            ];
+            
+            outputs.forEach(output => {
+                const x = outputX + outputRadius * Math.cos(output.angle * Math.PI/180);
+                const y = outputY + outputRadius * Math.sin(output.angle * Math.PI/180);
+                
+                // Connect line
+                svg.append("line")
+                    .attr("x1", modelX + modelWidth)
+                    .attr("y1", height/2)
+                    .attr("x2", x - 30)
+                    .attr("y2", y)
+                    .attr("stroke", "#66CCFF")
+                    .attr("stroke-width", 2)
+                    .attr("opacity", 0.7);
+                
+                // Output circle
+                svg.append("circle")
+                    .attr("cx", x)
+                    .attr("cy", y)
+                    .attr("r", 30)
+                    .attr("fill", "#FF9900")
+                    .attr("opacity", 0.8);
+                
+                // Icon and text
+                svg.append("text")
+                    .attr("x", x)
+                    .attr("y", y - 5)
+                    .attr("text-anchor", "middle")
+                    .attr("font-family", "FontAwesome")
+                    .attr("fill", "white")
+                    .attr("font-size", "16px")
+                    .text(output.icon);
+                
+                svg.append("text")
+                    .attr("x", x)
+                    .attr("y", y + 15)
+                    .attr("text-anchor", "middle")
+                    .attr("fill", "white")
+                    .attr("font-size", "12px")
+                    .text(output.name);
+            });
+            
+            // Draw input arrows
+            svg.append("line")
+                .attr("x1", inputX - 30)
+                .attr("y1", height/2)
+                .attr("x2", inputX)
+                .attr("y2", height/2)
+                .attr("stroke", "#66CCFF")
+                .attr("stroke-width", 2)
+                .attr("marker-end", "url(#arrow)");
+            
+            // Draw connector between input and model
+            svg.append("line")
+                .attr("x1", inputX + inputWidth)
+                .attr("y1", height/2)
+                .attr("x2", modelX)
+                .attr("y2", height/2)
+                .attr("stroke", "#66CCFF")
+                .attr("stroke-width", 2);
+                
+            // Add arrow markers
+            svg.append("defs").append("marker")
+                .attr("id", "arrow")
+                .attr("viewBox", "0 -5 10 10")
+                .attr("refX", 8)
+                .attr("refY", 0)
+                .attr("markerWidth", 6)
+                .attr("markerHeight", 6)
+                .attr("orient", "auto")
+                .append("path")
+                .attr("d", "M0,-5L10,0L0,5")
+                .attr("fill", "#66CCFF");
+        });
+    </script>
+
+</body></html>

@@ -1,0 +1,184 @@
+<!DOCTYPE html><html lang="zh"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>预训练过程：模型能力的来源</title>
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"/>
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script><style>
+        /* .bg-primary { background-color: #003366; } */
+        .bg-secondary { background-color: #66CCFF; }
+        .text-accent { color: #FF9900; }
+        .border-accent { border-color: #FF9900; }
+        .slide-content {
+            min-height: 720px;
+            width: 1280px;
+            
+        }
+        .process-step {
+            transition: all 0.3s ease;
+        }
+        .process-step:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+        }
+        .slide-number {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            font-size: 14px;
+            color: #ffffff;
+            opacity: 0.7;
+        }
+        .process-arrow {
+            position: relative;
+            height: 3px;
+            background-color: #66CCFF;
+            margin: 0 15px;
+        }
+        .process-arrow:after {
+            content: '';
+            position: absolute;
+            right: -10px;
+            top: -8px;
+            border-left: 10px solid #66CCFF;
+            border-top: 10px solid transparent;
+            border-bottom: 10px solid transparent;
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen">
+<div class="slide-content bg-primary relative">
+<!-- Header -->
+<div class="pt-10 pb-4 px-16">
+<h1 class="text-white text-6xl font-bold pb-4 border-b-8 border-green-400 inline-block">预训练过程：模型能力的来源</h1>
+</div>
+<!-- Main Content -->
+<div class="px-16 py-6">
+<!-- Introduction text -->
+<div class="bg-white bg-opacity-10 rounded-lg p-4 mb-8">
+<p class="text-white text-lg">
+<i class="fas fa-lightbulb text-accent mr-2"></i>
+                    通过大规模预训练，Time Series Foundation Model获得了捕捉复杂时间模式的能力，这个过程包含以下关键步骤：
+                </p>
+</div>
+<!-- Process Flow Diagram -->
+<div class="flex items-center justify-between mb-8">
+<!-- Step 1: Data Input -->
+<div class="process-step bg-white bg-opacity-10 rounded-lg p-4 w-64">
+<div class="h-12 w-12 rounded-full bg-secondary flex items-center justify-center mb-3 mx-auto">
+<i class="fas fa-database text-primary text-2xl"></i>
+</div>
+<h3 class="text-accent font-bold text-2xl text-center mb-2">数据输入</h3>
+<ul class="text-white text-lg space-y-1">
+<li class="flex items-start">
+<i class="fas fa-check text-secondary text-lg mt-1 mr-1"></i>
+<span>大规模多样化时间序列数据</span>
+</li>
+<li class="flex items-start">
+<i class="fas fa-check text-secondary text-lg mt-1 mr-1"></i>
+<span>来自不同领域（金融、气象、医疗等）</span>
+</li>
+<li class="flex items-start">
+<i class="fas fa-check text-secondary text-lg mt-1 mr-1"></i>
+<span>标准化、缺失值处理等预处理</span>
+</li>
+</ul>
+</div>
+<!-- Arrow 1 -->
+<div class="process-arrow w-16"></div>
+<!-- Step 2: Self-supervised Learning -->
+<div class="process-step bg-white bg-opacity-10 rounded-lg p-4 w-64">
+<div class="h-12 w-12 rounded-full bg-secondary flex items-center justify-center mb-3 mx-auto">
+<i class="fas fa-mask text-primary text-2xl"></i>
+</div>
+<h3 class="text-accent font-bold text-2xl text-center mb-2">自监督学习策略</h3>
+<ul class="text-white text-lg space-y-1">
+<li class="flex items-start">
+<i class="fas fa-check text-secondary text-lg mt-1 mr-1"></i>
+<span>掩码预测任务</span>
+</li>
+<li class="flex items-start">
+<i class="fas fa-check text-secondary text-lg mt-1 mr-1"></i>
+<span>随机遮蔽输入序列中的时间步或特征</span>
+</li>
+<li class="flex items-start">
+<i class="fas fa-check text-secondary text-lg mt-1 mr-1"></i>
+<span>训练模型预测被遮蔽的部分</span>
+</li>
+</ul>
+</div>
+<!-- Arrow 2 -->
+<div class="process-arrow w-16"></div>
+<!-- Step 3: Network Architecture -->
+<div class="process-step bg-white bg-opacity-10 rounded-lg p-4 w-64">
+<div class="h-12 w-12 rounded-full bg-secondary flex items-center justify-center mb-3 mx-auto">
+<i class="fas fa-network-wired text-primary text-2xl"></i>
+</div>
+<h3 class="text-accent font-bold text-2xl text-center mb-2">网络架构</h3>
+<ul class="text-white text-lg space-y-1">
+<li class="flex items-start">
+<i class="fas fa-check text-secondary text-lg mt-1 mr-1"></i>
+<span>Transformer或其变体作为骨干网络</span>
+</li>
+<li class="flex items-start">
+<i class="fas fa-check text-secondary text-lg mt-1 mr-1"></i>
+<span>自注意力机制捕捉长距离依赖</span>
+</li>
+<li class="flex items-start">
+<i class="fas fa-check text-secondary text-lg mt-1 mr-1"></i>
+<span>堆叠多层编码器提取高层次特征</span>
+</li>
+</ul>
+</div>
+<!-- Arrow 3 -->
+<div class="process-arrow w-16"></div>
+<!-- Step 4: Parameter Adjustment -->
+<div class="process-step bg-white bg-opacity-10 rounded-lg p-4 w-64">
+<div class="h-12 w-12 rounded-full bg-secondary flex items-center justify-center mb-3 mx-auto">
+<i class="fas fa-sliders-h text-primary text-2xl"></i>
+</div>
+<h3 class="text-accent font-bold text-2xl text-center mb-2">参数调整</h3>
+<ul class="text-white text-lg space-y-1">
+<li class="flex items-start">
+<i class="fas fa-check text-secondary text-lg mt-1 mr-1"></i>
+<span>持续调整参数以最小化预测误差</span>
+</li>
+<li class="flex items-start">
+<i class="fas fa-check text-secondary text-lg mt-1 mr-1"></i>
+<span>需要大量计算资源和时间</span>
+</li>
+<li class="flex items-start">
+<i class="fas fa-check text-secondary text-lg mt-1 mr-1"></i>
+<span>学习通用时间模式和特征表示</span>
+</li>
+</ul>
+</div>
+</div>
+<!-- Bottom explanation -->
+<div class="bg-white bg-opacity-10 rounded-lg p-5 mt-4">
+<div class="flex items-start">
+<div class="flex-shrink-0 mt-1">
+<i class="fas fa-brain text-accent text-3xl"></i>
+</div>
+<div class="ml-4">
+<h3 class="text-accent font-bold text-2xl mb-2">预训练的关键价值</h3>
+<p class="text-white text-lg">
+                            通过大规模预训练，模型能够从海量多样化的时间序列数据中学习通用模式和依赖关系。这种预训练过程使模型获得了"时间智能"，能够理解时间数据的内在结构，为后续的迁移学习和多任务处理奠定基础。这一过程类似于人类从大量经验中学习规律，使模型具备了强大的泛化能力。
+                        </p>
+</div>
+</div>
+</div>
+</div>
+<!-- Slide Number -->
+<div class="mt-4 flex justify-between items-center text-blue-300 text-lg">
+<div>4/14</div>
+<div class="text-center">时间序列基础模型</div>
+<div class="flex items-center">
+<i class="fas fa-brain mr-2"></i>
+<i class="fas fa-virus mr-2"></i>
+<i class="fas fa-chart-line"></i>
+</div>
+</div>
+</div>
+</body></html>

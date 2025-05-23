@@ -1,0 +1,258 @@
+<!DOCTYPE html><html lang="zh"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>模型比较：可解释性</title>
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"/>
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script><style>
+        /* .bg-primary { background-color: #003366; } */
+        .bg-secondary { background-color: #66CCFF; }
+        .text-accent { color: #FF9900; }
+        .border-accent { border-color: #FF9900; }
+        .slide-content {
+            min-height: 882px;
+            width: 1280px;
+            
+        }
+        .slide-number {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            font-size: 14px;
+            color: #ffffff;
+            opacity: 0.7;
+        }
+        .comparison-box {
+            height: 180px;
+            transition: all 0.3s ease;
+        }
+        .comparison-box:hover {
+            transform: translateY(-5px);
+        }
+        #interpretability-vis {
+            height: 150px;
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen">
+<div class="slide-content bg-primary relative">
+<!-- Header -->
+<div class="pt-10 pb-4 px-16">
+<h1 class="text-white text-6xl font-bold pb-4 border-b-8 border-green-400 inline-block">模型比较：可解释性</h1>
+</div>
+<!-- Main Content -->
+<div class="px-16 py-4">
+<!-- Model Comparison Section -->
+<div class="grid grid-cols-2 gap-6 mb-6">
+<!-- Time Series Foundation Model -->
+<div class="comparison-box bg-white bg-opacity-10 rounded-lg p-5">
+<div class="flex items-center mb-3">
+<div class="h-12 w-12 rounded-full bg-secondary flex items-center justify-center mr-4">
+<i class="fas fa-brain text-primary text-2xl"></i>
+</div>
+<h3 class="text-accent font-bold text-2xl">Time Series Foundation Model</h3>
+</div>
+<ul class="text-white space-y-2">
+<li class="flex items-start">
+<i class="fas fa-times-circle text-red-400 mt-1 mr-2"></i>
+<span class="text-lg">结构复杂、参数量大，决策过程被视为"黑箱"</span>
+</li>
+<li class="flex items-start">
+<i class="fas fa-times-circle text-red-400 mt-1 mr-2"></i>
+<span class="text-lg">解释性较弱，难以理解具体决策依据</span>
+</li>
+<li class="flex items-start">
+<i class="fas fa-exclamation-triangle text-yellow-300 mt-1 mr-2"></i>
+<span class="text-lg">在医疗决策中可能引发信任问题</span>
+</li>
+</ul>
+</div>
+<!-- Traditional Deep Neural Networks -->
+<div class="comparison-box bg-white bg-opacity-10 rounded-lg p-5">
+<div class="flex items-center mb-3">
+<div class="h-12 w-12 rounded-full bg-secondary flex items-center justify-center mr-4">
+<i class="fas fa-network-wired text-primary text-2xl"></i>
+</div>
+<h3 class="text-accent font-bold text-2xl">传统深度神经网络模型</h3>
+</div>
+<ul class="text-white space-y-2">
+<li class="flex items-start">
+<i class="fas fa-check-circle text-green-400 mt-1 mr-2"></i>
+<span class="text-lg">注意力机制增强的LSTM可提供一定解释性</span>
+</li>
+<li class="flex items-start">
+<i class="fas fa-check-circle text-green-400 mt-1 mr-2"></i>
+<span class="text-lg">可视化注意力权重，提供决策依据</span>
+</li>
+<li class="flex items-start">
+<i class="fas fa-exclamation-triangle text-yellow-300 mt-1 mr-2"></i>
+<span class="text-lg">解释性仍然有限，难以满足医疗领域要求</span>
+</li>
+</ul>
+</div>
+</div>
+<!-- Interpretability Visualization -->
+<div class="bg-white bg-opacity-10 rounded-lg p-4 mb-6">
+<h3 class="text-accent font-bold text-2xl mb-2">模型解释性对比</h3>
+<div class="w-full" id="interpretability-vis"></div>
+</div>
+<!-- Impact on Medical Decision Making -->
+<div class="bg-white bg-opacity-10 rounded-lg p-5 mb-6">
+<h3 class="text-accent font-bold text-2xl mb-3 flex items-center">
+<i class="fas fa-stethoscope mr-2"></i>对医疗决策的影响
+</h3>
+<p class="text-white text-lg">
+在医疗决策中，模型解释性至关重要，因为医生和患者通常需要理解模型做出特定预测或建议的原因。
+缺乏透明度可能导致医疗专业人员对AI辅助决策的不信任，影响临床应用推广。
+</p>
+</div>
+<!-- Future Research Directions -->
+<div class="bg-white bg-opacity-10 rounded-lg p-5">
+<h3 class="text-accent font-bold text-2xl mb-3 flex items-center">
+<i class="fas fa-lightbulb mr-2"></i>未来研究方向
+</h3>
+<div class="grid grid-cols-2 gap-4 text-white">
+<div class="flex items-start">
+<i class="fas fa-arrow-right text-secondary mt-1 mr-2"></i>
+<span class="text-lg">开发专门的可解释性技术，揭示模型决策过程</span>
+</div>
+<div class="flex items-start">
+<i class="fas fa-arrow-right text-secondary mt-1 mr-2"></i>
+<span class="text-lg">结合领域知识进行模型设计，提高可解释性</span>
+</div>
+<div class="flex items-start">
+<i class="fas fa-arrow-right text-secondary mt-1 mr-2"></i>
+<span class="text-lg">开发医疗专用的可视化解释工具</span>
+</div>
+<div class="flex items-start">
+<i class="fas fa-arrow-right text-secondary mt-1 mr-2"></i>
+<span class="text-lg">探索模型透明度与预测性能的平衡点</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Slide Number -->
+<div class="mt-4 flex justify-between items-center text-blue-300 text-lg">
+<div>10/14</div>
+<div class="text-center">时间序列基础模型</div>
+<div class="flex items-center">
+<i class="fas fa-brain mr-2"></i>
+<i class="fas fa-virus mr-2"></i>
+<i class="fas fa-chart-line"></i>
+</div>
+</div>
+</div>
+<script>
+        // D3.js visualization for model interpretability comparison
+        document.addEventListener('DOMContentLoaded', function() {
+            // Data representing interpretability levels (conceptual, not actual measurements)
+            const data = [
+                {model: "Time Series Foundation Model", interpretability: 30, complexity: 85},
+                {model: "传统深度神经网络", interpretability: 55, complexity: 60}
+            ];
+            
+            // SVG dimensions
+            const width = document.getElementById('interpretability-vis').clientWidth;
+            const height = 120;
+            const margin = {top: 20, right: 30, bottom: 40, left: 50};
+            
+            // Create SVG
+            const svg = d3.select('#interpretability-vis')
+                .append('svg')
+                .attr('width', width)
+                .attr('height', height)
+                .attr('viewBox', `0 0 ${width} ${height}`)
+                .attr('preserveAspectRatio', 'xMidYMid meet');
+            
+            // X scale
+            const x = d3.scaleBand()
+                .domain(data.map(d => d.model))
+                .range([margin.left, width - margin.right])
+                .padding(0.3);
+            
+            // Y scale for interpretability
+            const y = d3.scaleLinear()
+                .domain([0, 100])
+                .range([height - margin.bottom, margin.top]);
+            
+            // Add X axis
+            svg.append('g')
+                .attr('transform', `translate(0,${height - margin.bottom})`)
+                .call(d3.axisBottom(x))
+                .selectAll('text')
+                .style('fill', 'white')
+                .style('font-size', '12px');
+            
+            // Add Y axis
+            svg.append('g')
+                .attr('transform', `translate(${margin.left},0)`)
+                .call(d3.axisLeft(y).ticks(5))
+                .selectAll('text')
+                .style('fill', 'white')
+                .style('font-size', '12px');
+            
+            // Y axis label
+            svg.append('text')
+                .attr('transform', 'rotate(-90)')
+                .attr('y', 15)
+                .attr('x', -height/2)
+                .attr('text-anchor', 'middle')
+                .style('fill', 'white')
+                .style('font-size', '12px')
+                .text('可解释性程度 (%)');
+            
+            // Add bars for interpretability
+            svg.selectAll('.bar-interpretability')
+                .data(data)
+                .join('rect')
+                .attr('class', 'bar-interpretability')
+                .attr('x', d => x(d.model))
+                .attr('y', d => y(d.interpretability))
+                .attr('width', x.bandwidth() / 2)
+                .attr('height', d => height - margin.bottom - y(d.interpretability))
+                .attr('fill', '#66CCFF');
+            
+            // Add bars for complexity
+            svg.selectAll('.bar-complexity')
+                .data(data)
+                .join('rect')
+                .attr('class', 'bar-complexity')
+                .attr('x', d => x(d.model) + x.bandwidth() / 2)
+                .attr('y', d => y(d.complexity))
+                .attr('width', x.bandwidth() / 2)
+                .attr('height', d => height - margin.bottom - y(d.complexity))
+                .attr('fill', '#FF9900');
+            
+            // Legend
+            const legend = svg.append('g')
+                .attr('transform', `translate(${width - margin.right - 120}, ${margin.top})`);
+            
+            legend.append('rect')
+                .attr('width', 15)
+                .attr('height', 15)
+                .attr('fill', '#66CCFF');
+            
+            legend.append('text')
+                .attr('x', 20)
+                .attr('y', 12.5)
+                .style('fill', 'white')
+                .style('font-size', '12px')
+                .text('可解释性');
+            
+            legend.append('rect')
+                .attr('width', 15)
+                .attr('height', 15)
+                .attr('y', 20)
+                .attr('fill', '#FF9900');
+            
+            legend.append('text')
+                .attr('x', 20)
+                .attr('y', 32.5)
+                .style('fill', 'white')
+                .style('font-size', '12px')
+                .text('复杂度');
+        });
+    </script>
+
+</body></html>

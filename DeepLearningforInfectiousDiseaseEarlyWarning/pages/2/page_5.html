@@ -1,0 +1,164 @@
+<!DOCTYPE html><html lang="zh"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>迁移学习能力：应对医疗数据稀缺的关键</title>
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"/>
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script><style>
+        /* .bg-primary { background-color: #003366; } */
+        .bg-secondary { background-color: #66CCFF; }
+        .text-accent { color: #FF9900; }
+        .border-accent { border-color: #FF9900; }
+        .slide-content {
+            min-height: 834px;
+            width: 1280px;
+            
+        }
+        .slide-number {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            font-size: 14px;
+            color: #ffffff;
+            opacity: 0.7;
+        }
+        .transfer-arrow {
+            position: relative;
+            height: 4px;
+            background-color: #66CCFF;
+        }
+        .transfer-arrow::after {
+            content: '';
+            position: absolute;
+            right: -10px;
+            top: -8px;
+            border-left: 14px solid #66CCFF;
+            border-top: 10px solid transparent;
+            border-bottom: 10px solid transparent;
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen">
+<div class="slide-content bg-primary relative">
+<!-- Header -->
+<div class="pt-10 pb-4 px-16">
+<h1 class="text-white text-6xl font-bold pb-4 border-b-8 border-green-400 inline-block">迁移学习能力：应对医疗数据稀缺的关键</h1>
+</div>
+<!-- Main Content -->
+<div class="px-16 py-6">
+<!-- Introduction to Transfer Learning -->
+<div class="bg-white bg-opacity-10 rounded-lg p-5 mb-8">
+<p class="text-white text-lg leading-relaxed">
+                    时间序列基础模型通过预训练获得的通用时间模式知识，能够<span class="text-accent font-semibold">快速适应新的任务和领域</span>，这种迁移学习能力使其特别适合应用于数据稀缺的医疗健康领域。
+                </p>
+</div>
+<!-- Zero-shot and Few-shot Learning -->
+<div class="grid grid-cols-2 gap-8 mb-8">
+<!-- Zero-shot Learning -->
+<div class="bg-white bg-opacity-10 rounded-lg p-5">
+<div class="flex items-center mb-3">
+<div class="bg-secondary rounded-full h-12 w-12 flex items-center justify-center mr-4">
+<i class="fas fa-bolt text-primary text-2xl"></i>
+</div>
+<h3 class="text-accent font-bold text-2xl">零样本学习</h3>
+</div>
+<p class="text-white text-lg">
+                        模型可以直接应用于<span class="font-semibold">未见过的任务</span>，无需额外训练。<br>例如，一个在金融数据上预训练的模型可能能够直接用于医疗时间序列的异常检测。
+                    </p>
+<div class="flex items-center justify-center mt-4">
+<div class="flex items-center">
+<div class="bg-blue-800 bg-opacity-50 rounded p-2 text-white text-center">
+<i class="fas fa-database text-xl mb-1"></i><br/>预训练模型
+                            </div>
+<div class="transfer-arrow w-16 mx-4"></div>
+<div class="bg-green-700 bg-opacity-50 rounded p-2 text-white text-center">
+<i class="fas fa-heartbeat text-xl mb-1"></i><br/>直接应用
+                            </div>
+</div>
+</div>
+</div>
+<!-- Few-shot Learning -->
+<div class="bg-white bg-opacity-10 rounded-lg p-5">
+<div class="flex items-center mb-3">
+<div class="bg-secondary rounded-full h-12 w-12 flex items-center justify-center mr-4">
+<i class="fas fa-feather-alt text-primary text-2xl"></i>
+</div>
+<h3 class="text-accent font-bold text-2xl">少样本学习</h3>
+</div>
+<p class="text-white text-lg">
+                        模型只需要<span class="font-semibold">少量的标注数据</span>就能快速适应新任务。<br>通过微调（fine-tuning），保留预训练知识的同时针对特定任务优化。
+                    </p>
+<div class="flex items-center justify-center mt-4">
+<div class="flex items-center">
+<div class="bg-blue-800 bg-opacity-50 rounded p-2 text-white text-center">
+<i class="fas fa-database text-xl mb-1"></i><br/>预训练模型
+                            </div>
+<div class="transfer-arrow w-10 mx-2"></div>
+<div class="bg-yellow-600 bg-opacity-50 rounded p-2 text-white text-center">
+<i class="fas fa-vial text-xl mb-1"></i><br/>少量数据微调
+                            </div>
+<div class="transfer-arrow w-10 mx-2"></div>
+<div class="bg-green-700 bg-opacity-50 rounded p-2 text-white text-center">
+<i class="fas fa-heartbeat text-xl mb-1"></i><br/>医疗应用
+                            </div>
+</div>
+</div>
+</div>
+</div>
+<!-- Adaptation Across Different Scales -->
+<div class="bg-white bg-opacity-10 rounded-lg p-5 mb-8">
+<h3 class="text-accent font-bold text-2xl mb-3 flex items-center">
+<i class="fas fa-exchange-alt mr-3"></i>跨尺度和数据类型的适应能力
+                </h3>
+<div class="grid grid-cols-3 gap-4">
+<div class="flex items-center">
+<i class="fas fa-calendar-day text-secondary text-2xl mr-3 text-white"></i>
+<span class="text-white">从日级数据迁移到小时级或月级预测</span>
+</div>
+<div class="flex items-center">
+<i class="fas fa-chart-line text-secondary text-2xl mr-3 text-white"></i>
+<span class="text-white">从单变量预测扩展到多变量预测</span>
+</div>
+<div class="flex items-center">
+<i class="fas fa-tasks text-secondary text-2xl mr-3 text-white"></i>
+<span class="text-white">从一种分析任务迁移到另一种任务</span>
+</div>
+</div>
+</div>
+<!-- Value for Medical Fields -->
+<div class="bg-white bg-opacity-10 rounded-lg p-5">
+<h3 class="text-accent font-bold text-2xl mb-3">医疗领域的价值</h3>
+<div class="grid grid-cols-2 gap-4">
+<div class="flex items-start">
+<i class="fas fa-user-md text-secondary text-xl mt-1 mr-3 text-white"></i>
+<p class="text-white text-s">解决罕见疾病数据稀缺问题，仅需少量病例即可构建有效预测模型</p>
+</div>
+<div class="flex items-start">
+<i class="fas fa-virus text-secondary text-xl mt-1 mr-3 text-white"></i>
+<p class="text-white text-s">快速应对新型疾病暴发，无需等待大量数据积累即可开展预测</p>
+</div>
+<div class="flex items-start">
+<i class="fas fa-hospital-user text-secondary text-xl mt-1 mr-3 text-white"></i>
+<p class="text-white text-s">个性化医疗中，基于有限的患者历史数据实现精准预测</p>
+</div>
+<div class="flex items-start">
+<i class="fas fa-globe text-secondary text-xl mt-1 mr-3 text-white" ></i>
+<p class="text-white text-s">区域医疗数据不平衡问题，将资源丰富区域的模型迁移到数据匮乏区域</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Slide Number -->
+<div class="mt-4 flex justify-between items-center text-blue-300 text-lg">
+<div>5/14</div>
+<div class="text-center">时间序列基础模型</div>
+<div class="flex items-center">
+<i class="fas fa-brain mr-2"></i>
+<i class="fas fa-virus mr-2"></i>
+<i class="fas fa-chart-line"></i>
+</div>
+</div>
+</div>
+
+</body></html>

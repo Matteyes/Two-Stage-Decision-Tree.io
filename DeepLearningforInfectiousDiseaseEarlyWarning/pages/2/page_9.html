@@ -1,0 +1,151 @@
+<!DOCTYPE html><html lang="zh"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>模型比较：计算资源</title>
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"/>
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script><style>
+        /* .bg-primary { background-color: #003366; } */
+        .bg-secondary { background-color: #66CCFF; }
+        .text-accent { color: #FF9900; }
+        .border-accent { border-color: #FF9900; }
+        .slide-content {
+            min-height: 720px;
+            width: 1280px;
+            
+        }
+        .resource-card {
+            transition: all 0.3s ease;
+        }
+        .resource-card:hover {
+            transform: translateY(-5px);
+        }
+        .slide-number {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            font-size: 14px;
+            color: #ffffff;
+            opacity: 0.7;
+        }
+        .comparison-container {
+            position: relative;
+        }
+        .comparison-line {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background-color: #66CCFF;
+            opacity: 0.5;
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen">
+<div class="slide-content bg-primary relative">
+<!-- Header -->
+<div class="pt-10 pb-4 px-16">
+<h1 class="text-white text-6xl font-bold pb-4 border-b-8 border-green-400 inline-block">模型比较：计算资源</h1>
+</div>
+<!-- Main Content -->
+<div class="px-16 py-6">
+<!-- Model Comparison Section -->
+<div class="grid grid-cols-2 gap-8 mb-8">
+<!-- Time Series Foundation Model -->
+<div class="resource-card bg-white bg-opacity-10 rounded-lg p-6">
+<div class="flex items-center mb-4">
+<div class="h-14 w-14 rounded-full bg-secondary flex items-center justify-center mr-4">
+<i class="fas fa-server text-primary text-2xl"></i>
+</div>
+<h3 class="text-accent font-bold text-2xl">Time Series Foundation Model</h3>
+</div>
+<ul class="text-white space-y-3">
+<li class="flex items-start">
+<i class="fas fa-microchip text-secondary mt-1 mr-3"></i>
+<span>预训练阶段需要大量计算资源，通常需要高性能GPU集群</span>
+</li>
+<li class="flex items-start">
+<i class="fas fa-tachometer-alt text-secondary mt-1 mr-3"></i>
+<span>预训练完成后，在新任务上的微调和推理相对高效</span>
+</li>
+<li class="flex items-start">
+<i class="fas fa-balance-scale text-secondary mt-1 mr-3"></i>
+<span>一次投入，多次受益，长期来看可能更经济</span>
+</li>
+</ul>
+</div>
+<!-- Traditional Deep Neural Networks -->
+<div class="resource-card bg-white bg-opacity-10 rounded-lg p-6">
+<div class="flex items-center mb-4">
+<div class="h-14 w-14 rounded-full bg-secondary flex items-center justify-center mr-4">
+<i class="fas fa-network-wired text-primary text-2xl"></i>
+</div>
+<h3 class="text-accent font-bold text-2xl">传统深度神经网络模型</h3>
+</div>
+<ul class="text-white space-y-3">
+<li class="flex items-start">
+<i class="fas fa-microchip text-secondary mt-1 mr-3"></i>
+<span>单次训练的资源需求较小，适合普通硬件配置</span>
+</li>
+<li class="flex items-start">
+<i class="fas fa-sync text-secondary mt-1 mr-3"></i>
+<span>面对新任务时常需重新训练，累积计算成本可能较高</span>
+</li>
+<li class="flex items-start">
+<i class="fas fa-tasks text-secondary mt-1 mr-3"></i>
+<span>任务专用模型，针对特定应用场景可高度优化</span>
+</li>
+</ul>
+</div>
+</div>
+<!-- Institution Recommendations -->
+<div class="bg-white bg-opacity-10 rounded-lg p-6">
+<h3 class="text-accent font-bold text-2xl mb-4 flex items-center">
+<i class="fas fa-hospital-alt mr-3"></i>医疗机构应用建议
+</h3>
+<div class="grid grid-cols-2 gap-6">
+<!-- Large Institutions -->
+<div class="flex items-start">
+<div class="h-12 w-12 rounded-full bg-secondary flex-shrink-0 flex items-center justify-center mr-4">
+<i class="fas fa-hospital-user text-primary text-xl"></i>
+</div>
+<div>
+<h4 class="text-white font-bold text-xl mb-1">大型研究机构</h4>
+<p class="text-white text-lg">拥有充足计算资源，可部署Time Series Foundation Model，充分利用其强大的泛化能力和多任务处理能力，实现长期价值最大化。</p>
+</div>
+</div>
+<!-- Small Institutions -->
+<div class="flex items-start">
+<div class="h-12 w-12 rounded-full bg-secondary flex-shrink-0 flex items-center justify-center mr-4">
+<i class="fas fa-clinic-medical text-primary text-xl"></i>
+</div>
+<div>
+<h4 class="text-white font-bold text-xl mb-1">小型医疗机构</h4>
+<p class="text-white text-lg">资源有限情况下，可选择针对特定任务优化的轻量级深度神经网络模型，或利用云服务访问已预训练的基础模型，平衡性能和资源限制。</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Key Consideration -->
+<div class="mt-6 bg-secondary bg-opacity-20 rounded-lg p-4 border-l-4 border-accent">
+<p class="text-white text-lg flex items-center">
+<i class="fas fa-lightbulb text-accent text-xl mr-3"></i>
+<span>关键考量：根据机构规模、可用资源和具体应用场景，选择合适的模型可以实现资源投入与预测效果的最佳平衡。</span>
+</p>
+</div>
+</div>
+<!-- Slide Number -->
+<div class="mt-4 flex justify-between items-center text-blue-300 text-lg">
+<div>9/14</div>
+<div class="text-center">时间序列基础模型</div>
+<div class="flex items-center">
+<i class="fas fa-brain mr-2"></i>
+<i class="fas fa-virus mr-2"></i>
+<i class="fas fa-chart-line"></i>
+</div>
+</div>
+</div>
+
+</body></html>

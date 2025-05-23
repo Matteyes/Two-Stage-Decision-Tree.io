@@ -1,0 +1,90 @@
+<!DOCTYPE html><html lang="zh"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>基于深度学习的传染病预警模型构建与应用</title>
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"/>
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script><style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap');
+        body {
+    width:1280px;
+    height:720px;
+            font-family: 'Noto Sans SC', sans-serif;
+            background: transparent !important;
+    overflow: hidden; /* 防止出现滚动条 */
+        }
+        .neural-network {
+            position: absolute;
+            opacity: 0.1;
+            z-index: 0;
+        }
+        .neural-node {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.7);
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.5);
+        }
+        .neural-connection {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.3);
+            transform-origin: top left;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-blue-900 to-blue-700 text-white h-screen w-screen flex items-center justify-center overflow-hidden">
+<div class="absolute inset-0 overflow-hidden">
+<div class="neural-network w-full h-full">
+<div class="neural-node w-4 h-4" style="top: 20%; left: 30%;"></div>
+<div class="neural-node w-5 h-5" style="top: 40%; left: 25%;"></div>
+<div class="neural-node w-4 h-4" style="top: 70%; left: 35%;"></div>
+<div class="neural-node w-6 h-6" style="top: 30%; left: 45%;"></div>
+<div class="neural-node w-4 h-4" style="top: 60%; left: 55%;"></div>
+<div class="neural-node w-5 h-5" style="top: 25%; left: 65%;"></div>
+<div class="neural-node w-4 h-4" style="top: 50%; left: 70%;"></div>
+<div class="neural-node w-6 h-6" style="top: 75%; left: 75%;"></div>
+<div class="neural-connection w-1 h-32" style="top: 22%; left: 32%; transform: rotate(25deg);"></div>
+<div class="neural-connection w-1 h-40" style="top: 42%; left: 27%; transform: rotate(-30deg);"></div>
+<div class="neural-connection w-1 h-36" style="top: 32%; left: 47%; transform: rotate(45deg);"></div>
+<div class="neural-connection w-1 h-30" style="top: 62%; left: 57%; transform: rotate(-25deg);"></div>
+<div class="neural-connection w-1 h-38" style="top: 27%; left: 67%; transform: rotate(35deg);"></div>
+<div class="neural-connection w-1 h-42" style="top: 52%; left: 72%; transform: rotate(30deg);"></div>
+</div>
+</div>
+<div class="relative z-10 max-w-screen-xl mx-auto px-4 py-12 flex flex-col items-center justify-center h-full">
+<div class="bg-gradient-to-br from-blue-800/80 to-blue-600/80 backdrop-blur-sm p-16 rounded-2xl shadow-2xl border border-blue-500/20 w-full max-w-5xl">
+<div class="text-center mb-8">
+<div class="flex justify-center space-x-6 mb-12">
+<i class="fas fa-virus text-green-400 text-5xl animate-pulse"></i>
+<i class="fas fa-brain text-blue-300 text-5xl"></i>
+<i class="fas fa-chart-line text-orange-400 text-5xl"></i>
+</div>
+<h1 class="text-6xl font-bold mb-6 text-white leading-tight">基于深度学习的传染病预警模型<br>构建与应用</h1>
+<p class="text-2xl text-blue-100 mb-8">Deep Learning for Infectious Disease Early Warning</p>
+<div class="w-32 h-2 bg-green-400 mx-auto mb-8"></div>
+<p class="text-2xl text-blue-100">徐铣明</p>
+<p class="text-2xl text-blue-100 mb-12">重庆医科大学附属儿童医院大数据工程中心</p>
+</div>
+<div class="flex justify-between items-center mt-16 text-blue-200">
+<div class="flex items-center">
+<i class="fas fa-calendar-alt mr-3 text-xl"></i>
+<span class="text-xl">2025-05-24</span>
+</div>
+<div class="flex space-x-4">
+<span class="px-4 py-2 bg-blue-700/50 rounded-full border border-blue-500/30 text-lg">
+<i class="fas fa-network-wired mr-2"></i> 深度学习
+                    </span>
+<span class="px-4 py-2 bg-green-700/50 rounded-full border border-green-500/30 text-lg">
+<i class="fas fa-shield-virus mr-2"></i> 传染病防控
+                    </span>
+<span class="px-4 py-2 bg-orange-700/50 rounded-full border border-orange-500/30 text-lg">
+<i class="fas fa-bell mr-2"></i> 预警系统
+                    </span>
+</div>
+</div>
+</div>
+<div class="mt-12 text-blue-200 text-lg">
+<p>点击右侧按钮/Right/PageDown开始演示 / Click the right button/Right/PageDown to start the demonstration</p>
+</div>
+</div>
+
+</body></html>

@@ -1,0 +1,212 @@
+<!DOCTYPE html><html lang="zh"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>什么是时间序列数据？</title>
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"/>
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script><style>
+        .bg-pattern {
+            background-image: radial-gradient(#3b82f620 1px, transparent 1px);
+            background-size: 20px 20px;
+        }
+        .time-series-line {
+            fill: none;
+            stroke: #3b82f6;
+            stroke-width: 3;
+        }
+        .time-series-point {
+            fill: #f97316;
+            stroke: white;
+            stroke-width: 2;
+        }
+        .axis {
+            font-size: 12px;
+            color: #64748b;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex items-center justify-center">
+    <div class="relative w-full max-w-[80%] mx-auto flex flex-col p-6 rounded-2xl min-h-[800px]">
+    <!-- Decorative elements -->
+    <!-- <div class="absolute top-0 left-0 w-full h-24 bg-gradient-to-r from-blue-500/20 to-transparent rounded-t-2xl"></div> -->
+    <!-- Header -->
+    <div class="mb-12 z-10">
+      <h1 class="text-6xl font-bold text-white  pb-4  border-b-8 border-orange-500 inline-block">什么是时间序列数据？</h1>
+    </div>
+    <!-- Main content -->
+    <div class="flex flex-row space-x-12 z-10">
+      <!-- Left side: Definition and examples -->
+      <div class="w-1/2">
+        <!-- Definition -->
+        <div class="bg-white/80 rounded-xl p-8 shadow-lg mb-10">
+          <p class="text-2xl text-blue-900 font-medium">
+            时间序列数据是<span class="text-orange-600 font-bold">按时间顺序排列</span>的一系列数据点，记录了某个变量随时间变化的情况。
+          </p>
+        </div>
+        <!-- Examples -->
+        <div class="grid grid-cols-2 gap-6 mb-8">
+          <div class="bg-white/80 rounded-xl p-6 shadow-md flex items-start">
+            <div class="text-5xl text-blue-600 mr-6">
+              <i class="fas fa-temperature-high"></i>
+            </div>
+            <div>
+              <h3 class="text-2xl font-bold text-blue-800">每日气温</h3>
+              <p class="text-xl text-gray-600">记录每天的最高和最低温度变化</p>
+            </div>
+          </div>
+          <div class="bg-white/80 rounded-xl p-6 shadow-md flex items-start">
+            <div class="text-5xl text-blue-600 mr-6">
+              <i class="fas fa-chart-line"></i>
+            </div>
+            <div>
+              <h3 class="text-2xl font-bold text-blue-800">股票价格</h3>
+              <p class="text-xl text-gray-600">记录股票每天开盘、收盘价格的波动</p>
+            </div>
+          </div>
+          <div class="bg-white/80 rounded-xl p-6 shadow-md flex items-start">
+            <div class="text-5xl text-blue-600 mr-6">
+              <i class="fas fa-shopping-cart"></i>
+            </div>
+            <div>
+              <h3 class="text-2xl font-bold text-blue-800">每月销售额</h3>
+              <p class="text-xl text-gray-600">记录商店每月的销售总额变化</p>
+            </div>
+          </div>
+          <div class="bg-white/80 rounded-xl p-6 shadow-md flex items-start">
+            <div class="text-5xl text-blue-600 mr-6">
+              <i class="fas fa-chart-pie"></i>
+            </div>
+            <div>
+              <h3 class="text-2xl font-bold text-blue-800">年度GDP</h3>
+              <p class="text-xl text-gray-600">记录国家每年的经济总产值</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Right side: Visualization -->
+      <div class="w-1/2 flex flex-col">
+        <div class="bg-white/90 rounded-xl p-8 shadow-lg h-full flex flex-col">
+          <h2 class="text-3xl font-bold text-blue-800 mb-6">时间序列数据的特点</h2>
+          <div class="mb-8">
+            <div class="flex items-center mb-4">
+              <div class="text-orange-500 text-2xl mr-4"><i class="fas fa-clock"></i></div>
+              <p class="text-xl text-gray-700"><span class="font-bold">时间顺序性</span>：数据点按照时间先后顺序排列</p>
+            </div>
+            <div class="flex items-center mb-4">
+              <div class="text-orange-500 text-2xl mr-4"><i class="fas fa-sync-alt"></i></div>
+              <p class="text-xl text-gray-700"><span class="font-bold">周期性</span>：可能存在重复出现的模式</p>
+            </div>
+            <div class="flex items-center mb-4">
+              <div class="text-orange-500 text-2xl mr-4"><i class="fas fa-arrow-trend-up"></i></div>
+              <p class="text-xl text-gray-700"><span class="font-bold">趋势性</span>：可能存在长期上升或下降的趋势</p>
+            </div>
+            <div class="flex items-center">
+              <div class="text-orange-500 text-2xl mr-4"><i class="fas fa-random"></i></div>
+              <p class="text-xl text-gray-700"><span class="font-bold">随机性</span>：包含不可预测的随机波动</p>
+            </div>
+          </div>
+          <!-- Simple time series visualization -->
+          <div class="flex-grow relative">
+            <h3 class="text-2xl font-medium text-blue-800 mb-4">一周气温变化示例：</h3>
+            <div class="w-full h-[250px]" id="visualization"></div>
+            <div class="mt-6 text-center text-lg text-gray-500">
+              <p>时间序列数据可以帮助我们<span class="text-orange-600 font-bold">理解过去</span>并<span class="text-blue-600 font-bold">预测未来</span></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Footer -->
+    <div class="mt-6 flex justify-between items-center text-blue-300 text-base">
+      <div>1/15</div>
+      <div class="text-center">基于深度学习的传染病预警模型构建与应用</div>
+      <div class="flex items-center">
+        <i class="fas fa-brain mr-2"></i>
+        <i class="fas fa-virus mr-2"></i>
+        <i class="fas fa-chart-line"></i>
+      </div>
+    </div>
+  </div>
+  <script>
+        // Simple time series visualization
+        document.addEventListener('DOMContentLoaded', function() {
+            // Sample temperature data (simplified for illustration)
+            const data = [
+                {day: "周一", temp: 22},
+                {day: "周二", temp: 24},
+                {day: "周三", temp: 28},
+                {day: "周四", temp: 26},
+                {day: "周五", temp: 25},
+                {day: "周六", temp: 23},
+                {day: "周日", temp: 21}
+            ];
+            
+            // Set up dimensions
+            const margin = {top: 20, right: 30, bottom: 30, left: 40},
+                  width = document.getElementById('visualization').offsetWidth - margin.left - margin.right,
+                  height = document.getElementById('visualization').offsetHeight - margin.top - margin.bottom;
+            
+            // Create SVG
+            const svg = d3.select("#visualization")
+                .append("svg")
+                .attr("width", width + margin.left + margin.right)
+                .attr("height", height + margin.top + margin.bottom)
+                .append("g")
+                .attr("transform", `translate(${margin.left},${margin.top})`);
+            
+            // X scale
+            const x = d3.scaleBand()
+                .domain(data.map(d => d.day))
+                .range([0, width])
+                .padding(0.1);
+            
+            // Y scale
+            const y = d3.scaleLinear()
+                .domain([15, d3.max(data, d => d.temp) + 5])
+                .range([height, 0]);
+            
+            // Add X axis
+            svg.append("g")
+                .attr("transform", `translate(0,${height})`)
+                .call(d3.axisBottom(x))
+                .attr("class", "axis");
+            
+            // Add Y axis
+            svg.append("g")
+                .call(d3.axisLeft(y))
+                .attr("class", "axis");
+            
+            // Add Y axis label
+            svg.append("text")
+                .attr("transform", "rotate(-90)")
+                .attr("y", -30)
+                .attr("x", -height / 2)
+                .attr("text-anchor", "middle")
+                .text("温度 (°C)")
+                .attr("class", "text-xs text-gray-500");
+            
+            // Create line generator
+            const line = d3.line()
+                .x(d => x(d.day) + x.bandwidth()/2)
+                .y(d => y(d.temp))
+                .curve(d3.curveMonotoneX);
+            
+            // Add the line
+            svg.append("path")
+                .datum(data)
+                .attr("class", "time-series-line")
+                .attr("d", line);
+            
+            // Add the points
+            svg.selectAll(".point")
+                .data(data)
+                .enter()
+                .append("circle")
+                .attr("class", "time-series-point")
+                .attr("cx", d => x(d.day) + x.bandwidth()/2)
+                .attr("cy", d => y(d.temp))
+                .attr("r", 5);
+        });
+    </script>
+</body></html>

@@ -1,0 +1,536 @@
+<!DOCTYPE html><html lang="zh"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>常用的深度学习网络结构</title>
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"/>
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script><style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap');
+        body {
+    width:1280px;
+    height:720px;
+            font-family: 'Noto Sans SC', sans-serif;
+            background: transparent !important;
+    overflow: hidden; /* 防止出现滚动条 */
+        }
+        .neural-network {
+            position: absolute;
+            opacity: 0.08;
+            z-index: 0;
+        }
+        .neural-node {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.7);
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.5);
+        }
+        .neural-connection {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.3);
+            transform-origin: top left;
+        }
+        .network-card {
+            transition: all 0.3s ease;
+        }
+        .network-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* Network Visualization Styles */
+        .lstm-cell {
+            position: relative;
+            width: 100%;
+            height: 120px;
+        }
+        .cnn-layers {
+            position: relative;
+            width: 100%;
+            height: 120px;
+        }
+        .gnn-graph {
+            position: relative;
+            width: 100%;
+            height: 120px;
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-blue-900 to-blue-700 text-white h-screen w-screen flex items-center justify-center overflow-hidden">
+<div class="absolute inset-0 overflow-hidden">
+<!-- Neural Network Background -->
+<div class="neural-network w-full h-full">
+<!-- Nodes -->
+<div class="neural-node w-3 h-3" style="top: 15%; left: 10%;"></div>
+<div class="neural-node w-4 h-4" style="top: 35%; left: 8%;"></div>
+<div class="neural-node w-3 h-3" style="top: 65%; left: 12%;"></div>
+<div class="neural-node w-5 h-5" style="top: 25%; left: 88%;"></div>
+<div class="neural-node w-3 h-3" style="top: 50%; left: 92%;"></div>
+<div class="neural-node w-4 h-4" style="top: 75%; left: 90%;"></div>
+<!-- Connections -->
+<div class="neural-connection w-1 h-25" style="top: 17%; left: 11%; transform: rotate(25deg);"></div>
+<div class="neural-connection w-1 h-35" style="top: 37%; left: 9%; transform: rotate(-30deg);"></div>
+<div class="neural-connection w-1 h-30" style="top: 27%; left: 89%; transform: rotate(45deg);"></div>
+<div class="neural-connection w-1 h-32" style="top: 52%; left: 93%; transform: rotate(-25deg);"></div>
+</div>
+</div>
+<div class="relative z-10 w-full h-full max-w-[80%] mx-auto px-16 py-12 flex flex-col">
+<div class="mb-12">
+<h1 class="text-6xl font-bold text-white pb-4 border-b-8 border-green-400 inline-block">深度学习预警模型的应用场景</h1>
+</div>
+<!-- Content -->
+<div class="flex flex-grow justify-between space-x-8">
+<!-- LSTM Network -->
+<div class="network-card bg-blue-800/40 backdrop-blur-sm rounded-xl p-8 shadow-lg border border-blue-600/30 flex-1 flex flex-col">
+<h2 class="text-2xl font-semibold text-blue-200 mb-4 flex items-center">
+<i class="fas fa-clock text-yellow-400 mr-3"></i>
+                    长短期记忆网络 (LSTM)
+                </h2>
+<!-- LSTM Visualization -->
+<div class="lstm-cell mb-6" id="lstm-viz"></div>
+<div class="text-lg text-blue-100 flex-grow">
+<p class="mb-3"><span class="font-semibold text-green-300">核心特点：</span>专为处理时间序列数据设计，能捕捉长期依赖关系</p>
+<ul class="list-disc list-inside space-y-3 mt-4">
+<li><span class="text-blue-300">输入层：</span>接收时间序列数据（如历史病例数据）</li>
+<li><span class="text-blue-300">LSTM层：</span>包含输入门、遗忘门和输出门，处理长期依赖</li>
+<li><span class="text-blue-300">输出层：</span>预测未来疫情趋势</li>
+</ul>
+<p class="mt-4 text-green-300 font-semibold">应用场景：</p>
+<p class="text-lg">疫情趋势预测、季节性传染病预警</p>
+</div>
+</div>
+<!-- CNN Network -->
+<div class="network-card bg-blue-800/40 backdrop-blur-sm rounded-xl p-8 shadow-lg border border-blue-600/30 flex-1 flex flex-col">
+<h2 class="text-2xl font-semibold text-blue-200 mb-4 flex items-center">
+<i class="fas fa-th text-orange-400 mr-3"></i>
+                    卷积神经网络 (CNN)
+                </h2>
+<!-- CNN Visualization -->
+<div class="cnn-layers mb-6" id="cnn-viz"></div>
+<div class="text-lg text-blue-100 flex-grow">
+<p class="mb-3"><span class="font-semibold text-green-300">核心特点：</span>擅长处理空间数据，提取局部特征，识别空间模式</p>
+<ul class="list-disc list-inside space-y-3 mt-4">
+<li><span class="text-blue-300">输入层：</span>接收多维数据（如图像、时空数据）</li>
+<li><span class="text-blue-300">卷积层：</span>提取局部特征</li>
+<li><span class="text-blue-300">池化层：</span>降维，提取主要特征</li>
+<li><span class="text-blue-300">全连接层：</span>综合特征，进行预测</li>
+</ul>
+<p class="mt-4 text-green-300 font-semibold">应用场景：</p>
+<p class="text-lg">地理空间疫情分析、医学影像辅助诊断</p>
+</div>
+</div>
+<!-- GNN Network -->
+<div class="network-card bg-blue-800/40 backdrop-blur-sm rounded-xl p-8 shadow-lg border border-blue-600/30 flex-1 flex flex-col">
+<h2 class="text-2xl font-semibold text-blue-200 mb-4 flex items-center">
+<i class="fas fa-project-diagram text-purple-400 mr-3"></i>
+                    图神经网络 (GNN)
+                </h2>
+<!-- GNN Visualization -->
+<div class="gnn-graph mb-6" id="gnn-viz"></div>
+<div class="text-lg text-blue-100 flex-grow">
+<p class="mb-3"><span class="font-semibold text-green-300">核心特点：</span>处理图结构数据，捕捉节点间关系，适合社交网络和传播网络</p>
+<ul class="list-disc list-inside space-y-3 mt-4">
+<li><span class="text-blue-300">输入层：</span>接收图结构数据（如人口流动网络）</li>
+<li><span class="text-blue-300">图卷积层：</span>聚合邻居节点信息</li>
+<li><span class="text-blue-300">输出层：</span>预测节点（如地区）的疫情风险</li>
+</ul>
+<p class="mt-4 text-green-300 font-semibold">应用场景：</p>
+<p class="text-lg">跨区域传播风险评估、社交网络疫情传播模拟</p>
+</div>
+</div>
+</div>
+<!-- Footer -->
+<div class="mt-6 flex justify-between items-center text-blue-300 text-lg">
+<div>6/15</div>
+<div class="text-center">基于深度学习的传染病预警模型构建与应用</div>
+<div class="flex items-center">
+<i class="fas fa-brain mr-2"></i>
+<i class="fas fa-virus mr-2"></i>
+<i class="fas fa-network-wired"></i>
+</div>
+</div>
+</div>
+<script>
+        // LSTM Visualization
+        function createLSTMViz() {
+            const svg = d3.select("#lstm-viz")
+                .append("svg")
+                .attr("width", "100%")
+                .attr("height", "100%")
+                .attr("viewBox", "0 0 300 120");
+            
+            // Cell rectangles
+            const cellWidth = 50;
+            const cellHeight = 80;
+            const cellSpacing = 60;
+            
+            // Draw LSTM cells
+            for (let i = 0; i < 4; i++) {
+                const x = 20 + i * cellSpacing;
+                
+                // Main cell
+                svg.append("rect")
+                    .attr("x", x)
+                    .attr("y", 20)
+                    .attr("width", cellWidth)
+                    .attr("height", cellHeight)
+                    .attr("rx", 5)
+                    .attr("fill", "rgba(59, 130, 246, 0.3)")
+                    .attr("stroke", "#60a5fa")
+                    .attr("stroke-width", 1.5);
+                
+                // Gates
+                const gateSize = 15;
+                const gateY = 30;
+                
+                // Input gate
+                svg.append("circle")
+                    .attr("cx", x + 10)
+                    .attr("cy", gateY)
+                    .attr("r", gateSize / 2)
+                    .attr("fill", "rgba(250, 204, 21, 0.7)");
+                
+                // Forget gate
+                svg.append("circle")
+                    .attr("cx", x + cellWidth / 2)
+                    .attr("cy", gateY)
+                    .attr("r", gateSize / 2)
+                    .attr("fill", "rgba(248, 113, 113, 0.7)");
+                
+                // Output gate
+                svg.append("circle")
+                    .attr("cx", x + cellWidth - 10)
+                    .attr("cy", gateY)
+                    .attr("r", gateSize / 2)
+                    .attr("fill", "rgba(74, 222, 128, 0.7)");
+                
+                // Cell state line
+                svg.append("line")
+                    .attr("x1", x)
+                    .attr("y1", 60)
+                    .attr("x2", x + cellWidth)
+                    .attr("y2", 60)
+                    .attr("stroke", "#f0f9ff")
+                    .attr("stroke-width", 2);
+                
+                // Connections between cells
+                if (i < 3) {
+                    svg.append("path")
+                        .attr("d", `M${x + cellWidth} 60 Q${x + cellWidth + cellSpacing/2} 60 ${x + cellSpacing} 60`)
+                        .attr("fill", "none")
+                        .attr("stroke", "#93c5fd")
+                        .attr("stroke-width", 1.5);
+                }
+            }
+            
+            // Input arrow
+            svg.append("path")
+                .attr("d", "M0 60 L15 60")
+                .attr("fill", "none")
+                .attr("stroke", "#93c5fd")
+                .attr("stroke-width", 1.5)
+                .attr("marker-end", "url(#arrowhead)");
+            
+            // Output arrow
+            svg.append("path")
+                .attr("d", "M260 60 L290 60")
+                .attr("fill", "none")
+                .attr("stroke", "#93c5fd")
+                .attr("stroke-width", 1.5)
+                .attr("marker-end", "url(#arrowhead)");
+            
+            // Add arrowhead marker
+            svg.append("defs").append("marker")
+                .attr("id", "arrowhead")
+                .attr("viewBox", "0 -5 10 10")
+                .attr("refX", 8)
+                .attr("refY", 0)
+                .attr("markerWidth", 6)
+                .attr("markerHeight", 6)
+                .attr("orient", "auto")
+                .append("path")
+                .attr("d", "M0,-5L10,0L0,5")
+                .attr("fill", "#93c5fd");
+            
+            // Labels
+            svg.append("text")
+                .attr("x", 10)
+                .attr("y", 100)
+                .attr("text-anchor", "middle")
+                .attr("fill", "#93c5fd")
+                .attr("font-size", "12px")
+                .text("输入");
+            
+            svg.append("text")
+                .attr("x", 290)
+                .attr("y", 100)
+                .attr("text-anchor", "middle")
+                .attr("fill", "#93c5fd")
+                .attr("font-size", "12px")
+                .text("输出");
+        }
+
+        // CNN Visualization
+        function createCNNViz() {
+            const svg = d3.select("#cnn-viz")
+                .append("svg")
+                .attr("width", "100%")
+                .attr("height", "100%")
+                .attr("viewBox", "0 0 300 120");
+            
+            // Layer dimensions
+            const layerHeight = 80;
+            const startX = 10;
+            
+            // Input layer (larger)
+            svg.append("rect")
+                .attr("x", startX)
+                .attr("y", 20)
+                .attr("width", 40)
+                .attr("height", layerHeight)
+                .attr("fill", "rgba(59, 130, 246, 0.3)")
+                .attr("stroke", "#60a5fa")
+                .attr("stroke-width", 1.5);
+            
+            // Convolutional layers
+            const convLayers = [
+                { x: startX + 60, width: 35, color: "rgba(139, 92, 246, 0.5)" },
+                { x: startX + 110, width: 30, color: "rgba(139, 92, 246, 0.5)" },
+                { x: startX + 155, width: 25, color: "rgba(139, 92, 246, 0.5)" }
+            ];
+            
+            convLayers.forEach(layer => {
+                svg.append("rect")
+                    .attr("x", layer.x)
+                    .attr("y", 25)
+                    .attr("width", layer.width)
+                    .attr("height", layerHeight - 10)
+                    .attr("fill", layer.color)
+                    .attr("stroke", "#a78bfa")
+                    .attr("stroke-width", 1.5);
+            });
+            
+            // Fully connected layers
+            const fcLayers = [
+                { x: startX + 195, width: 20, height: 60 },
+                { x: startX + 230, width: 15, height: 50 },
+                { x: startX + 260, width: 10, height: 40 }
+            ];
+            
+            fcLayers.forEach(layer => {
+                svg.append("rect")
+                    .attr("x", layer.x)
+                    .attr("y", (120 - layer.height) / 2)
+                    .attr("width", layer.width)
+                    .attr("height", layer.height)
+                    .attr("fill", "rgba(251, 113, 133, 0.5)")
+                    .attr("stroke", "#fb7185")
+                    .attr("stroke-width", 1.5);
+            });
+            
+            // Connections between layers
+            function connectLayers(x1, x2, y, height) {
+                for (let i = 0; i < 4; i++) {
+                    const yOffset = y + i * (height / 3);
+                    svg.append("line")
+                        .attr("x1", x1)
+                        .attr("y1", yOffset)
+                        .attr("x2", x2)
+                        .attr("y2", yOffset)
+                        .attr("stroke", "#93c5fd")
+                        .attr("stroke-width", 0.8)
+                        .attr("stroke-dasharray", "3,2");
+                }
+            }
+            
+            connectLayers(startX + 40, startX + 60, 30, layerHeight - 20);
+            connectLayers(startX + 95, startX + 110, 30, layerHeight - 20);
+            connectLayers(startX + 140, startX + 155, 30, layerHeight - 20);
+            connectLayers(startX + 180, startX + 195, 30, layerHeight - 20);
+            connectLayers(startX + 215, startX + 230, 35, layerHeight - 30);
+            connectLayers(startX + 245, startX + 260, 40, layerHeight - 40);
+            
+            // Labels
+            const labels = [
+                { x: startX + 20, y: 115, text: "输入" },
+                { x: startX + 85, y: 115, text: "卷积层" },
+                { x: startX + 210, y: 115, text: "全连接层" },
+                { x: startX + 265, y: 115, text: "输出" }
+            ];
+            
+            labels.forEach(label => {
+                svg.append("text")
+                    .attr("x", label.x)
+                    .attr("y", label.y)
+                    .attr("text-anchor", "middle")
+                    .attr("fill", "#93c5fd")
+                    .attr("font-size", "12px")
+                    .text(label.text);
+            });
+        }
+
+        // GNN Visualization
+        function createGNNViz() {
+            const svg = d3.select("#gnn-viz")
+                .append("svg")
+                .attr("width", "100%")
+                .attr("height", "100%")
+                .attr("viewBox", "0 0 300 120");
+            
+            // Create nodes
+            const nodes = [
+                { id: 0, x: 50, y: 40, r: 10, color: "rgba(251, 146, 60, 0.8)" },  // Orange - center node
+                { id: 1, x: 30, y: 70, r: 7, color: "rgba(74, 222, 128, 0.8)" },   // Green
+                { id: 2, x: 70, y: 80, r: 7, color: "rgba(74, 222, 128, 0.8)" },
+                { id: 3, x: 90, y: 50, r: 7, color: "rgba(74, 222, 128, 0.8)" },
+                { id: 4, x: 60, y: 15, r: 7, color: "rgba(74, 222, 128, 0.8)" },
+                { id: 5, x: 20, y: 30, r: 7, color: "rgba(74, 222, 128, 0.8)" },
+            ];
+            
+            // Create edges
+            const edges = [
+                { source: 0, target: 1 },
+                { source: 0, target: 2 },
+                { source: 0, target: 3 },
+                { source: 0, target: 4 },
+                { source: 0, target: 5 },
+                { source: 1, target: 2 },
+                { source: 2, target: 3 },
+                { source: 3, target: 4 },
+                { source: 4, target: 5 },
+                { source: 5, target: 1 }
+            ];
+            
+            // Draw edges
+            edges.forEach(edge => {
+                const source = nodes[edge.source];
+                const target = nodes[edge.target];
+                svg.append("line")
+                    .attr("x1", source.x)
+                    .attr("y1", source.y)
+                    .attr("x2", target.x)
+                    .attr("y2", target.y)
+                    .attr("stroke", "#93c5fd")
+                    .attr("stroke-width", 1.5);
+            });
+            
+            // Draw nodes
+            nodes.forEach(node => {
+                svg.append("circle")
+                    .attr("cx", node.x)
+                    .attr("cy", node.y)
+                    .attr("r", node.r)
+                    .attr("fill", node.color)
+                    .attr("stroke", "#fff")
+                    .attr("stroke-width", 1);
+            });
+            
+            // Add arrow to show transformation
+            svg.append("path")
+                .attr("d", "M115 50 L145 50")
+                .attr("fill", "none")
+                .attr("stroke", "#fff")
+                .attr("stroke-width", 2)
+                .attr("marker-end", "url(#arrowhead2)");
+            
+            // Add arrowhead marker
+            svg.append("defs").append("marker")
+                .attr("id", "arrowhead2")
+                .attr("viewBox", "0 -5 10 10")
+                .attr("refX", 8)
+                .attr("refY", 0)
+                .attr("markerWidth", 6)
+                .attr("markerHeight", 6)
+                .attr("orient", "auto")
+                .append("path")
+                .attr("d", "M0,-5L10,0L0,5")
+                .attr("fill", "#fff");
+            
+            // Draw transformed graph (after GNN)
+            // Nodes with embeddings (represented as small bars)
+            const transformedNodes = [
+                { id: 0, x: 200, y: 40, r: 10, color: "rgba(251, 146, 60, 0.8)" },
+                { id: 1, x: 180, y: 70, r: 7, color: "rgba(74, 222, 128, 0.8)" },
+                { id: 2, x: 220, y: 80, r: 7, color: "rgba(74, 222, 128, 0.8)" },
+                { id: 3, x: 240, y: 50, r: 7, color: "rgba(74, 222, 128, 0.8)" },
+                { id: 4, x: 210, y: 15, r: 7, color: "rgba(74, 222, 128, 0.8)" },
+                { id: 5, x: 170, y: 30, r: 7, color: "rgba(74, 222, 128, 0.8)" },
+            ];
+            
+            // Draw transformed edges
+            edges.forEach(edge => {
+                const source = transformedNodes[edge.source];
+                const target = transformedNodes[edge.target];
+                svg.append("line")
+                    .attr("x1", source.x)
+                    .attr("y1", source.y)
+                    .attr("x2", target.x)
+                    .attr("y2", target.y)
+                    .attr("stroke", "#93c5fd")
+                    .attr("stroke-width", 1.5);
+            });
+            
+            // Draw transformed nodes
+            transformedNodes.forEach(node => {
+                svg.append("circle")
+                    .attr("cx", node.x)
+                    .attr("cy", node.y)
+                    .attr("r", node.r)
+                    .attr("fill", node.color)
+                    .attr("stroke", "#fff")
+                    .attr("stroke-width", 1);
+                
+                // Add embedding visualization
+                const embedSize = node.r * 1.8;
+                svg.append("rect")
+                    .attr("x", node.x + node.r + 2)
+                    .attr("y", node.y - embedSize/4)
+                    .attr("width", embedSize)
+                    .attr("height", embedSize/2)
+                    .attr("fill", "rgba(147, 197, 253, 0.6)")
+                    .attr("rx", 2);
+            });
+            
+            // Add prediction arrow
+            svg.append("path")
+                .attr("d", "M265 50 L290 50")
+                .attr("fill", "none")
+                .attr("stroke", "#fff")
+                .attr("stroke-width", 2)
+                .attr("marker-end", "url(#arrowhead2)");
+            
+            // Labels
+            svg.append("text")
+                .attr("x", 55)
+                .attr("y", 110)
+                .attr("text-anchor", "middle")
+                .attr("fill", "#93c5fd")
+                .attr("font-size", "12px")
+                .text("节点图");
+            
+            svg.append("text")
+                .attr("x", 205)
+                .attr("y", 110)
+                .attr("text-anchor", "middle")
+                .attr("fill", "#93c5fd")
+                .attr("font-size", "12px")
+                .text("特征聚合");
+            
+            svg.append("text")
+                .attr("x", 290)
+                .attr("y", 110)
+                .attr("text-anchor", "middle")
+                .attr("fill", "#93c5fd")
+                .attr("font-size", "12px")
+                .text("预测");
+        }
+        
+        // Initialize visualizations
+        document.addEventListener('DOMContentLoaded', function() {
+            createLSTMViz();
+            createCNNViz();
+            createGNNViz();
+        });
+    </script>
+
+</body></html>

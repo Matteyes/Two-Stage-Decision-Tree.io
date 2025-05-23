@@ -1,0 +1,170 @@
+<!DOCTYPE html><html lang="zh"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>模型比较：泛化能力</title>
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"/>
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script><style>
+        /* .bg-primary { background-color: #003366; } */
+        .bg-secondary { background-color: #66CCFF; }
+        .text-accent { color: #FF9900; }
+        .border-accent { border-color: #FF9900; }
+        .slide-content {
+            min-height: 720px;
+            width: 1280px;
+            
+        }
+        .comparison-row:nth-child(odd) {
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+        .comparison-row:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        .excellent {
+            color: #4ade80; /* green */
+        }
+        .poor {
+            color: #f87171; /* red */
+        }
+        .slide-number {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            font-size: 14px;
+            color: #ffffff;
+            opacity: 0.7;
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen">
+<div class="slide-content bg-primary relative">
+<!-- Header -->
+<div class="pt-10 pb-4 px-16">
+<h1 class="text-white text-6xl font-bold pb-4 border-b-8 border-green-400 inline-block">模型比较：泛化能力</h1>
+</div>
+<!-- Main Content -->
+<div class="px-16 py-6">
+<!-- Model Comparison Visualization -->
+<div class="flex mb-8">
+<!-- Model Icons -->
+<div class="w-2/6 flex flex-col items-center justify-center">
+<div class="w-full h-64 flex items-center justify-center" id="model-comparison-visual">
+<div class="flex flex-col items-center">
+<div class="relative">
+<div class="h-24 w-24 rounded-full bg-secondary flex items-center justify-center">
+<i class="fas fa-brain text-primary text-5xl"></i>
+</div>
+<div class="absolute -top-2 -right-2 h-10 w-10 rounded-full bg-accent flex items-center justify-center">
+<!-- <i class="fas fa-chart-line text-white text-lg"></i> -->
+</div>
+</div>
+<h3 class="text-white font-bold text-lg mt-4">Time Series<br/>Foundation Model</h3>
+</div>
+<div class="mx-4 text-secondary text-4xl">VS</div>
+<div class="flex flex-col items-center">
+<div class="h-20 w-20 rounded-full bg-gray-300 flex items-center justify-center">
+<i class="fas fa-network-wired text-primary text-4xl"></i>
+</div>
+<h3 class="text-white font-bold text-lg mt-4">传统深度<br/>神经网络模型</h3>
+</div>
+</div>
+</div>
+<!-- Comparison Table -->
+<div class="w-4/6 bg-white bg-opacity-10 rounded-lg overflow-hidden">
+<div class="grid grid-cols-3 text-white">
+<!-- Table Header -->
+<div class="p-4 font-bold text-2xl bg-secondary bg-opacity-20 flex items-center justify-center">
+<i class="fas fa-exchange-alt mr-2"></i>泛化能力特性
+</div>
+<div class="p-4 font-bold text-2xl bg-secondary bg-opacity-20 flex items-center justify-center">
+<i class="fas fa-chart-line mr-2"></i>Time Series Foundation Model
+</div>
+<div class="p-4 font-bold text-2xl bg-secondary bg-opacity-20 flex items-center justify-center">
+<i class="fas fa-network-wired mr-2"></i>传统深度神经网络
+</div>
+<!-- Table Rows -->
+<div class="p-3 comparison-row flex items-center">
+<i class="fas fa-globe mr-2 text-accent"></i>
+<span class="text-lg">跨领域适应性</span>
+</div>
+<div class="p-3 comparison-row flex items-center">
+<i class="fas fa-check-circle mr-2 excellent"></i>
+<span class="text-lg">优秀，支持跨领域少样本学习</span>
+</div>
+<div class="p-3 comparison-row flex items-center">
+<i class="fas fa-times-circle mr-2 poor"></i>
+<span class="text-lg">较差，通常需要针对特定领域重新训练</span>
+</div>
+<div class="p-3 comparison-row flex items-center">
+<i class="fas fa-exchange-alt mr-2 text-accent"></i>
+<span class="text-lg">迁移学习能力</span>
+</div>
+<div class="p-3 comparison-row flex items-center">
+<i class="fas fa-check-circle mr-2 excellent"></i>
+<span class="text-lg">强，预训练知识可快速迁移到新任务</span>
+</div>
+<div class="p-3 comparison-row flex items-center">
+<i class="fas fa-times-circle mr-2 poor"></i>
+<span class="text-lg">弱，迁移学习效果有限</span>
+</div>
+<div class="p-3 comparison-row flex items-center">
+<i class="fas fa-bolt mr-2 text-accent"></i>
+<span class="text-lg">零样本/少样本学习</span>
+</div>
+<div class="p-3 comparison-row flex items-center">
+<i class="fas fa-check-circle mr-2 excellent"></i>
+<span class="text-lg">支持，仅需少量示例即可适应新领域</span>
+</div>
+<div class="p-3 comparison-row flex items-center">
+<i class="fas fa-times-circle mr-2 poor"></i>
+<span class="text-lg">不支持或效果较差，需要大量标注数据</span>
+</div>
+<div class="p-3 comparison-row flex items-center">
+<i class="fas fa-tasks mr-2 text-accent"></i>
+<span class="text-lg">多任务处理能力</span>
+</div>
+<div class="p-3 comparison-row flex items-center">
+<i class="fas fa-check-circle mr-2 excellent"></i>
+<span class="text-lg">强，单一模型可处理多种时间序列任务</span>
+</div>
+<div class="p-3 comparison-row flex items-center">
+<i class="fas fa-times-circle mr-2 poor"></i>
+<span class="text-lg">弱，通常需要为不同任务设计专门模型</span>
+</div>
+<div class="p-3 comparison-row flex items-center">
+<i class="fas fa-binoculars mr-2 text-accent"></i>
+<span class="text-lg">对未见领域的泛化</span>
+</div>
+<div class="p-3 comparison-row flex items-center">
+<i class="fas fa-check-circle mr-2 excellent"></i>
+<span class="text-lg">良好，能较好地处理训练数据中未出现的领域</span>
+</div>
+<div class="p-3 comparison-row flex items-center">
+<i class="fas fa-times-circle mr-2 poor"></i>
+<span class="text-lg">较差，对未见领域泛化能力有限</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Bottom Note -->
+<div class="bg-white bg-opacity-10 rounded-lg p-4 mt-4">
+<p class="text-white text-lg flex items-center">
+<i class="fas fa-lightbulb text-accent mr-3 text-xl"></i>
+<span>Time Series Foundation Model的强大泛化能力使其特别适合医疗场景，可以从有限的医疗数据中学习，并应用到各种医疗预测任务中。</span>
+</p>
+</div>
+</div>
+<!-- Slide Number -->
+<div class="mt-4 flex justify-between items-center text-blue-300 text-lg">
+<div>7/14</div>
+<div class="text-center">时间序列基础模型</div>
+<div class="flex items-center">
+<i class="fas fa-brain mr-2"></i>
+<i class="fas fa-virus mr-2"></i>
+<i class="fas fa-chart-line"></i>
+</div>
+</div>
+</div>
+
+</body></html>

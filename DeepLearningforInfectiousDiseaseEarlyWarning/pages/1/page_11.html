@@ -1,0 +1,306 @@
+<!DOCTYPE html><html lang="zh"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>案例二：流感趋势精准预测</title>
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"/>
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script><style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap');
+        body {
+    width:1280px;
+    height:720px;
+            font-family: 'Noto Sans SC', sans-serif;
+            background: transparent !important;
+    overflow: hidden; /* 防止出现滚动条 */
+        }
+        .neural-network {
+            position: absolute;
+            opacity: 0.08;
+            z-index: 0;
+        }
+        .neural-node {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.7);
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.5);
+        }
+        .neural-connection {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.3);
+            transform-origin: top left;
+        }
+        .axis path,
+        .axis line {
+            stroke: #ccc;
+            stroke-width: 1;
+        }
+        .axis text {
+            fill: #ccc;
+            font-size: 12px;
+        }
+        .line {
+            fill: none;
+            stroke-width: 3;
+        }
+        .actual-line {
+            stroke: #fff;
+        }
+        .lstm-line {
+            stroke: #4ade80;
+        }
+        .arima-line {
+            stroke: #f97316;
+        }
+        .point {
+            fill: #fff;
+        }
+        .advantage-item {
+            transition: all 0.3s ease;
+        }
+        .advantage-item:hover {
+            transform: translateX(5px);
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-blue-900 to-blue-700 text-white h-screen w-screen flex items-center justify-center overflow-hidden">
+<div class="absolute inset-0 overflow-hidden">
+<!-- Neural Network Background -->
+<div class="neural-network w-full h-full">
+<!-- Nodes -->
+<div class="neural-node w-3 h-3" style="top: 15%; left: 10%;"></div>
+<div class="neural-node w-4 h-4" style="top: 35%; left: 8%;"></div>
+<div class="neural-node w-3 h-3" style="top: 65%; left: 12%;"></div>
+<div class="neural-node w-5 h-5" style="top: 25%; left: 88%;"></div>
+<div class="neural-node w-3 h-3" style="top: 50%; left: 92%;"></div>
+<div class="neural-node w-4 h-4" style="top: 75%; left: 90%;"></div>
+<!-- Connections -->
+<div class="neural-connection w-1 h-25" style="top: 17%; left: 11%; transform: rotate(25deg);"></div>
+<div class="neural-connection w-1 h-35" style="top: 37%; left: 9%; transform: rotate(-30deg);"></div>
+<div class="neural-connection w-1 h-30" style="top: 27%; left: 89%; transform: rotate(45deg);"></div>
+<div class="neural-connection w-1 h-32" style="top: 52%; left: 93%; transform: rotate(-25deg);"></div>
+</div>
+</div>
+<div class="relative z-10 w-full h-full max-w-screen-xl mx-auto px-12 py-8 flex flex-col">
+<!-- Header -->
+<div class="mb-8">
+<h1 class="text-6xl font-bold text-white pb-4 border-b-8 border-green-400 inline-block">案例二：流感趋势精准预测</h1>
+</div>
+<!-- Main Content -->
+<div class="flex flex-grow">
+<!-- Left Column - Chart -->
+<div class="w-3/5 pr-6">
+<div class="bg-blue-800/40 backdrop-blur-sm rounded-xl p-6 shadow-lg border border-blue-600/30 h-full flex flex-col">
+<h2 class="text-2xl font-semibold text-blue-200 mb-4">LSTM vs ARIMA 流感预测效果对比</h2>
+<div class="flex-grow" id="chart"></div>
+<div class="flex justify-center space-x-6 mt-4">
+<div class="flex items-center">
+<div class="w-4 h-4 bg-white rounded-full mr-2"></div>
+<span class="text-lg">实际流感病例</span>
+</div>
+<div class="flex items-center">
+<div class="w-4 h-4 bg-green-400 rounded-full mr-2"></div>
+<span class="text-lg">LSTM预测</span>
+</div>
+<div class="flex items-center">
+<div class="w-4 h-4 bg-orange-500 rounded-full mr-2"></div>
+<span class="text-lg">ARIMA预测</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column - Key Points -->
+<div class="w-2/5 pl-6">
+<div class="bg-blue-800/40 backdrop-blur-sm rounded-xl p-6 shadow-lg border border-blue-600/30 mb-4">
+<h2 class="text-2xl font-semibold text-blue-200 mb-4 flex items-center">
+<i class="fas fa-chart-line text-green-400 mr-2"></i>
+案例概述
+</h2>
+<p class="text-lg text-blue-100 mb-4">
+本案例展示了深度学习LSTM模型与传统ARIMA模型在季节性流感预测中的效果对比，数据来源于某地区历年流感监测系统。
+</p>
+</div>
+<div class="bg-blue-800/40 backdrop-blur-sm rounded-xl p-6 shadow-lg border border-blue-600/30">
+<h2 class="text-2xl font-semibold text-blue-200 mb-4 flex items-center">
+<i class="fas fa-award text-orange-400 mr-2"></i>
+LSTM模型优势
+</h2>
+<ul class="space-y-4">
+<li class="advantage-item flex items-start">
+<i class="fas fa-check-circle text-green-400 mt-1 mr-2"></i>
+<span class="text-lg">更准确预测流感高峰时间，提前为医疗资源调配提供依据</span>
+</li>
+<li class="advantage-item flex items-start">
+<i class="fas fa-check-circle text-green-400 mt-1 mr-2"></i>
+<span class="text-lg">精确估计流感持续时间，助力疾控部门确定防控周期</span>
+</li>
+<li class="advantage-item flex items-start">
+<i class="fas fa-check-circle text-green-400 mt-1 mr-2"></i>
+<span class="text-lg">准确预测流感强度，为疫苗接种和药品储备提供决策支持</span>
+</li>
+<li class="advantage-item flex items-start">
+<i class="fas fa-check-circle text-green-400 mt-1 mr-2"></i>
+<span class="text-lg">有效捕捉非线性趋势变化，适应复杂现实情况</span>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<!-- Footer -->
+<div class="mt-auto flex justify-between items-center text-blue-300 text-lg">
+<div>11/15</div>
+<div class="text-center">基于深度学习的传染病预警模型构建与应用</div>
+<div class="flex items-center">
+<i class="fas fa-brain mr-2"></i>
+<i class="fas fa-virus mr-2"></i>
+<i class="fas fa-chart-line"></i>
+</div>
+</div>
+</div>
+<script>
+        // Set up the chart
+        document.addEventListener('DOMContentLoaded', function() {
+            const chartDiv = document.getElementById('chart');
+            const width = chartDiv.clientWidth;
+            const height = chartDiv.clientHeight;
+            const margin = {top: 20, right: 30, bottom: 40, left: 50};
+            const innerWidth = width - margin.left - margin.right;
+            const innerHeight = height - margin.top - margin.bottom;
+            
+            // Sample data based on document content (conceptual representation, not actual values)
+            const data = [
+                {week: 1, actual: 20, lstm: 18, arima: 15},
+                {week: 2, actual: 25, lstm: 24, arima: 20},
+                {week: 3, actual: 35, lstm: 33, arima: 25},
+                {week: 4, actual: 50, lstm: 48, arima: 35},
+                {week: 5, actual: 75, lstm: 72, arima: 55},
+                {week: 6, actual: 100, lstm: 95, arima: 75},
+                {week: 7, actual: 120, lstm: 115, arima: 90},
+                {week: 8, actual: 135, lstm: 130, arima: 100},
+                {week: 9, actual: 125, lstm: 127, arima: 105},
+                {week: 10, actual: 110, lstm: 112, arima: 100},
+                {week: 11, actual: 90, lstm: 92, arima: 85},
+                {week: 12, actual: 70, lstm: 72, arima: 65},
+                {week: 13, actual: 50, lstm: 52, arima: 55},
+                {week: 14, actual: 35, lstm: 36, arima: 40},
+                {week: 15, actual: 25, lstm: 26, arima: 30}
+            ];
+            
+            // Create SVG
+            const svg = d3.select('#chart')
+                .append('svg')
+                .attr('width', width)
+                .attr('height', height);
+                
+            const g = svg.append('g')
+                .attr('transform', `translate(${margin.left}, ${margin.top})`);
+                
+            // Create scales
+            const xScale = d3.scaleLinear()
+                .domain([1, 15])
+                .range([0, innerWidth]);
+                
+            const yScale = d3.scaleLinear()
+                .domain([0, 150])
+                .range([innerHeight, 0]);
+                
+            // Create axes
+            const xAxis = d3.axisBottom(xScale)
+                .ticks(7)
+                .tickFormat(d => `第${d}周`);
+                
+            const yAxis = d3.axisLeft(yScale)
+                .ticks(5);
+                
+            g.append('g')
+                .attr('class', 'axis')
+                .attr('transform', `translate(0, ${innerHeight})`)
+                .call(xAxis);
+                
+            g.append('g')
+                .attr('class', 'axis')
+                .call(yAxis);
+                
+            // Add x-axis label
+            g.append('text')
+                .attr('class', 'text-xs fill-current text-blue-200')
+                .attr('text-anchor', 'middle')
+                .attr('x', innerWidth / 2)
+                .attr('y', innerHeight + 35)
+                .text('时间');
+                
+            // Add y-axis label
+            g.append('text')
+                .attr('class', 'text-xs fill-current text-blue-200')
+                .attr('text-anchor', 'middle')
+                .attr('transform', 'rotate(-90)')
+                .attr('x', -innerHeight / 2)
+                .attr('y', -35)
+                .text('流感病例数');
+                
+            // Create line generators
+            const actualLine = d3.line()
+                .x(d => xScale(d.week))
+                .y(d => yScale(d.actual))
+                .curve(d3.curveCatmullRom);
+                
+            const lstmLine = d3.line()
+                .x(d => xScale(d.week))
+                .y(d => yScale(d.lstm))
+                .curve(d3.curveCatmullRom);
+                
+            const arimaLine = d3.line()
+                .x(d => xScale(d.week))
+                .y(d => yScale(d.arima))
+                .curve(d3.curveCatmullRom);
+                
+            // Add the lines
+            g.append('path')
+                .datum(data)
+                .attr('class', 'line actual-line')
+                .style('stroke-dasharray', '5,5')
+                .attr('d', actualLine);
+                
+            g.append('path')
+                .datum(data)
+                .attr('class', 'line lstm-line')
+                .attr('d', lstmLine);
+                
+            g.append('path')
+                .datum(data)
+                .attr('class', 'line arima-line')
+                .attr('d', arimaLine);
+                
+            // Add peak highlighting
+            const peak = data.reduce((max, d) => d.actual > max.actual ? d : max, data[0]);
+            
+            g.append('circle')
+                .attr('cx', xScale(peak.week))
+                .attr('cy', yScale(peak.actual))
+                .attr('r', 6)
+                .attr('class', 'point')
+                .style('fill', '#ffffff');
+                
+            g.append('circle')
+                .attr('cx', xScale(peak.week))
+                .attr('cy', yScale(peak.lstm))
+                .attr('r', 6)
+                .style('fill', '#4ade80');
+                
+            g.append('circle')
+                .attr('cx', xScale(peak.week))
+                .attr('cy', yScale(peak.arima))
+                .attr('r', 6)
+                .style('fill', '#f97316');
+                
+            // Add annotation for peak
+            g.append('text')
+                .attr('x', xScale(peak.week))
+                .attr('y', yScale(peak.actual) - 15)
+                .attr('text-anchor', 'middle')
+                .attr('class', 'text-xs fill-current text-white')
+                .text('流感高峰');
+        });
+    </script>
+
+</body></html>

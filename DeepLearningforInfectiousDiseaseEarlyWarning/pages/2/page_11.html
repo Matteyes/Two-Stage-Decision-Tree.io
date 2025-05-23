@@ -1,0 +1,236 @@
+<!DOCTYPE html><html lang="zh"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>医疗应用：疾病趋势预测</title>
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"/>
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script><style>
+        /* .bg-primary { background-color: #003366; } */
+        .bg-secondary { background-color: #66CCFF; }
+        .text-accent { color: #FF9900; }
+        .border-accent { border-color: #FF9900; }
+        .slide-content {
+            min-height: 720px;
+            width: 1280px;
+            
+        }
+        .application-box {
+            transition: all 0.3s ease;
+        }
+        .application-box:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+        }
+        .slide-number {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            font-size: 14px;
+            color: #ffffff;
+            opacity: 0.7;
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen">
+<div class="slide-content bg-primary relative">
+<!-- Header -->
+<div class="pt-10 pb-4 px-16">
+<h1 class="text-white text-6xl font-bold pb-4 border-b-8 border-green-400 inline-block">医疗应用：疾病趋势预测</h1>
+</div>
+<!-- Main Content -->
+<div class="px-16 py-6 grid grid-cols-5 gap-6">
+<!-- Left Column - Content -->
+<div class="col-span-3 space-y-6">
+<!-- COVID-19 Section -->
+<div class="application-box bg-white bg-opacity-10 rounded-lg p-6">
+<div class="flex items-center mb-3">
+<div class="h-12 w-12 rounded-full bg-secondary flex items-center justify-center mr-4">
+<i class="fas fa-virus text-primary text-2xl"></i>
+</div>
+<h3 class="text-accent font-bold text-2xl">COVID-19预测应用</h3>
+</div>
+<p class="text-white mb-3 text-lg">基础模型能有效捕捉疫情传播的复杂时间模式和多变量交互作用：</p>
+<ul class="text-white space-y-2">
+<li class="flex items-start">
+<i class="fas fa-check-circle text-secondary mt-1 mr-2"></i>
+<span class="text-lg">TabPFN-TS、TimeGPT、TimesFM、Lag-Llama和Chronos等模型用于预测不同国家和地区的病例数</span>
+</li>
+<li class="flex items-start">
+<i class="fas fa-check-circle text-secondary mt-1 mr-2"></i>
+<span class="text-lg">展现出优于传统时间序列模型的性能</span>
+</li>
+<li class="flex items-start">
+<i class="fas fa-check-circle text-secondary mt-1 mr-2"></i>
+<span class="text-lg">无需长时间训练，快速适应新的疾病数据</span>
+</li>
+</ul>
+</div>
+<!-- Other Diseases Section -->
+<div class="application-box bg-white bg-opacity-10 rounded-lg p-6">
+<div class="flex items-center mb-3">
+<div class="h-12 w-12 rounded-full bg-secondary flex items-center justify-center mr-4">
+<i class="fas fa-viruses text-primary text-2xl"></i>
+</div>
+<h3 class="text-accent font-bold text-2xl">其他传染病应用</h3>
+</div>
+<p class="text-white mb-3 text-lg">基础模型在多种传染病预测中展现潜力：</p>
+<div class="grid grid-cols-2 gap-4">
+<div class="bg-white bg-opacity-5 p-3 rounded">
+<h4 class="text-secondary font-semibold mb-1 text-orange-500 text-lg">结核病、手足口病、乙型肝炎</h4>
+<p class="text-white text-lg">整合多源数据提供更全面、准确的预测</p>
+</div>
+<div class="bg-white bg-opacity-5 p-3 rounded">
+<h4 class="text-secondary font-semibold mb-1 text-orange-500 text-lg">季节性流感</h4>
+<p class="text-white text-lg">精准捕捉周期性变化，辅助防控策略制定</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Right Column - Visualization &amp; Advantages -->
+<div class="col-span-2 space-y-6">
+<!-- Conceptual Visualization -->
+<div class="bg-white bg-opacity-10 rounded-lg p-5 h-56">
+<h3 class="text-accent font-bold text-xl mb-3">疾病趋势预测概念图</h3>
+<div class="h-40" id="trend-visualization"></div>
+</div>
+<!-- Key Advantages -->
+<div class="bg-white bg-opacity-10 rounded-lg p-5">
+<h3 class="text-accent font-bold text-xl mb-3">关键优势</h3>
+<ul class="text-white space-y-3">
+<li class="flex items-start">
+<div class="h-8 w-8 rounded-full bg-secondary flex items-center justify-center mr-3 flex-shrink-0">
+<i class="fas fa-bolt text-primary"></i>
+</div>
+<span class="text-lg">特别适合应对突发公共卫生事件，反应速度快</span>
+</li>
+<li class="flex items-start">
+<div class="h-8 w-8 rounded-full bg-secondary flex items-center justify-center mr-3 flex-shrink-0">
+<i class="fas fa-database text-primary"></i>
+</div>
+<span class="text-lg">能整合气象数据、人口流动数据等多源信息</span>
+</li>
+<li class="flex items-start">
+<div class="h-8 w-8 rounded-full bg-secondary flex items-center justify-center mr-3 flex-shrink-0">
+<i class="fas fa-chart-line text-primary"></i>
+</div>
+<span class="text-lg">捕捉复杂时间模式和季节性变化</span>
+</li>
+<li class="flex items-start">
+<div class="h-8 w-8 rounded-full bg-secondary flex items-center justify-center mr-3 flex-shrink-0">
+<i class="fas fa-clock text-primary"></i>
+</div>
+<span class="text-lg">提前预警，为卫生部门决策提供时间窗口</span>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<!-- Slide Number -->
+<div class="mt-4 flex justify-between items-center text-blue-300 text-lg">
+<div>11/14</div>
+<div class="text-center">时间序列基础模型</div>
+<div class="flex items-center">
+<i class="fas fa-brain mr-2"></i>
+<i class="fas fa-virus mr-2"></i>
+<i class="fas fa-chart-line"></i>
+</div>
+</div>
+</div>
+<script>
+        // Simple conceptual visualization of disease trend prediction
+        // This is not using actual data, just a conceptual representation
+        document.addEventListener('DOMContentLoaded', function() {
+            const margin = {top: 20, right: 20, bottom: 30, left: 40};
+            const width = document.getElementById('trend-visualization').offsetWidth - margin.left - margin.right;
+            const height = document.getElementById('trend-visualization').offsetHeight - margin.top - margin.bottom;
+            
+            const svg = d3.select('#trend-visualization')
+                .append('svg')
+                .attr('width', width + margin.left + margin.right)
+                .attr('height', height + margin.top + margin.bottom)
+                .append('g')
+                .attr('transform', `translate(${margin.left},${margin.top})`);
+                
+            // Conceptual data - not real data
+            const actualData = [
+                {day: 0, value: 10}, {day: 1, value: 15}, {day: 2, value: 25}, 
+                {day: 3, value: 40}, {day: 4, value: 60}, {day: 5, value: 85},
+                {day: 6, value: 65}, {day: 7, value: 50}, {day: 8, value: 35}
+            ];
+            
+            const predictedData = [
+                {day: 8, value: 35}, {day: 9, value: 25}, {day: 10, value: 18}, 
+                {day: 11, value: 12}, {day: 12, value: 8}
+            ];
+            
+            // Scales
+            const x = d3.scaleLinear()
+                .domain([0, 12])
+                .range([0, width]);
+                
+            const y = d3.scaleLinear()
+                .domain([0, 100])
+                .range([height, 0]);
+                
+            // Add X axis
+            svg.append('g')
+                .attr('transform', `translate(0,${height})`)
+                .call(d3.axisBottom(x).ticks(5))
+                .attr('color', '#ffffff');
+                
+            // Add Y axis
+            svg.append('g')
+                .call(d3.axisLeft(y).ticks(5))
+                .attr('color', '#ffffff');
+                
+            // Add actual data line
+            svg.append('path')
+                .datum(actualData)
+                .attr('fill', 'none')
+                .attr('stroke', '#66CCFF')
+                .attr('stroke-width', 3)
+                .attr('d', d3.line()
+                    .x(d => x(d.day))
+                    .y(d => y(d.value))
+                );
+                
+            // Add predicted data line
+            svg.append('path')
+                .datum(predictedData)
+                .attr('fill', 'none')
+                .attr('stroke', '#FF9900')
+                .attr('stroke-width', 3)
+                .attr('stroke-dasharray', '5,5')
+                .attr('d', d3.line()
+                    .x(d => x(d.day))
+                    .y(d => y(d.value))
+                );
+                
+            // Add legend
+            svg.append('circle').attr('cx', width-120).attr('cy', 10).attr('r', 5).style('fill', '#66CCFF');
+            svg.append('text').attr('x', width-110).attr('y', 15).text('实际数据').style('font-size', '12px').style('fill', '#ffffff');
+            svg.append('circle').attr('cx', width-120).attr('cy', 50).attr('r', 5).style('fill', '#FF9900');
+            svg.append('text').attr('x', width-110).attr('y', 55).text('预测数据').style('font-size', '12px').style('fill', '#ffffff');
+            
+            // Add a vertical line at the prediction start
+            svg.append('line')
+                .attr('x1', x(8))
+                .attr('y1', 0)
+                .attr('x2', x(8))
+                .attr('y2', height)
+                .attr('stroke', '#ffffff')
+                .attr('stroke-width', 1)
+                .attr('stroke-dasharray', '3,3');
+                
+            // Add label for the prediction line
+            svg.append('text')
+                .attr('x', x(8) + 5)
+                .attr('y', 35)
+                .text('预测开始')
+                .style('font-size', '10px')
+                .style('fill', '#ffffff');
+        });
+    </script>
+
+</body></html>

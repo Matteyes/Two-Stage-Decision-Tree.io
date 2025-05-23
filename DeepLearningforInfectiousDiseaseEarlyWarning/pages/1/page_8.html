@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>深度学习 vs ARIMA统计模型</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"/>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap');
+        body {
+            font-family: 'Noto Sans SC', sans-serif;
+            background: transparent !important;
+            overflow: hidden;
+        }
+
+        /* 神经网络背景特效 */
+        .neural-network {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0.08;
+            z-index: 0;
+            pointer-events: none;
+        }
+        .neural-node {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.7);
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.5);
+            animation: pulse 2s infinite;
+        }
+        .neural-connection {
+            position: absolute;
+            background: linear-gradient(90deg, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0) 100%);
+            transform-origin: top left;
+            animation: flow 3s infinite;
+        }
+
+        /* 动画效果 */
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+        @keyframes flow {
+            0% { opacity: 0.3; }
+            50% { opacity: 0.6; }
+            100% { opacity: 0.3; }
+        }
+
+        /* 表格交互效果 */
+        .table-row {
+            transition: all 0.3s ease;
+        }
+        .table-row:hover {
+            background: rgba(74, 144, 226, 0.15) !important;
+            backdrop-filter: blur(4px);
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-blue-900 to-blue-700 text-white h-screen w-screen flex items-center justify-center overflow-hidden">
+    <!-- 神经网络背景 -->
+    <div class="neural-network">
+        <div class="neural-node w-3 h-3" style="top: 15%; left: 10%;"></div>
+        <div class="neural-node w-4 h-4" style="top: 35%; left: 8%;"></div>
+        <div class="neural-node w-3 h-3" style="top: 65%; left: 12%;"></div>
+        <div class="neural-node w-5 h-5" style="top: 25%; left: 88%;"></div>
+        <div class="neural-node w-3 h-3" style="top: 50%; left: 92%;"></div>
+        <div class="neural-node w-4 h-4" style="top: 75%; left: 90%;"></div>
+        
+        <div class="neural-connection w-1 h-25" style="top: 17%; left: 11%; transform: rotate(25deg);"></div>
+        <div class="neural-connection w-1 h-35" style="top: 37%; left: 9%; transform: rotate(-30deg);"></div>
+        <div class="neural-connection w-1 h-30" style="top: 27%; left: 89%; transform: rotate(45deg);"></div>
+        <div class="neural-connection w-1 h-32" style="top: 52%; left: 93%; transform: rotate(-25deg);"></div>
+    </div>
+
+    <div class="relative z-10 w-full h-full max-w-[80%] mx-auto px-16 py-12 flex flex-col">
+        <div class="mb-8">
+            <h1 class="text-6xl font-bold text-white pb-4 border-b-8 border-green-400 inline-block">深度学习 vs ARIMA统计模型</h1>
+        </div>
+        <!-- Content -->
+        <div class="flex flex-grow justify-between space-x-8 mb-6">
+            <!-- 左侧表格 -->
+            <div class="w-1/2 bg-blue-800/40 backdrop-blur-sm rounded-xl p-8 shadow-lg border border-blue-600/30">
+                <table class="w-full text-lg table-fixed">
+                    <thead>
+                        <tr class="border-b border-blue-700">
+                            <th class="py-4 text-left pl-4 w-1/5">
+                                <i class="fas fa-chart-bar text-yellow-400 mr-2"></i>性能指标
+                            </th>
+                            <th class="py-4 text-center w-1/5">
+                                <div class="flex flex-col items-center">
+                                    <i class="fas fa-analytics text-blue-400 text-2xl mb-2"></i>
+                                    <span>ARIMA模型</span>
+                                </div>
+                            </th>
+                            <th class="py-4 text-center w-1/5">
+                                <div class="flex flex-col items-center">
+                                    <i class="fas fa-brain text-yellow-400 text-2xl mb-2"></i>
+                                    <span>深度学习模型</span>
+                                </div>
+                            </th>
+                            <th class="py-4 text-center w-1/5">
+                                <i class="fas fa-balance-scale text-blue-300 mr-2"></i>对比结论
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="table-row border-b border-blue-800 border-opacity-50">
+                            <td class="py-4 pl-4">
+                                <div class="flex items-center">
+                                    <i class="fas fa-bullseye text-red-400 mr-2"></i>
+                                    <span>预测准确性</span>
+                                </div>
+                            </td>
+                            <td class="py-4 text-center">短期预测较准确，长期预测准确性下降</td>
+                            <td class="py-4 text-center">短期和长期预测都可以达到较高准确性</td>
+                            <td class="py-4 text-center text-blue-300">深度学习在长期预测中优势明显</td>
+                        </tr>
+                        <tr class="table-row border-b border-blue-800 border-opacity-50">
+                            <td class="py-4 pl-4">
+                                <div class="flex items-center">
+                                    <i class="fas fa-calendar-alt text-green-400 mr-2"></i>
+                                    <span>适用时间尺度</span>
+                                </div>
+                            </td>
+                            <td class="py-4 text-center">适合短期预测（通常不超过30天）</td>
+                            <td class="py-4 text-center">可适应短期和长期预测</td>
+                            <td class="py-4 text-center text-blue-300">深度学习适用范围更广</td>
+                        </tr>
+                        <tr class="table-row border-b border-blue-800 border-opacity-50">
+                            <td class="py-4 pl-4">
+                                <div class="flex items-center">
+                                    <i class="fas fa-shield-alt text-purple-400 mr-2"></i>
+                                    <span>模型稳定性</span>
+                                </div>
+                            </td>
+                            <td class="py-4 text-center">对异常值敏感，稳定性较低</td>
+                            <td class="py-4 text-center">对异常值较为鲁棒，稳定性较高</td>
+                            <td class="py-4 text-center text-blue-300">深度学习在面对噪声数据时更稳健</td>
+                        </tr>
+                        <tr class="table-row border-b border-blue-800 border-opacity-50">
+                            <td class="py-4 pl-4">
+                                <div class="flex items-center">
+                                    <i class="fas fa-microchip text-blue-400 mr-2"></i>
+                                    <span>计算复杂度</span>
+                                </div>
+                            </td>
+                            <td class="py-4 text-center">较低，适合快速建模和预测</td>
+                            <td class="py-4 text-center">较高，需要大量数据和计算资源</td>
+                            <td class="py-4 text-center text-blue-300">ARIMA在资源受限情况下更具优势</td>
+                        </tr>
+                        <tr class="table-row">
+                            <td class="py-4 pl-4">
+                                <div class="flex items-center">
+                                    <i class="fas fa-search text-yellow-400 mr-2"></i>
+                                    <span>可解释性</span>
+                                </div>
+                            </td>
+                            <td class="py-4 text-center">较强，模型参数具有明确统计意义</td>
+                            <td class="py-4 text-center">较弱，模型决策过程难以解释</td>
+                            <td class="py-4 text-center text-blue-300">ARIMA更适合需要解释预测依据的场景</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <!-- 右侧图表 -->
+            <div class="w-1/2 flex flex-col space-y-6">
+                <!-- 雷达图 -->
+                <div class="bg-blue-800/40 backdrop-blur-sm rounded-xl p-6 shadow-lg border border-blue-600/30">
+                    <h3 class="text-xl font-semibold text-blue-200 mb-4 text-center text-3xl">
+                        <i class="fas fa-chart-radar text-yellow-400 mr-2"></i>
+                        性能雷达图对比
+                    </h3>
+                    <div class="h-64" id="radar-chart"></div>
+                </div>
+                <!-- 关键结论 -->
+                <div class="bg-blue-800/40 backdrop-blur-sm rounded-xl p-6 shadow-lg border border-blue-600/30">
+                    <h3 class="text-xl font-semibold text-blue-200 mb-4">
+                        <i class="fas fa-lightbulb text-yellow-400 mr-2"></i>
+                        关键结论
+                    </h3>
+                    <div class="space-y-4">
+                        <div class="bg-blue-700/30 rounded-lg p-4">
+                            <div class="flex items-start">
+                                <i class="fas fa-check-circle text-green-400 mt-1 mr-2"></i>
+                                <p class="text-lg text-blue-100">
+                                    <span class="text-yellow-300">ARIMA优势：</span>
+                                    计算效率高，解释性强，适合短期预测和突发公共卫生事件的快速响应
+                                </p>
+                            </div>
+                        </div>
+                        <div class="bg-blue-700/30 rounded-lg p-4">
+                            <div class="flex items-start">
+                                <i class="fas fa-check-circle text-green-400 mt-1 mr-2"></i>
+                                <p class="text-lg text-blue-100">
+                                    <span class="text-yellow-300">深度学习优势：</span>
+                                    能捕捉复杂非线性关系，长期预测准确性高，适合多变量和大规模数据分析
+                                </p>
+                            </div>
+                        </div>
+                        <div class="bg-blue-700/30 rounded-lg p-4">
+                            <div class="flex items-start">
+                                <i class="fas fa-info-circle text-blue-400 mt-1 mr-2"></i>
+                                <p class="text-lg text-blue-100">
+                                    <span class="text-yellow-300">选择建议：</span>
+                                    根据预测目标、数据特性和可用资源综合考虑；某些情况下混合模型可能获得更好效果
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Footer -->
+        <div class="mt-auto flex justify-between items-center text-blue-300 text-lg">
+            <div>8/15</div>
+            <div class="text-center">基于深度学习的传染病预警模型构建与应用</div>
+            <div class="flex items-center">
+                <i class="fas fa-brain mr-2"></i>
+                <i class="fas fa-virus mr-2"></i>
+                <i class="fas fa-chart-line"></i>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // D3.js Radar Chart
+        document.addEventListener('DOMContentLoaded', function() {
+            const container = document.getElementById('radar-chart');
+            const width = container.clientWidth;
+            const height = container.clientHeight;
+            const radius = Math.min(width, height) / 2 - 30;
+            
+            const svg = d3.select('#radar-chart')
+                .append('svg')
+                .attr('width', width)
+                .attr('height', height)
+                .append('g')
+                .attr('transform', `translate(${width/2}, ${height/2})`);
+            
+            // Data for radar chart
+            const features = [
+                '预测准确性', '适用时间尺度', '模型稳定性',
+                '计算复杂度', '可解释性'
+            ];
+            
+            const arimaValues = [0.65, 0.4, 0.5, 0.8, 0.9];
+            const dlValues = [0.9, 0.85, 0.8, 0.4, 0.3];
+            
+            // Scales
+            const angleScale = d3.scaleLinear()
+                .domain([0, features.length])
+                .range([0, 2 * Math.PI]);
+            
+            const radiusScale = d3.scaleLinear()
+                .domain([0, 1])
+                .range([0, radius]);
+            
+            // Draw background circles
+            const circles = [0.2, 0.4, 0.6, 0.8, 1];
+            circles.forEach(c => {
+                svg.append('circle')
+                    .attr('cx', 0)
+                    .attr('cy', 0)
+                    .attr('r', radiusScale(c))
+                    .attr('fill', 'none')
+                    .attr('stroke', '#4A90E2')
+                    .attr('stroke-width', 0.5)
+                    .attr('stroke-opacity', 0.3);
+            });
+            
+            // Draw axis lines
+            features.forEach((_, i) => {
+                const angle = angleScale(i);
+                const lineX = radius * Math.sin(angle);
+                const lineY = -radius * Math.cos(angle);
+                
+                svg.append('line')
+                    .attr('x1', 0)
+                    .attr('y1', 0)
+                    .attr('x2', lineX)
+                    .attr('y2', lineY)
+                    .attr('stroke', '#4A90E2')
+                    .attr('stroke-width', 0.5)
+                    .attr('stroke-opacity', 0.3);
+                
+                // Add axis labels
+                const labelX = (radius + 18) * Math.sin(angle);
+                const labelY = -(radius + 18) * Math.cos(angle);
+                
+                svg.append('text')
+                    .attr('x', labelX)
+                    .attr('y', labelY)
+                    .attr('text-anchor', 'middle')
+                    .attr('dominant-baseline', 'middle')
+                    .attr('font-size', '12px')
+                    .attr('fill', '#A7C7E7')
+                    .text(features[i]);
+            });
+            
+            // Create line and area generators
+            const lineGenerator = d3.lineRadial()
+                .angle((_, i) => angleScale(i))
+                .radius(d => radiusScale(d))
+                .curve(d3.curveLinearClosed);
+            
+            const areaGenerator = d3.areaRadial()
+                .angle((_, i) => angleScale(i))
+                .innerRadius(0)
+                .outerRadius(d => radiusScale(d))
+                .curve(d3.curveLinearClosed);
+            
+            // Draw ARIMA data
+            svg.append('path')
+                .datum(arimaValues)
+                .attr('d', areaGenerator)
+                .attr('fill', '#4A90E2')
+                .attr('fill-opacity', 0.2)
+                .attr('stroke', '#4A90E2')
+                .attr('stroke-width', 2);
+            
+            // Draw Deep Learning data
+            svg.append('path')
+                .datum(dlValues)
+                .attr('d', areaGenerator)
+                .attr('fill', '#F5A623')
+                .attr('fill-opacity', 0.2)
+                .attr('stroke', '#F5A623')
+                .attr('stroke-width', 2);
+            
+            // Add data points
+            arimaValues.forEach((d, i) => {
+                const angle = angleScale(i);
+                const x = radiusScale(d) * Math.sin(angle);
+                const y = -radiusScale(d) * Math.cos(angle);
+                
+                svg.append('circle')
+                    .attr('cx', x)
+                    .attr('cy', y)
+                    .attr('r', 3)
+                    .attr('fill', '#4A90E2');
+            });
+            
+            dlValues.forEach((d, i) => {
+                const angle = angleScale(i);
+                const x = radiusScale(d) * Math.sin(angle);
+                const y = -radiusScale(d) * Math.cos(angle);
+                
+                svg.append('circle')
+                    .attr('cx', x)
+                    .attr('cy', y)
+                    .attr('r', 3)
+                    .attr('fill', '#F5A623');
+            });
+            
+            // Add legend
+            const legend = svg.append('g')
+                .attr('transform', `translate(${-width/2 + 20}, ${-height/2 + 20})`);
+            
+            legend.append('rect')
+                .attr('x', 0)
+                .attr('y', 0)
+                .attr('width', 12)
+                .attr('height', 12)
+                .attr('fill', '#4A90E2');
+            
+            legend.append('text')
+                .attr('x', 20)
+                .attr('y', 10)
+                .attr('font-size', '15px')
+                .attr('fill', '#A7C7E7')
+                .text('ARIMA模型');
+            
+            legend.append('rect')
+                .attr('x', 0)
+                .attr('y', 30)
+                .attr('width', 12)
+                .attr('height', 12)
+                .attr('fill', '#F5A623');
+            
+            legend.append('text')
+                .attr('x', 20)
+                .attr('y', 40)
+                .attr('font-size', '15px')
+                .attr('fill', '#A7C7E7')
+                .text('深度学习模型');
+        });
+    </script>
+</body>
+</html>

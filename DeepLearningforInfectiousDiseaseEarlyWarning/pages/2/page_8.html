@@ -1,0 +1,230 @@
+<!DOCTYPE html><html lang="zh"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>模型比较：数据需求</title>
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"/>
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script><style>
+        /* .bg-primary { background-color: #003366; } */
+        .bg-secondary { background-color: #66CCFF; }
+        .text-accent { color: #FF9900; }
+        .border-accent { border-color: #FF9900; }
+        .slide-content {
+            min-height: 842px;
+            width: 1280px;
+            
+        }
+        .slide-number {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            font-size: 14px;
+            color: #ffffff;
+            opacity: 0.7;
+        }
+        .comparison-card {
+            height: 280px;
+            transition: all 0.3s ease;
+        }
+        .comparison-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen">
+<div class="slide-content bg-primary relative">
+<!-- Header -->
+<div class="pt-10 pb-4 px-16">
+<h1 class="text-white text-6xl font-bold pb-4 border-b-8 border-green-400 inline-block">模型比较：数据需求</h1>
+</div>
+<!-- Main Content -->
+<div class="px-16 py-4">
+<!-- Comparison Cards -->
+<div class="grid grid-cols-2 gap-8 mb-6">
+<!-- Foundation Model Card -->
+<div class="comparison-card bg-white bg-opacity-10 rounded-lg p-6">
+<div class="flex items-center mb-4">
+<div class="h-14 w-14 rounded-full bg-secondary flex items-center justify-center mr-4">
+<i class="fas fa-database text-primary text-2xl"></i>
+</div>
+<h3 class="text-accent font-bold text-2xl">Time Series Foundation Model</h3>
+</div>
+<ul class="text-white space-y-3">
+<li class="flex items-start">
+<i class="fas fa-check-circle text-secondary mt-1 mr-2"></i>
+<span>大规模预训练积累通用时间序列知识</span>
+</li>
+<li class="flex items-start">
+<i class="fas fa-check-circle text-secondary mt-1 mr-2"></i>
+<span>新任务仅需少量样本即可快速适应</span>
+</li>
+<li class="flex items-start">
+<i class="fas fa-check-circle text-secondary mt-1 mr-2"></i>
+<span>支持零样本或少样本学习</span>
+</li>
+<li class="flex items-start">
+<i class="fas fa-check-circle text-secondary mt-1 mr-2"></i>
+<span>适合医疗数据稀缺的场景（罕见疾病、新兴传染病）</span>
+</li>
+</ul>
+</div>
+<!-- Traditional DNN Card -->
+<div class="comparison-card bg-white bg-opacity-10 rounded-lg p-6">
+<div class="flex items-center mb-4">
+<div class="h-14 w-14 rounded-full bg-secondary flex items-center justify-center mr-4">
+<i class="fas fa-brain text-primary text-2xl"></i>
+</div>
+<h3 class="text-accent font-bold text-2xl">传统深度神经网络模型</h3>
+</div>
+<ul class="text-white space-y-3">
+<li class="flex items-start">
+<i class="fas fa-times-circle text-red-400 mt-1 mr-2"></i>
+<span>通常需要大量标注数据才能达到良好性能</span>
+</li>
+<li class="flex items-start">
+<i class="fas fa-times-circle text-red-400 mt-1 mr-2"></i>
+<span>针对新任务常需完全重新训练</span>
+</li>
+<li class="flex items-start">
+<i class="fas fa-times-circle text-red-400 mt-1 mr-2"></i>
+<span>在数据稀缺情况下表现不佳</span>
+</li>
+<li class="flex items-start">
+<i class="fas fa-times-circle text-red-400 mt-1 mr-2"></i>
+<span>对标注数据质量和数量要求高</span>
+</li>
+</ul>
+</div>
+</div>
+<!-- Research Case Study -->
+<div class="bg-white bg-opacity-10 rounded-lg p-6 mb-6">
+<h3 class="text-accent font-bold text-2xl mb-3 flex items-center">
+<i class="fas fa-microscope mr-3"></i>研究案例
+</h3>
+<div class="flex items-center">
+<div class="w-1/2">
+<p class="text-white text-lg mb-2">在一项针对罕见疾病预测的研究中：</p>
+<p class="text-white"><span class="text-secondary font-bold">Time Series Foundation Model</span> 仅使用 <span class="text-accent font-bold">10%</span> 的训练数据就达到了传统LSTM模型使用全量数据的预测准确率。</p>
+</div>
+<div class="w-1/2" id="data-comparison-chart"></div>
+</div>
+</div>
+<!-- Key Benefits -->
+<div class="bg-white bg-opacity-10 rounded-lg p-5">
+<h3 class="text-accent font-bold text-2xl mb-2 flex items-center">
+<i class="fas fa-lightbulb mr-3"></i>医疗应用价值
+</h3>
+<ul class="text-white grid grid-cols-2 gap-3">
+<li class="flex items-start">
+<i class="fas fa-plus-circle text-secondary mt-1 mr-2"></i>
+<span>解决罕见疾病数据稀缺问题</span>
+</li>
+<li class="flex items-start">
+<i class="fas fa-plus-circle text-secondary mt-1 mr-2"></i>
+<span>加速新兴传染病的预测模型开发</span>
+</li>
+<li class="flex items-start">
+<i class="fas fa-plus-circle text-secondary mt-1 mr-2"></i>
+<span>减轻医疗数据采集和标注负担</span>
+</li>
+<li class="flex items-start">
+<i class="fas fa-plus-circle text-secondary mt-1 mr-2"></i>
+<span>提高小规模医疗机构的AI应用能力</span>
+</li>
+</ul>
+</div>
+</div>
+<!-- Slide Number -->
+<div class="mt-4 flex justify-between items-center text-blue-300 text-lg">
+<div>8/14</div>
+<div class="text-center">时间序列基础模型</div>
+<div class="flex items-center">
+<i class="fas fa-brain mr-2"></i>
+<i class="fas fa-virus mr-2"></i>
+<i class="fas fa-chart-line"></i>
+</div>
+</div>
+</div>
+<script>
+        // D3.js visualization for data comparison
+        document.addEventListener('DOMContentLoaded', function() {
+            const width = 300;
+            const height = 150;
+            const margin = {top: 20, right: 20, bottom: 40, left: 50};
+            
+            const svg = d3.select("#data-comparison-chart")
+                .append("svg")
+                .attr("width", width)
+                .attr("height", height)
+                .append("g")
+                .attr("transform", `translate(${margin.left},${margin.top})`);
+                
+            // Data based on document (10% vs 100%)
+            const data = [
+                {model: "Foundation Model", data_percentage: 10, color: "#66CCFF"},
+                {model: "传统LSTM", data_percentage: 100, color: "#FF9900"}
+            ];
+            
+            // X axis
+            const x = d3.scaleBand()
+                .range([0, width - margin.left - margin.right])
+                .domain(data.map(d => d.model))
+                .padding(0.3);
+            
+            svg.append("g")
+                .attr("transform", `translate(0,${height - margin.top - margin.bottom})`)
+                .call(d3.axisBottom(x))
+                .selectAll("text")
+                .attr("fill", "white")
+                .style("text-anchor", "middle");
+                
+            // Y axis
+            const y = d3.scaleLinear()
+                .domain([0, 100])
+                .range([height - margin.top - margin.bottom, 0]);
+                
+            svg.append("g")
+                .call(d3.axisLeft(y))
+                .selectAll("text")
+                .attr("fill", "white");
+                
+            // Y axis label
+            svg.append("text")
+                .attr("text-anchor", "middle")
+                .attr("fill", "white")
+                .attr("transform", `translate(${-margin.left/1.5},${(height - margin.top - margin.bottom)/2}) rotate(-90)`)
+                .text("所需训练数据 (%)");
+                
+            // Bars
+            svg.selectAll("mybar")
+                .data(data)
+                .enter()
+                .append("rect")
+                .attr("x", d => x(d.model))
+                .attr("width", x.bandwidth())
+                .attr("fill", d => d.color)
+                .attr("height", 0)
+                .attr("y", height - margin.top - margin.bottom)
+                .transition()
+                .duration(800)
+                .attr("y", d => y(d.data_percentage))
+                .attr("height", d => height - margin.top - margin.bottom - y(d.data_percentage));
+                
+            // Add values on top of bars
+            svg.selectAll(".text")
+                .data(data)
+                .enter()
+                .append("text")
+                .attr("class", "label")
+                .attr("text-anchor", "middle")
+                .attr("fill", "white")
+                .attr("font-weight", "bold")
+                .attr("x", d => x(d.model) + x.bandwidth()/2)
+                .attr("y", d => y(d.data_percentage) - 5)
+                .text(d => d.data_percentage + "%");
+        });
+    </script>
+
+</body></html>

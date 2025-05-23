@@ -1,0 +1,253 @@
+<!DOCTYPE html><html lang="zh"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>医疗应用：个体化健康监测</title>
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"/>
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script><style>
+        /* .bg-primary { background-color: #003366; } */
+        .bg-secondary { background-color: #66CCFF; }
+        .text-accent { color: #FF9900; }
+        .border-accent { border-color: #FF9900; }
+        .slide-content {
+            min-height: 720px;
+            width: 1280px;
+            
+        }
+        .monitoring-item {
+            transition: all 0.3s ease;
+        }
+        .monitoring-item:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        .slide-number {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            font-size: 14px;
+            color: #ffffff;
+            opacity: 0.7;
+        }
+        .signal-line {
+            stroke-dasharray: 1000;
+            stroke-dashoffset: 1000;
+            animation: dash 3s linear forwards;
+        }
+        @keyframes dash {
+            to {
+                stroke-dashoffset: 0;
+            }
+        }
+    </style>
+</head>
+<body class="flex items-center justify-center min-h-screen">
+<div class="slide-content bg-primary relative">
+<!-- Header -->
+<div class="pt-10 pb-4 px-16">
+<h1 class="text-white text-6xl font-bold pb-4 border-b-8 border-green-400 inline-block">医疗应用：个体化健康监测</h1>
+</div>
+<!-- Introduction Section -->
+<div class="px-16 py-4">
+<div class="bg-white bg-opacity-10 rounded-lg p-5 mb-6">
+<div class="flex items-start">
+<i class="fas fa-user-md text-secondary text-3xl mr-4 mt-1 text-white"></i>
+<p class="text-white text-lg">
+                        Time Series Foundation Model能够同时处理来自不同来源的时间序列数据，如心电图、血压、血糖、活动量等，并从中提取有意义的健康指标，为个体健康管理提供精准支持。
+                    </p>
+</div>
+</div>
+<!-- Visualization of physiological signals -->
+<div class="h-20 mb-6 flex justify-center" id="signal-visualization">
+<!-- D3.js will render here -->
+</div>
+<!-- Applications Grid -->
+<div class="grid grid-cols-3 gap-5">
+<!-- Chronic Disease Management -->
+<div class="monitoring-item bg-white bg-opacity-10 rounded-lg p-4">
+<div class="flex items-center mb-3">
+<div class="h-12 w-12 rounded-full bg-secondary flex items-center justify-center mr-3">
+<i class="fas fa-heartbeat text-primary text-xl"></i>
+</div>
+<h3 class="text-accent font-bold text-2xl">慢性病管理</h3>
+</div>
+<p class="text-white text-lg">
+                        持续监测患者的各项生理指标，预测慢性病（如糖尿病、高血压）的发展趋势，及时提醒采取干预措施。
+                    </p>
+</div>
+<!-- Early Risk Identification -->
+<div class="monitoring-item bg-white bg-opacity-10 rounded-lg p-4">
+<div class="flex items-center mb-3">
+<div class="h-12 w-12 rounded-full bg-secondary flex items-center justify-center mr-3">
+<i class="fas fa-exclamation-triangle text-primary text-xl"></i>
+</div>
+<h3 class="text-accent font-bold text-2xl">早期风险识别</h3>
+</div>
+<p class="text-white text-lg">
+                        从日常监测数据中识别潜在的健康风险，如心血管疾病、中风等，实现疾病的早期预防。
+                    </p>
+</div>
+<!-- Personalized Treatment Plans -->
+<div class="monitoring-item bg-white bg-opacity-10 rounded-lg p-4">
+<div class="flex items-center mb-3">
+<div class="h-12 w-12 rounded-full bg-secondary flex items-center justify-center mr-3">
+<i class="fas fa-pills text-primary text-xl"></i>
+</div>
+<h3 class="text-accent font-bold text-2xl">个性化治疗方案</h3>
+</div>
+<p class="text-white text-lg">
+                        基于患者的历史健康数据和治疗反应，辅助医生制定更加个性化的治疗方案，提高治疗效果。
+                    </p>
+</div>
+<!-- Rehabilitation Monitoring -->
+<div class="monitoring-item bg-white bg-opacity-10 rounded-lg p-4">
+<div class="flex items-center mb-3">
+<div class="h-12 w-12 rounded-full bg-secondary flex items-center justify-center mr-3">
+<i class="fas fa-walking text-primary text-xl"></i>
+</div>
+<h3 class="text-accent font-bold text-2xl">康复进程监测</h3>
+</div>
+<p class="text-white text-lg">
+                        对于术后或重症患者，实时分析康复过程中的各项指标，预测康复趋势，及时调整康复计划。
+                    </p>
+</div>
+<!-- Lifestyle Recommendations -->
+<div class="monitoring-item bg-white bg-opacity-10 rounded-lg p-4">
+<div class="flex items-center mb-3">
+<div class="h-12 w-12 rounded-full bg-secondary flex items-center justify-center mr-3">
+<i class="fas fa-utensils text-primary text-xl"></i>
+</div>
+<h3 class="text-accent font-bold text-2xl">生活方式建议</h3>
+</div>
+<p class="text-white text-lg">
+                        通过分析个人的活动模式、饮食习惯等数据，提供个性化的健康生活建议，促进健康管理。
+                    </p>
+</div>
+<!-- Multimodal Data Integration -->
+<div class="monitoring-item bg-white bg-opacity-10 rounded-lg p-4">
+<div class="flex items-center mb-3">
+<div class="h-12 w-12 rounded-full bg-secondary flex items-center justify-center mr-3">
+<i class="fas fa-network-wired text-primary text-xl"></i>
+</div>
+<h3 class="text-accent font-bold text-2xl">多模态数据整合</h3>
+</div>
+<p class="text-white text-lg">
+                        整合可穿戴设备、移动健康应用、电子病历等多源数据，构建全面的个人健康画像，提供连续性健康监测。
+                    </p>
+</div>
+</div>
+</div>
+<!-- Benefits Summary -->
+<div class="px-16 py-2">
+<div class="bg-secondary bg-opacity-20 rounded-lg p-3 flex items-center">
+<i class="fas fa-lightbulb text-accent text-2xl mr-3"></i>
+<p class="text-white text-s">
+                    个体化健康监测应用不仅能够提高个体健康管理的精准度，还能为医疗资源的精准分配提供依据，推动医疗服务向预防性、个性化方向发展。
+                </p>
+</div>
+</div>
+<!-- Slide Number -->
+<div class="mt-4 flex justify-between items-center text-blue-300 text-lg">
+<div>13/14</div>
+<div class="text-center">时间序列基础模型</div>
+<div class="flex items-center">
+<i class="fas fa-brain mr-2"></i>
+<i class="fas fa-virus mr-2"></i>
+<i class="fas fa-chart-line"></i>
+</div>
+</div>
+</div>
+<script>
+        // D3.js visualization of physiological signals
+        document.addEventListener('DOMContentLoaded', function() {
+            const svg = d3.select('#signal-visualization')
+                .append('svg')
+                .attr('width', 800)
+                .attr('height', 80);
+                
+            // ECG-like signal
+            const ecgData = generateECGLikeData(40);
+            const ecgLine = d3.line()
+                .x((d, i) => i * 10 + 20)
+                .y(d => d + 20);
+                
+            svg.append('path')
+                .datum(ecgData)
+                .attr('class', 'signal-line')
+                .attr('fill', 'none')
+                .attr('stroke', '#FF9900')
+                .attr('stroke-width', 2)
+                .attr('d', ecgLine);
+                
+            // Blood pressure-like signal
+            const bpData = generateBPLikeData(40);
+            const bpLine = d3.line()
+                .x((d, i) => i * 10 + 450)
+                .y(d => d + 20);
+                
+            svg.append('path')
+                .datum(bpData)
+                .attr('class', 'signal-line')
+                .attr('fill', 'none')
+                .attr('stroke', '#66CCFF')
+                .attr('stroke-width', 2)
+                .attr('d', bpLine);
+                
+            // Labels
+            svg.append('text')
+                .attr('x', 120)
+                .attr('y', 78)
+                .attr('fill', '#FF9900')
+                .text('心电图数据');
+                
+            svg.append('text')
+                .attr('x', 520)
+                .attr('y', 78)
+                .attr('fill', '#66CCFF')
+                .text('血压数据');
+        });
+        
+        // Generate ECG-like pattern (simplified)
+        function generateECGLikeData(length) {
+            const data = [];
+            for (let i = 0; i < length; i++) {
+                if (i % 8 === 0) {
+                    data.push(5);  // P wave
+                } else if (i % 8 === 1) {
+                    data.push(0);  // PR segment
+                } else if (i % 8 === 2) {
+                    data.push(-20); // Q wave
+                } else if (i % 8 === 3) {
+                    data.push(40);  // R wave
+                } else if (i % 8 === 4) {
+                    data.push(-10); // S wave
+                } else {
+                    data.push(0);   // ST segment and T wave
+                }
+            }
+            return data;
+        }
+        
+        // Generate blood pressure-like pattern (simplified)
+        function generateBPLikeData(length) {
+            const data = [];
+            for (let i = 0; i < length; i++) {
+                const base = 20;
+                if (i % 5 === 0) {
+                    data.push(base - 15); // Diastolic
+                } else if (i % 5 === 1) {
+                    data.push(base - 5);
+                } else if (i % 5 === 2) {
+                    data.push(base + 15); // Systolic
+                } else if (i % 5 === 3) {
+                    data.push(base + 5);
+                } else {
+                    data.push(base - 10);
+                }
+            }
+            return data;
+        }
+    </script>
+
+</body></html>

@@ -1,0 +1,197 @@
+<!DOCTYPE html><html lang="zh"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>参考资料与学习资源</title>
+<link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet"/>
+<script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script><style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&display=swap');
+        body {
+    width:1280px;
+    height:722px;
+            font-family: 'Noto Sans SC', sans-serif;
+            background: transparent !important;
+    overflow: hidden; /* 防止出现滚动条 */
+        }
+        .neural-network {
+            position: absolute;
+            opacity: 0.08;
+            z-index: 0;
+        }
+        .neural-node {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.7);
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.5);
+        }
+        .neural-connection {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.3);
+            transform-origin: top left;
+        }
+        .resource-item {
+            transition: all 0.3s ease;
+        }
+        .resource-item:hover {
+            transform: translateX(5px);
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-br from-blue-900 to-blue-700 text-white h-screen w-screen flex items-center justify-center overflow-hidden">
+<div class="absolute inset-0 overflow-hidden">
+<!-- Neural Network Background -->
+<div class="neural-network w-full h-full">
+<!-- Nodes -->
+<div class="neural-node w-3 h-3" style="top: 15%; left: 10%;"></div>
+<div class="neural-node w-4 h-4" style="top: 35%; left: 8%;"></div>
+<div class="neural-node w-3 h-3" style="top: 65%; left: 12%;"></div>
+<div class="neural-node w-5 h-5" style="top: 25%; left: 88%;"></div>
+<div class="neural-node w-3 h-3" style="top: 50%; left: 92%;"></div>
+<div class="neural-node w-4 h-4" style="top: 75%; left: 90%;"></div>
+<!-- Connections -->
+<div class="neural-connection w-1 h-25" style="top: 17%; left: 11%; transform: rotate(25deg);"></div>
+<div class="neural-connection w-1 h-35" style="top: 37%; left: 9%; transform: rotate(-30deg);"></div>
+<div class="neural-connection w-1 h-30" style="top: 27%; left: 89%; transform: rotate(45deg);"></div>
+<div class="neural-connection w-1 h-32" style="top: 52%; left: 93%; transform: rotate(-25deg);"></div>
+</div>
+</div>
+<div class="relative z-10 w-full h-full max-w-screen-xl mx-auto px-12 py-8 flex flex-col">
+<!-- Header -->
+<div class="mb-6">
+<h1 class="text-4xl font-bold text-white">参考资料与学习资源</h1>
+<div class="w-20 h-1 bg-green-400 mt-2"></div>
+</div>
+<!-- Content -->
+<div class="flex flex-grow">
+<!-- Left Column -->
+<div class="w-1/2 pr-8">
+<!-- Academic Papers -->
+<div class="bg-blue-800/40 backdrop-blur-sm rounded-xl p-6 shadow-lg border border-blue-600/30 mb-4">
+<h2 class="text-xl font-semibold text-blue-200 mb-3 flex items-center">
+<i class="fas fa-file-alt text-orange-400 mr-2"></i>
+                        学术论文与期刊
+                    </h2>
+<ul class="space-y-3">
+<li class="resource-item flex items-start">
+<i class="fas fa-bookmark text-blue-300 mt-1 mr-3"></i>
+<span>《深度学习在传染病监测预警中的应用进展》，中华预防医学杂志</span>
+</li>
+<li class="resource-item flex items-start">
+<i class="fas fa-bookmark text-blue-300 mt-1 mr-3"></i>
+<span>《基于LSTM的流感趋势预测模型研究》，中国卫生信息管理杂志</span>
+</li>
+<li class="resource-item flex items-start">
+<i class="fas fa-bookmark text-blue-300 mt-1 mr-3"></i>
+<span>《多源数据融合的传染病预警方法综述》，中国数字医学</span>
+</li>
+</ul>
+</div>
+<!-- Books -->
+<div class="bg-blue-800/40 backdrop-blur-sm rounded-xl p-6 shadow-lg border border-blue-600/30 mb-4">
+<h2 class="text-xl font-semibold text-blue-200 mb-3 flex items-center">
+<i class="fas fa-book text-green-400 mr-2"></i>
+                        专业书籍
+                    </h2>
+<ul class="space-y-3">
+<li class="resource-item flex items-start">
+<i class="fas fa-book-open text-blue-300 mt-1 mr-3"></i>
+<span>《深度学习在公共卫生中的应用》，人民卫生出版社</span>
+</li>
+<li class="resource-item flex items-start">
+<i class="fas fa-book-open text-blue-300 mt-1 mr-3"></i>
+<span>《传染病数学模型与深度学习》，科学出版社</span>
+</li>
+<li class="resource-item flex items-start">
+<i class="fas fa-book-open text-blue-300 mt-1 mr-3"></i>
+<span>《Python与疾病预测建模实践》，电子工业出版社</span>
+</li>
+</ul>
+</div>
+</div>
+<!-- Right Column -->
+<div class="w-1/2 pl-8">
+<!-- Online Courses -->
+<div class="bg-blue-800/40 backdrop-blur-sm rounded-xl p-6 shadow-lg border border-blue-600/30 mb-4">
+<h2 class="text-xl font-semibold text-blue-200 mb-3 flex items-center">
+<i class="fas fa-laptop-code text-purple-400 mr-2"></i>
+                        在线课程
+                    </h2>
+<ul class="space-y-3">
+<li class="resource-item flex items-start">
+<i class="fas fa-play-circle text-blue-300 mt-1 mr-3"></i>
+<span>中国疾控中心培训平台：《深度学习在疾病监测中的应用》</span>
+</li>
+<li class="resource-item flex items-start">
+<i class="fas fa-play-circle text-blue-300 mt-1 mr-3"></i>
+<span>Coursera：《医疗健康数据科学与深度学习》</span>
+</li>
+<li class="resource-item flex items-start">
+<i class="fas fa-play-circle text-blue-300 mt-1 mr-3"></i>
+<span>国家卫健委网络学院：《传染病预警模型构建实战》</span>
+</li>
+</ul>
+</div>
+<!-- Tools -->
+<div class="bg-blue-800/40 backdrop-blur-sm rounded-xl p-6 shadow-lg border border-blue-600/30 mb-4">
+<h2 class="text-xl font-semibold text-blue-200 mb-3 flex items-center">
+<i class="fas fa-tools text-yellow-400 mr-2"></i>
+                        开源工具与框架
+                    </h2>
+<ul class="space-y-3">
+<li class="resource-item flex items-start">
+<i class="fab fa-python text-blue-300 mt-1 mr-3"></i>
+<span>EpiDeep：专注于流行病学的深度学习开源框架</span>
+</li>
+<li class="resource-item flex items-start">
+<i class="fas fa-code-branch text-blue-300 mt-1 mr-3"></i>
+<span>EpiModel + TensorFlow：传染病建模与深度学习结合工具包</span>
+</li>
+<li class="resource-item flex items-start">
+<i class="fas fa-database text-blue-300 mt-1 mr-3"></i>
+<span>CDC开放数据平台：训练传染病预警模型的数据资源</span>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<!-- Bottom Section - Communities -->
+<div class="mt-4">
+<div class="bg-blue-800/40 backdrop-blur-sm rounded-xl p-5 shadow-lg border border-blue-600/30">
+<h2 class="text-xl font-semibold text-blue-200 mb-2 flex items-center">
+<i class="fas fa-users text-blue-400 mr-2"></i>
+                    学术社区与交流平台
+                </h2>
+<div class="flex justify-between">
+<div class="resource-item flex items-center">
+<i class="fas fa-comments text-blue-300 mr-2"></i>
+<span>中国疾控AI应用研讨会</span>
+</div>
+<div class="resource-item flex items-center">
+<i class="fas fa-globe text-blue-300 mr-2"></i>
+<span>深度学习医疗应用论坛</span>
+</div>
+<div class="resource-item flex items-center">
+<i class="fas fa-envelope text-blue-300 mr-2"></i>
+<span>传染病预警模型研究联盟</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Contact Info -->
+<div class="mt-4 text-center text-blue-200">
+<p>欢迎联系我们获取更多学习资源和技术支持</p>
+<p class="text-sm">disease.ai.warning@example.com</p>
+</div>
+<!-- Footer -->
+<div class="mt-3 flex justify-between items-center text-blue-300 text-sm">
+<div>15/15</div>
+<div class="text-center">基于深度学习的传染病预警模型构建与应用</div>
+<div class="flex items-center">
+<i class="fas fa-brain mr-1"></i>
+<i class="fas fa-virus mr-1"></i>
+<i class="fas fa-chart-line"></i>
+</div>
+</div>
+</div>
+
+</body></html>
