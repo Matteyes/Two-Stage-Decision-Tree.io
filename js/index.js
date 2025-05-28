@@ -111,6 +111,10 @@ var miscellaneous = new Vue({
 				info1:'MIMIC数据库简介&下载与安装教程',
 				info2:'Website',
 				website1:'./MIMIC.html',
+			},{
+				info1:'',
+				info2:'时间序列基础模型：预测未来的魔法？',
+				website1:'./TimeSeriesBasicModel.html',
 			}
 		]
 	}

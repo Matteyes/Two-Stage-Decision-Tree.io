@@ -141,7 +141,9 @@
 							<!-- [{{index+2}}] -->
 							{{paper.info1}}
 							<strong v-if="paper.website1">
-								(<a :href="paper.website1"> {{paper.info2}} </a>)
+								<p v-if="paper.info1 != ''" style="display: inline;">(</p>
+								<a :href="paper.website1"> {{paper.info2}} </a>
+								<p v-if="paper.info1 != ''" style="display: inline;">)</p>
 							</strong>
 							{{paper.info3}}
 							<strong v-if="paper.website2">

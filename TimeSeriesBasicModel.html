@@ -1,0 +1,468 @@
+
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>时间序列基础模型：预测未来的魔法？</title>
+    <style>
+        body {
+            font-family: 'Microsoft YaHei', 'SimHei', sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .slide {
+            padding: 30px;
+            margin-bottom: 30px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        .slide:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+            background: linear-gradient(to bottom, #4a90e2, #63b3ed);
+        }
+        h1 {
+            color: #2c5282;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        h2 {
+            color: #2c5282;
+            border-bottom: 2px solid #e2e8f0;
+            padding-bottom: 10px;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+        h3 {
+            color: #3182ce;
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        p, li {
+            font-size: 1.1em;
+            margin-bottom: 15px;
+        }
+        .analogy {
+            font-style: italic;
+            color: #3182ce;
+            background-color: #ebf8ff;
+            padding: 10px 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+        }
+        .visual {
+            border: 1px solid #e2e8f0;
+            padding: 20px;
+            text-align: center;
+            margin: 20px 0;
+            background-color: #f7fafc;
+            border-radius: 10px;
+        }
+        .visual img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+        table {
+            width: 100%;
+            margin: 20px 0;
+            border-collapse: collapse;
+            box-shadow: 0 2px 3px rgba(0,0,0,0.1);
+        }
+        th, td {
+            border: 1px solid #e2e8f0;
+            padding: 12px 15px;
+            text-align: left;
+        }
+        th {
+            background-color: #f0f4f8;
+            color: #2d3748;
+        }
+        tr:nth-child(even) {
+            background-color: #f7fafc;
+        }
+        tr:hover {
+            background-color: #ebf8ff;
+        }
+        .highlight {
+            background-color: #fefcbf;
+            font-weight: bold;
+            padding: 2px 4px;
+            border-radius: 4px;
+        }
+        .btn {
+            display: inline-block;
+            background-color: #4299e1;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            margin: 10px 5px;
+            transition: background-color 0.3s;
+        }
+        .btn:hover {
+            background-color: #3182ce;
+        }
+        .nav {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+        .nav-btn {
+            background-color: #e2e8f0;
+            color: #4a5568;
+            padding: 8px 15px;
+            margin: 5px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 0.9em;
+            transition: all 0.3s;
+        }
+        .nav-btn:hover {
+            background-color: #4299e1;
+            color: white;
+        }
+        @media (max-width: 768px) {
+            .slide {
+                padding: 20px;
+            }
+            h1 {
+                font-size: 2em;
+            }
+            h2 {
+                font-size: 1.5em;
+            }
+            p, li {
+                font-size: 1em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 封面页 -->
+        <section id="cover" class="slide">
+            <h1>时间序列基础模型：预测未来的魔法？</h1>
+            <p style="text-align: center; font-size: 1.3em;">探索如何用人工智能理解和预测随时间变化的数据</p>
+            <p style="text-align: center; font-style: italic;">重医附属儿童医院：黄国宇&徐铣明+天工AI </p>
+            <div class="visual">
+                <img src="https://img.freepik.com/free-vector/time-management-concept-illustration_114360-1013.jpg?w=740&t=st=1716464129~exp=1716464729~hmac=5b1f611fb0a34e2c5354d1bf926d21a6e6a80b44fb96f26a9b5aa9fd58d26f17" alt="时间序列示意图" />
+            </div>
+            <div class="nav">
+                <a href="#chapter1" class="nav-btn">什么是时间序列？</a>
+                <a href="#chapter2" class="nav-btn">为什么研究时间序列？</a>
+                <a href="#chapter3" class="nav-btn">人工智能和深度学习</a>
+                <a href="#chapter4" class="nav-btn">深度学习与时间序列</a>
+                <a href="#chapter5" class="nav-btn">基础模型介绍</a>
+                <a href="#chapter6" class="nav-btn">时间序列基础模型</a>
+                <a href="#chapter7" class="nav-btn">TSFM vs 深度学习</a>
+                <a href="#chapter8" class="nav-btn">TSFM的应用</a>
+                <a href="#chapter9" class="nav-btn">未来展望</a>
+            </div>
+        </section>
+
+        <!-- 第一章：什么是时间序列？ -->
+        <section id="chapter1" class="slide">
+            <h2>第一章：时间的故事 - 什么是时间序列？</h2>
+            <p>想象一下，你每天记录自己的身高，或者记录每天的最高气温。这些按照时间顺序排列的数据，就是<span class="highlight">时间序列</span>！</p>
+            <p><strong>定义：</strong> 时间序列就是按时间顺序排列的一系列数据点。</p>
+            <p><strong>生活中的例子：</strong></p>
+            <ul>
+                <li>你的身高变化记录</li>
+                <li>每天的天气温度</li>
+                <li>学校食堂每天的用餐人数</li>
+                <li>你玩游戏每天的得分</li>
+                <li>股票市场每日的价格波动</li>
+            </ul>
+            <p><strong>关键特点：</strong> 数据点是有顺序的，后面的数据往往和前面的数据有关联。时间是单向流动的，我们只能根据过去和现在预测未来，不能改变过去。</p>
+            
+            <h3>时间序列长什么样？</h3>
+            <div class="visual">
+                <img src="https://img.freepik.com/free-vector/infographic-with-details-about-stock-market_52683-36703.jpg?w=740&t=st=1716464308~exp=1716464908~hmac=8e0f7f1a95d0ec0e1c70bafa5eb19ae1c28b46ba7bb6a3d37580c69e0ca76e29" alt="时间序列示例图" />
+            </div>
+            <div class="analogy">
+                <strong>比喻：</strong> 时间序列就像是一本日记，记录了某个事物随着时间推移的变化。通过阅读这本"日记"，我们能了解它的过去，理解它的现在，甚至预测它的未来。
+            </div>
+        </section>
+
+        <!-- 第二章：为什么研究时间序列？ -->
+        <section id="chapter2" class="slide">
+            <h2>第二章：为什么关心时间？ - 时间序列分析有什么用？</h2>
+            <p>研究时间序列，就像是想从过去的故事里，找到未来的线索。</p>
+            <p><strong>主要目的：</strong></p>
+            <ul>
+                <li><strong>描述过去：</strong> 看看数据过去是怎么变化的，有什么规律？（比如，气温是不是每年夏天都高？）</li>
+                <li><strong>分析规律：</strong> 找出数据变化的模式，比如：
+                    <ul>
+                        <li>趋势（一直在涨或跌）</li>
+                        <li>季节性（周期性重复）</li>
+                        <li>周期性（不规律的波动）</li>
+                        <li>突发事件的影响</li>
+                    </ul>
+                </li>
+                <li><strong>预测未来：</strong> 根据过去的规律，猜猜未来会发生什么？（比如，明天的气温大概是多少？下个月的销售额会怎样？）</li>
+                <li><strong>异常检测：</strong> 发现不寻常的情况。（比如，某个时间点的数据突然和之前的规律差很多，是不是有问题？）</li>
+            </ul>
+            <p><strong>中学生理解方式：</strong></p>
+            <ul>
+                <li>预测你的考试成绩趋势</li>
+                <li>预测下周零花钱够不够用</li>
+                <li>预测流行歌曲的受欢迎程度</li>
+                <li>发现异常：为什么今天的食堂用餐人数突然暴增？</li>
+            </ul>
+            <div class="visual">
+                <img src="https://img.freepik.com/free-vector/project-time-management-concept-planning-organization-working-hours-distribution-effective-work-optimization-businessman-arranging-tasks-setting-deadlines_335657-2034.jpg?w=740&t=st=1716464527~exp=1716465127~hmac=7050b1bde81f60bc3ffc5e97ab7b9ab2e00e4431cf8dbbb66f8f9b20c371d2ba" alt="时间序列分析目的" />
+            </div>
+        </section>
+
+        <!-- 第三章：机器如何学习？（简单介绍AI/ML/DL） -->
+        <section id="chapter3" class="slide">
+            <h2>第三章：让机器变聪明 - 认识人工智能和深度学习</h2>
+            <p>机器怎么才能像我们一样，从数据里学习规律呢？这就是人工智能（AI）和机器学习（ML）要做的事情。</p>
+            <p><strong>人工智能 (AI)：</strong> 让机器表现出智能，比如思考、学习、解决问题。</p>
+            <p><strong>机器学习 (ML)：</strong> 是AI的一种方法，让机器通过"看"大量数据来学习，而不是靠人编写死板的规则。</p>
+            <p><strong>深度学习 (DL)：</strong> 是机器学习里一种特别厉害的技术，它模仿人脑神经网络的结构，构建很多层"神经元"来处理信息。</p>
+            <div class="analogy">
+                <strong>比喻：</strong> 如果说机器学习是让机器学会"看图说话"，那么深度学习就是给机器装上了一双特别厉害、能看懂很多细节的"眼睛"，这双眼睛有很多层镜片（神经网络的层）。
+            </div>
+            <h3>深度学习是怎么"学"的？</h3>
+            <p>简单来说，深度学习模型通过不断调整内部的参数（就像调整收音机的旋钮），让它的预测结果和真实结果之间的"错误"越来越小。这个调整错误的过程，有点像我们在做数学题时，根据答案检查自己的步骤，然后修改错误。</p>
+            <div class="visual">
+                <img src="https://img.freepik.com/free-vector/flat-design-ai-landing-page-template_23-2149248540.jpg?w=740&t=st=1716464694~exp=1716465294~hmac=1cad04a6de3d5b9f6bbcae93c4a58a913ed60b9bb3f30c4c4c02b2b12e909864" alt="深度学习示意图" />
+            </div>
+        </section>
+
+        <!-- 第四章：深度学习与时间序列预测 -->
+        <section id="chapter4" class="slide">
+            <h2>第四章：用深度学习预测时间 - 优势与挑战</h2>
+            <p>深度学习模型因为能学习复杂的模式，所以也被用来预测时间序列。</p>
+            <p><strong>如何应用：</strong> 它们可以学习时间序列数据中隐藏的复杂规律，比如长期的依赖关系、多个时间序列之间的相互影响等。</p>
+            <h3>常见的深度学习模型：</h3>
+            <ul>
+                <li><strong>循环神经网络 (RNN)：</strong> 有"记忆"能力，可以记住前面看到的数据。</li>
+                <li><strong>长短期记忆网络 (LSTM)：</strong> RNN的升级版，能更好地记住长时间之前的信息。</li>
+                <li><strong>卷积神经网络 (CNN)：</strong> 最初用于图像识别，但也可以用来捕捉时间序列中的局部特征。</li>
+                <li><strong>Transformer模型：</strong> 最新的架构，能够更好地处理长序列，捕捉远距离的关系。</li>
+            </ul>
+            <p><strong>优势：</strong></p>
+            <ul>
+                <li>能处理非常复杂、非线性的时间模式。</li>
+                <li>在有大量数据的情况下，表现可能优于传统方法。</li>
+                <li>可以构建"全局模型"，同时学习多个相似时间序列的规律，互相借鉴。</li>
+            </ul>
+            <p><strong>挑战：</strong></p>
+            <ul>
+                <li><strong>需要大量数据：</strong> 训练一个好的深度学习模型通常需要非常多的历史数据。</li>
+                <li><strong>泛化能力：</strong> 如果在一个类型的时间序列上训练的模型，用在完全不同类型的时间序列上，可能表现不好。</li>
+                <li><strong>计算资源：</strong> 训练深度学习模型需要强大的计算机和较长时间。</li>
+            </ul>
+            <div class="visual">
+                <img src="https://img.freepik.com/free-vector/big-data-analytics-predictive-system-machine-learning-artificial-intelligence-intelligence-automation-business-experts-working-with-information-visualisation_335657-2386.jpg?w=740&t=st=1716464811~exp=1716465411~hmac=09b659be7ad31db4dfcfb8d50b16cc4cb23775195aafc96c3fa0bfcf37ca1d08" alt="深度学习预测时间序列" />
+            </div>
+        </section>
+
+        <!-- 第五章：认识基础模型（Foundation Models） -->
+        <section id="chapter5" class="slide">
+            <h2>第五章：AI世界的"万能工具" - 什么是基础模型？</h2>
+            <p>最近几年，AI领域出现了一种新的趋势：训练"基础模型"（Foundation Models）。</p>
+            <p><strong>定义：</strong> 基础模型是在海量、多样化的数据上进行预训练的超大型模型。它们学习到了很多通用的知识和能力。</p>
+            <div class="analogy">
+                <strong>比喻：</strong> 想象一个学识渊博、经验丰富的"通才"或"万事通"。他在很多领域都学习过（预训练），所以当遇到一个新的具体问题时，他不需要从零开始学，只需要稍微了解一下新问题的特点，就能很快上手解决。
+            </div>
+            <p><strong>关键特点：</strong></p>
+            <ul>
+                <li><strong>规模大：</strong> 模型参数非常多（相当于大脑中的"神经元连接"越多）。</li>
+                <li><strong>数据多：</strong> 在海量数据上训练（相当于"阅读"了大量的书和资料）。</li>
+                <li><strong>通用性强：</strong> 学习到很多通用模式（相当于掌握了各个领域的基础知识）。</li>
+                <li><strong>可迁移/适应：</strong> 经过预训练后，可以很容易地通过少量数据或调整，适应各种不同的任务（就像一个有广泛知识的人可以快速上手新工作）。</li>
+            </ul>
+            <div class="visual">
+                <img src="https://img.freepik.com/free-vector/neural-networks-concept-illustration_114360-8506.jpg?w=740&t=st=1716464920~exp=1716465520~hmac=d1e6e5c0ec2d2fe6f32acae3664fc6fc4c8a06ab01b54538c8e5d9175254cd9c" alt="基础模型示意图" />
+            </div>
+        </section>
+
+        <!-- 第六章：时间序列基础模型 (TSFM) -->
+        <section id="chapter6" class="slide">
+            <h2>第六章：时间序列的"万能预测家" - 时间序列基础模型 (TSFM)</h2>
+            <p>把"基础模型"的思想应用到时间序列领域，就诞生了时间序列基础模型（Time Series Foundation Model，TSFM）。</p>
+            <p><strong>定义：</strong> TSFM 是在海量、多样化的时间序列数据上进行预训练的模型。它们学习理解各种时间序列数据的通用模式和结构。</p>
+            <div class="analogy">
+                <strong>比喻：</strong> TSFM 就像一个"时间规律的百科全书"或"时间模式的语言大师"。它阅读了无数不同类型的时间序列"故事"（股票、天气、销售、传感器数据等），所以对各种时间变化的规律非常熟悉。当你给它一个新的时间序列"故事"时，它能很快理解并预测接下来的发展。
+            </div>
+            <p><strong>TSFM 的特点：</strong></p>
+            <ul>
+                <li>利用海量的、多样化的时间序列数据进行训练</li>
+                <li>学习到时间序列数据中普遍存在的模式、趋势、季节性以及它们之间的复杂关系</li>
+                <li>预训练后，能够对未见过的时间序列进行预测，且不需要大量额外训练（零样本或少样本预测）</li>
+            </ul>
+            <p><strong>TSFM 的目标：</strong> 利用基础模型的强大能力，开发能够熟练理解和预测跨不同领域的时间序列数据的通用模型。</p>
+            <div class="visual">
+                <img src="https://img.freepik.com/free-vector/gradient-stock-market-concept_23-2149161025.jpg?w=740&t=st=1716465082~exp=1716465682~hmac=9e4bdd60e7a07bab9b3e54883c5e473ae0c32eb63c33c7c73b731d6fc3e8682e" alt="TSFM示意图" />
+            </div>
+        </section>
+
+        <!-- 第七章：TSFM vs. 传统方法/深度学习 -->
+        <section id="chapter7" class="slide">
+            <h2>第七章：谁更厉害？ - TSFM vs. 传统方法 vs. 深度学习</h2>
+            <p>TSFM 和传统的统计方法、以及一般的深度学习模型有什么不同？它的优势在哪里？</p>
+            <div class="analogy">
+                <strong>比喻：</strong> 就像学习一门新技能，传统方法是针对一个具体任务反复练习（比如只学骑自行车），深度学习是学习更通用的技能（比如学开各种车），而TSFM则是在各种交通工具上都学习过（自行车、汽车、摩托车、飞机），所以学新的交通工具（比如滑板）会非常快。
+            </div>
+            <h3>对比表格：</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>特点</th>
+                        <th>传统统计模型<br>(如ARIMA)</th>
+                        <th>传统深度学习模型<br>(针对特定任务训练)</th>
+                        <th>时间序列基础模型 (TSFM)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>学习方式</strong></td>
+                        <td>基于数学公式和统计规律</td>
+                        <td>从大量特定数据中学习复杂模式</td>
+                        <td>在海量多样化时间序列数据上预训练，学习通用模式</td>
+                    </tr>
+                    <tr>
+                        <td><strong>数据需求</strong></td>
+                        <td>相对较少，但对数据特性敏感</td>
+                        <td>需要大量特定任务数据</td>
+                        <td>预训练需要海量数据，但适应新任务时数据需求少</td>
+                    </tr>
+                    <tr>
+                        <td><strong>泛化能力<br>(处理新类型数据)</strong></td>
+                        <td>通常较差，需要为每种数据重新建模</td>
+                        <td>通常较差，需要为每种数据重新训练</td>
+                        <td><span class="highlight">很强！</span>能理解并处理未见过的新类型时间序列</td>
+                    </tr>
+                    <tr>
+                        <td><strong>新任务适应性<br>(零/少样本学习)</strong></td>
+                        <td>需要重新建模和训练</td>
+                        <td>需要大量新数据重新训练</td>
+                        <td><span class="highlight">很强！</span>只需少量新数据甚至无需新数据就能预测</td>
+                    </tr>
+                    <tr>
+                        <td><strong>模型复杂度</strong></td>
+                        <td>相对较低</td>
+                        <td>较高</td>
+                        <td>非常高（模型规模大）</td>
+                    </tr>
+                    <tr>
+                        <td><strong>计算成本</strong></td>
+                        <td>较低</td>
+                        <td>较高（训练）</td>
+                        <td>非常高（预训练），但适应新任务成本较低</td>
+                    </tr>
+                    <tr>
+                        <td><strong>代表模型</strong></td>
+                        <td>ARIMA, 趋势分析等</td>
+                        <td>LSTM, GRU, Transformer</td>
+                        <td>TimesFM, MOIRAI, Chronos, Timer等</td>
+                    </tr>
+                </tbody>
+            </table>
+            <p><strong>总结：</strong> TSFM 的最大优势在于它的<span class="highlight">通用性和适应性</span>，特别是在面对新的、数据量少的时间序列任务时，表现出色。</p>
+        </section>
+
+        <!-- 第八章：TSFM的应用 -->
+        <section id="chapter8" class="slide">
+            <h2>第八章：认识一些TSFM"明星"及其应用</h2>
+            <p>科学家们已经开发出了一些厉害的TSFM模型：</p>
+            <ul>
+                <li><strong>TimesFM (Google):</strong> 谷歌开源的模型，擅长单变量时间序列预测。</li>
+                <li><strong>MOIRAI (Salesforce):</strong> Salesforce开源，通用性强，支持多变量预测和零样本预测。</li>
+                <li><strong>Chronos (Amazon):</strong> 亚马逊开源，通过将时间序列数据"标记化"后用类似语言模型的方法训练。</li>
+                <li><strong>Timer (清华大学):</strong> 中国团队开发的开源原生时序大模型，在泛化性、预测表现等方面表现优秀。</li>
+            </ul>
+            <h3>TSFM的应用领域：</h3>
+            <ul>
+                <li><strong>天气预测：</strong> 更准确的短期和长期天气预报</li>
+                <li><strong>金融市场：</strong> 股票价格、交易量等预测</li>
+                <li><strong>电力需求：</strong> 预测城市或区域的用电量，帮助电网调度</li>
+                <li><strong>交通管理：</strong> 预测交通流量，减少拥堵</li>
+                <li><strong>医疗健康：</strong> 分析生命体征数据，预测潜在健康问题</li>
+                <li><strong>零售销售：</strong> 预测商品需求，优化库存管理</li>
+            </ul>
+            <div class="visual">
+                <img src="https://img.freepik.com/free-vector/automation-concept-illustration_114360-3181.jpg?w=740&t=st=1716465248~exp=1716465848~hmac=d0f0de9a18b88fd5ed1d0db7dd29d3b80a0d1add00a66c93bdcded7a0bced3b0" alt="TSFM应用领域" />
+            </div>
+        </section>
+
+        <!-- 第九章：TSFM 的未来 -->
+        <section id="chapter9" class="slide">
+            <h2>第九章：TSFM 的未来展望</h2>
+            <p>TSFM 是一个非常新的领域，但潜力巨大！</p>
+            <ul>
+                <li>未来可能会出现更强大、更通用的TSFM模型。</li>
+                <li>它们将在更多领域发挥作用，比如更准确的天气预报、更智能的城市交通管理、更精准的疾病预测等。</li>
+                <li>让时间序列分析变得更容易，即使数据量不大或类型新颖，也能快速获得不错的预测结果。</li>
+                <li>与传统深度学习模型结合，充分发挥各自优势。</li>
+                <li>与其他类型的人工智能模型（如大语言模型）结合，创造出更强大的混合模型。</li>
+            </ul>
+            <p>随着计算能力的提升和算法的革新，TSFM可能会帮助我们解决更多复杂的时间序列预测问题，让我们更好地理解和预测这个充满变化的世界！</p>
+            <div class="visual">
+                <img src="https://img.freepik.com/free-vector/futuristic-ai-technology-template-vector-disruptive-technology-blog-banner_53876-126058.jpg?w=740&t=st=1716465325~exp=1716465925~hmac=8bf0b3de1c70b2efbaf52a73d9e0b4a6c0b1ad3cfa9e7d242bcacc1f5b6f5ccb" alt="TSFM未来展望" />
+            </div>
+        </section>
+
+        <!-- 总结与问答 -->
+        <section id="summary" class="slide">
+            <h2>总结与思考</h2>
+            <p><strong>回顾：</strong></p>
+            <ul>
+                <li>时间序列是按时间顺序排列的数据。</li>
+                <li>分析时间序列是为了描述、分析规律、预测未来和检测异常。</li>
+                <li>深度学习能处理复杂模式，但对新类型数据泛化能力有限。</li>
+                <li>基础模型是通用性强的预训练大模型。</li>
+                <li>TSFM 是时间序列领域的通用基础模型，在处理多样化、数据量少的新任务时有显著优势。</li>
+            </ul>
+            <h3>思考题：</h3>
+            <ol>
+                <li>你能想到身边哪些数据是时间序列数据？</li>
+                <li>TSFM与传统深度学习模型相比，最大的优势是什么？</li>
+                <li>如果你要预测自己的学习成绩变化趋势，你会选择哪种预测方法？为什么？</li>
+            </ol>
+            <div class="nav">
+                <a href="#cover" class="btn">返回首页</a>
+                <a href="javascript:window.print()" class="btn">打印课件</a>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // 简单的交互脚本
+        document.addEventListener('DOMContentLoaded', function() {
+            // 滑动动画
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>
