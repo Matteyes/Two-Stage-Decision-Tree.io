@@ -114,7 +114,7 @@ var miscellaneous = new Vue({
 			},{
 				info1:'',
 				info2:'时间序列基础模型：预测未来的魔法？',
-				website1:'./TimeSeriesBasicModel.html',
+				website1:'./TSFM.html',
 			}
 		]
 	}
