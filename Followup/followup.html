@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>V1智能化高危儿随访系统：自动化筛选、追踪与分析</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background: none;
+        }
+
+        #container {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+        }
+
+        .arrow {
+            position: fixed;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            opacity: 0.3;
+            padding: 20px;
+            background: rgba(0,0,0,0.2);
+            font-size: 24px;
+            color: white;
+            transition: all 0.3s; /* 加快按钮动画 */
+            user-select: none;
+            z-index: 2;
+        }
+
+        .arrow:hover {
+            opacity: 1;
+            background: rgba(0,0,0,0.5);
+        }
+
+        #prev {
+            left: 0;
+            border-radius: 0 5px 5px 0;
+        }
+
+        #next {
+            right: 0;
+            border-radius: 5px 0 0 5px;
+        }
+
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            background: transparent;
+            transition: opacity 0.2s ease-in-out;
+            opacity: 1;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+
+        iframe[loading] {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        #jump-container {
+            position: fixed;
+            top: 20px;
+            right: 30px;
+            z-index: 10;
+            user-select: none;
+        }
+
+        #jump-btn {
+            background: rgba(0,0,0,0.2);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            opacity: 0.5;
+            transition: opacity 0.3s;
+        }
+
+        #jump-btn:hover {
+            opacity: 1;
+            background: rgba(0,0,0,0.5);
+        }
+
+        #jump-select {
+            margin-left: 8px;
+            padding: 8px 36px 8px 12px;
+            border-radius: 6px;
+            border: none;
+            outline: none;
+            font-size: 16px;
+            background: linear-gradient(135deg, #2a4eb3 60%, #1f2bca 100%);
+            color: #fff;
+            box-shadow: 0 2px 8px rgba(30,40,120,0.15);
+            appearance: none;
+            -webkit-appearance: none;
+            position: relative;
+            min-width: 110px;
+            cursor: pointer;
+            transition: box-shadow 0.2s, background 0.2s;
+        }
+        #jump-select:focus, #jump-select:hover {
+            box-shadow: 0 4px 16px rgba(30,40,120,0.25);
+            background: linear-gradient(135deg, #3a5ed3 60%, #2f3bfa 100%);
+        }
+        #jump-select option {
+            color: #222;
+            background: #f5f7fa;
+        }
+    </style>
+</head>
+<body>
+    <div id="jump-container">
+        <button id="jump-btn">跳转</button>
+        <select id="jump-select" style="display:none"></select>
+    </div>
+    <div class="arrow" id="prev">◀</div>
+    <div class="arrow" id="next">▶</div>
+    <div id="container">
+        <iframe id="content"></iframe>
+    </div>
+
+    <script>
+        const pages = [
+            'pages/page_1.html',
+            'pages/page_2.html',
+            'pages/page_3.html',
+            'pages/page_4.html',
+            'pages/page_5.html',
+            'pages/page_6.html',
+            'pages/page_7.html',
+            'pages/page_8.html',
+            'pages/page_9.html',
+            'pages/page_10.html',
+            'pages/page_11.html',
+            'pages/page_12.html',
+            'pages/page_13.html',
+            'pages/page_14.html',
+            // 添加更多页面...
+        ];
+
+        let currentPage = 0;
+        const iframe = document.getElementById('content');
+        const jumpBtn = document.getElementById('jump-btn');
+        const jumpSelect = document.getElementById('jump-select');
+
+        // 填充下拉框选项
+        pages.forEach((p, i) => {
+            const opt = document.createElement('option');
+            opt.value = i;
+            opt.text = `第${i+1}页`;
+            jumpSelect.appendChild(opt);
+        });
+
+        // 更新跳转按钮和下拉框选中项
+        function updateJumpUI() {
+            jumpBtn.textContent = `跳转`;
+            jumpSelect.selectedIndex = currentPage;
+        }
+
+        // 加载页面并同步UI
+        function loadPage(index) {
+            const newIframe = document.createElement('iframe');
+            newIframe.src = pages[index];
+            newIframe.setAttribute('loading', '');
+            
+            newIframe.onload = () => {
+                newIframe.removeAttribute('loading');
+                if (iframe.parentNode) {
+                    iframe.parentNode.removeChild(iframe);
+                }
+                iframe = newIframe;
+            };
+            
+            document.getElementById('container').appendChild(newIframe);
+        }
+
+        // 翻页
+        function navigate(direction) {
+            const newPage = currentPage + direction;
+            if (newPage < 0 || newPage >= pages.length) return;
+            currentPage = newPage;
+            loadPage(currentPage);
+        }
+
+        // 初始化加载
+        loadPage(currentPage);
+
+        // 左右按钮
+        document.getElementById('prev').addEventListener('click', () => navigate(-1));
+        document.getElementById('next').addEventListener('click', () => navigate(1));
+
+        // 键盘控制
+        document.addEventListener('keydown', (e) => {
+            switch(e.key) {
+                case 'ArrowLeft':
+                case 'PageUp':
+                    navigate(-1);
+                    break;
+                case 'ArrowRight':
+                case 'PageDown':
+                    navigate(1);
+                    break;
+            }
+        });
+
+        // 跳转按钮显示/隐藏下拉框（阻止冒泡）
+        jumpBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            jumpSelect.style.display = jumpSelect.style.display === 'none' ? 'inline-block' : 'none';
+        });
+
+        // 下拉框点击自身不隐藏
+        jumpSelect.addEventListener('click', function(e) {
+            e.stopPropagation();
+        });
+
+        // 跳转到选中页
+        jumpSelect.addEventListener('change', () => {
+            currentPage = parseInt(jumpSelect.value);
+            loadPage(currentPage);
+            jumpSelect.style.display = 'none';
+        });
+
+        // 点击页面其他地方时隐藏下拉框
+        document.addEventListener('click', function(e) {
+            if (
+                e.target !== jumpBtn &&
+                e.target !== jumpSelect
+            ) {
+                jumpSelect.style.display = 'none';
+            }
+        });
+
+        // 焦点保持
+        document.body.tabIndex = 0;
+        document.body.focus();
+        document.body.addEventListener('blur', () => document.body.focus());
+    </script>
+</body>
+</html>
