@@ -136,6 +136,27 @@ var paper = new Vue({
 				name:'1. 统计学理论',
 				papers:[
 					{
+						info1:"Wang, Y., Huang, G., Chen, C., Li, Q., ",
+						name: "Xu, X.",
+						info2: " (2025).A Comparative Study of Time Series Foundation Models for Hand, Foot and Mouth Disease Forecasting: TimesFM, Moirai, and Traditional Approaches. Frontiers in Public Health. 13, 1634138."
+					},{
+						info1:"Long, X., Li, W., Tang, Y., Luo, Z., Luo, J., Fu, Z., Liu, E., ",
+						name: "Xu, X.",
+						info2: ", Deng, Y. (2025).Online Tool for Predicting Severe Cases of Childhood Community-Acquired Pneumonia Based on the PIRO Concept. Pediatric Pulmonology. 60, e71199."
+					},{
+						info1:"Xu, X., Zhang, X., Whitehead, H., Kong, D., ",
+						name: "Xu, X.",
+						info2: "(2025).Composite likelihood inference for analysis of individual animal identification data. Ecological Informatics. 90, 103298."
+					},{
+						info1:"Zhang, H., Wei, X., Liu, W., Leng, H., Shen, Q., Wan, X., ",
+						name: "Xu, X.",
+						info2: ", Zheng, X. (2025).Latent class analysis identifies distinct pain phenotypes in newly diagnosed systemic juvenile idiopathic arthritis. Arthritis Research & Therapy. 27, 71."
+					},{
+						info1:"Wei, Q., Dong, W.,..., ",
+						name: "Xu, X.",
+						info2: " (2024).Performance Evaluation of Lightweight Open-source Large Language Models in Pediatric Consultations: A Comparative Analysis. arXiv preprint arXiv:2407.15862."
+					},
+					{
 						info1:"Wei, Q., Dong, W.,..., ",
 						name: "Xu, X.",
 						info2: ", Li, T. (2024).Early identification of autism spectrum disorder based on machine learning with eye-tracking data. Journal of Affective Disorders. 358, 326-334."
