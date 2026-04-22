@@ -1,0 +1,3141 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>新医科 AI 素养智教助手 · v1.0</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;500;600;700;900&family=Noto+Sans+SC:wght@300;400;500;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+:root {
+  --ink: #14202b;
+  --ink-2: #334155;
+  --paper: #f5f1e8;
+  --paper-2: #ede7d6;
+  --clinical: #1e5a8f;
+  --clinical-light: #3d7fb8;
+  --physician: #2d6e3e;
+  --alert: #c8611a;
+  --alert-red: #a63838;
+  --gold: #b8935a;
+  --divider: #d4c9ab;
+  --shadow: 0 2px 12px rgba(20, 32, 43, 0.08);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Noto Sans SC', sans-serif;
+  background: var(--paper);
+  color: var(--ink);
+  line-height: 1.7;
+  min-height: 100vh;
+  background-image:
+    radial-gradient(circle at 20% 10%, rgba(30, 90, 143, 0.04) 0%, transparent 40%),
+    radial-gradient(circle at 80% 90%, rgba(184, 147, 90, 0.05) 0%, transparent 40%);
+  background-attachment: fixed;
+}
+
+.serif { font-family: 'Noto Serif SC', serif; }
+.mono { font-family: 'JetBrains Mono', monospace; }
+
+/* ========== 顶部导航栏 ========== */
+.topbar {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  background: rgba(245, 241, 232, 0.96);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--divider);
+  padding: 14px 32px;
+  display: flex; align-items: center; gap: 24px;
+}
+.brand {
+  font-family: 'Noto Serif SC', serif;
+  font-weight: 700; font-size: 17px;
+  color: var(--ink);
+  letter-spacing: 0.5px;
+  display: flex; align-items: center; gap: 10px;
+}
+.brand-mark {
+  width: 28px; height: 28px;
+  background: var(--clinical);
+  color: var(--paper);
+  display: grid; place-items: center;
+  font-family: 'Noto Serif SC', serif;
+  font-weight: 900; font-size: 14px;
+  border-radius: 2px;
+}
+.brand-sub {
+  font-family: 'Noto Sans SC', sans-serif;
+  font-size: 11px; font-weight: 400;
+  color: var(--ink-2);
+  letter-spacing: 2px;
+  padding-left: 12px;
+  border-left: 1px solid var(--divider);
+  margin-left: 4px;
+}
+
+.progress-wrap {
+  flex: 1; display: flex; align-items: center; gap: 8px;
+  font-size: 11px; color: var(--ink-2);
+  letter-spacing: 1.5px;
+}
+.progress-bar {
+  flex: 1; height: 2px; background: var(--divider); position: relative;
+  max-width: 400px;
+}
+.progress-fill {
+  position: absolute; left: 0; top: 0; height: 100%;
+  background: var(--clinical); transition: width 0.6s ease;
+}
+.progress-dots { display: flex; gap: 14px; }
+.dot {
+  width: 8px; height: 8px; border: 1.5px solid var(--divider);
+  border-radius: 50%; background: var(--paper);
+  cursor: pointer; transition: all 0.3s;
+}
+.dot.done { background: var(--clinical); border-color: var(--clinical); }
+.dot.active {
+  background: var(--alert); border-color: var(--alert);
+  transform: scale(1.3);
+  box-shadow: 0 0 0 3px rgba(200, 97, 26, 0.15);
+}
+
+.settings-btn {
+  background: transparent; border: 1px solid var(--divider);
+  padding: 6px 14px; font-size: 12px;
+  color: var(--ink-2); cursor: pointer;
+  font-family: inherit; letter-spacing: 0.5px;
+  transition: all 0.2s;
+}
+.settings-btn:hover { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+
+/* ========== 小宝状态卡（左下悬浮） ========== */
+.patient-card {
+  position: fixed; left: 20px; bottom: 20px; z-index: 50;
+  width: 220px;
+  background: #fff;
+  border: 1px solid var(--divider);
+  border-top: 3px solid var(--clinical);
+  padding: 14px 16px;
+  font-size: 12px;
+  box-shadow: var(--shadow);
+  transition: transform 0.3s;
+}
+.patient-card-label {
+  font-size: 9px; letter-spacing: 2px; color: var(--ink-2);
+  font-family: 'Noto Sans SC', sans-serif;
+  margin-bottom: 6px;
+}
+.patient-name {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 18px; font-weight: 700;
+  color: var(--ink); margin-bottom: 4px;
+}
+.patient-detail {
+  font-size: 11px; color: var(--ink-2); line-height: 1.5;
+}
+.patient-status {
+  margin-top: 8px; padding-top: 8px;
+  border-top: 1px dashed var(--divider);
+  font-size: 10px; color: var(--alert);
+  font-weight: 500;
+}
+
+/* ========== 主内容区 ========== */
+.stage {
+  max-width: 960px; margin: 0 auto;
+  padding: 100px 40px 120px;
+  min-height: 100vh;
+}
+
+.act-header {
+  margin-bottom: 40px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid var(--divider);
+}
+.act-number {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 11px; letter-spacing: 4px;
+  color: var(--gold); font-weight: 500;
+  margin-bottom: 8px;
+}
+.act-title {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 38px; font-weight: 900;
+  color: var(--ink); line-height: 1.2;
+  margin-bottom: 12px;
+}
+.act-subtitle {
+  font-size: 14px; color: var(--ink-2);
+  letter-spacing: 0.3px;
+  font-style: italic;
+}
+
+/* ========== 病历卡（第一幕） ========== */
+.chart-paper {
+  background: #fdfcf7;
+  border: 1px solid var(--divider);
+  padding: 32px;
+  margin: 28px 0;
+  position: relative;
+  box-shadow: var(--shadow);
+  font-family: 'Noto Serif SC', serif;
+}
+.chart-paper::before {
+  content: '急诊分诊单';
+  position: absolute; top: -10px; left: 24px;
+  background: var(--paper); padding: 2px 12px;
+  font-size: 11px; letter-spacing: 3px;
+  color: var(--gold); font-weight: 600;
+}
+.chart-row { display: flex; padding: 8px 0; border-bottom: 1px dotted var(--divider); }
+.chart-row:last-child { border-bottom: none; }
+.chart-label {
+  width: 120px; color: var(--ink-2); font-size: 13px;
+  font-weight: 500;
+}
+.chart-value { flex: 1; font-size: 14px; color: var(--ink); }
+.chart-highlight { color: var(--alert); font-weight: 700; }
+
+/* ========== 选项按钮 ========== */
+.question-prompt {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 20px; font-weight: 600;
+  color: var(--ink);
+  margin: 32px 0 20px;
+  padding-left: 16px;
+  border-left: 3px solid var(--alert);
+}
+.choice-grid { display: grid; gap: 12px; margin: 20px 0; }
+.choice-btn {
+  background: #fff;
+  border: 1px solid var(--divider);
+  padding: 16px 20px;
+  text-align: left;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 14px;
+  color: var(--ink);
+  transition: all 0.2s;
+  position: relative;
+  display: flex; align-items: flex-start; gap: 14px;
+}
+.choice-btn:hover {
+  border-color: var(--clinical);
+  background: #fafaf6;
+  transform: translateX(4px);
+}
+.choice-btn.selected {
+  border-color: var(--clinical);
+  background: rgba(30, 90, 143, 0.04);
+  border-left: 3px solid var(--clinical);
+}
+.choice-btn.selected::after {
+  content: '✓'; position: absolute; right: 18px; top: 50%;
+  transform: translateY(-50%);
+  color: var(--clinical); font-weight: 700;
+}
+.choice-letter {
+  font-family: 'Noto Serif SC', serif;
+  font-weight: 700; font-size: 18px;
+  color: var(--gold);
+  width: 24px; flex-shrink: 0;
+}
+
+/* ========== 旁白气泡 ========== */
+.narrative {
+  background: rgba(30, 90, 143, 0.06);
+  border-left: 3px solid var(--clinical);
+  padding: 20px 24px;
+  margin: 24px 0;
+  font-family: 'Noto Serif SC', serif;
+  font-size: 15px;
+  color: var(--ink-2);
+  line-height: 1.8;
+  position: relative;
+}
+.narrative::before {
+  content: '旁白';
+  position: absolute; left: 0; top: -9px;
+  background: var(--clinical); color: #fff;
+  font-family: 'Noto Sans SC', sans-serif;
+  font-size: 10px; padding: 2px 10px;
+  letter-spacing: 2px;
+}
+
+.insight-box {
+  background: #fff;
+  border: 1px solid var(--divider);
+  padding: 20px 24px;
+  margin: 20px 0;
+}
+.insight-title {
+  font-family: 'Noto Serif SC', serif;
+  font-weight: 700; font-size: 14px;
+  color: var(--ink);
+  margin-bottom: 10px;
+  display: flex; align-items: center; gap: 10px;
+}
+.insight-title::before {
+  content: ''; width: 16px; height: 1px; background: var(--gold);
+}
+
+/* ========== 导航按钮 ========== */
+.act-nav {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-top: 60px; padding-top: 32px;
+  border-top: 1px solid var(--divider);
+}
+.nav-btn {
+  background: var(--ink); color: var(--paper);
+  border: none; padding: 12px 28px;
+  font-family: 'Noto Serif SC', serif;
+  font-size: 14px; font-weight: 600;
+  letter-spacing: 2px; cursor: pointer;
+  transition: all 0.2s;
+}
+.nav-btn:hover { background: var(--clinical); }
+.nav-btn.secondary { background: transparent; color: var(--ink-2); border: 1px solid var(--divider); }
+.nav-btn.secondary:hover { background: var(--paper-2); color: var(--ink); }
+.nav-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+
+/* ========== 设置面板（教师） ========== */
+.modal-overlay {
+  position: fixed; inset: 0;
+  background: rgba(20, 32, 43, 0.6);
+  backdrop-filter: blur(4px);
+  z-index: 200;
+  display: none; align-items: center; justify-content: center;
+  padding: 20px;
+}
+.modal-overlay.active { display: flex; }
+.modal {
+  background: #fff;
+  max-width: 560px; width: 100%;
+  max-height: 90vh; overflow-y: auto;
+  padding: 36px 40px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+  position: relative;
+}
+.modal-title {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 22px; font-weight: 700;
+  margin-bottom: 4px;
+}
+.modal-sub {
+  font-size: 12px; color: var(--ink-2); margin-bottom: 24px;
+  letter-spacing: 0.5px;
+}
+.field { margin-bottom: 18px; }
+.field-label {
+  display: block; font-size: 12px; font-weight: 500;
+  color: var(--ink-2); margin-bottom: 6px;
+  letter-spacing: 1px;
+}
+.field-input, .field-select {
+  width: 100%; padding: 10px 14px;
+  border: 1px solid var(--divider);
+  background: var(--paper);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  color: var(--ink);
+}
+.field-input:focus, .field-select:focus {
+  outline: none; border-color: var(--clinical);
+}
+.field-hint {
+  font-size: 11px; color: var(--ink-2);
+  margin-top: 4px; font-style: italic;
+}
+.modal-actions {
+  display: flex; gap: 12px; justify-content: flex-end;
+  margin-top: 24px; padding-top: 20px;
+  border-top: 1px solid var(--divider);
+}
+.modal-close {
+  position: absolute; top: 16px; right: 20px;
+  background: none; border: none; font-size: 24px;
+  color: var(--ink-2); cursor: pointer; line-height: 1;
+}
+
+/* ========== 数据清洗表格（第二幕） ========== */
+.data-table-wrap {
+  background: #fff;
+  border: 1px solid var(--divider);
+  margin: 24px 0;
+  overflow: hidden;
+}
+.data-table-header {
+  background: var(--ink); color: var(--paper);
+  padding: 12px 20px;
+  display: flex; justify-content: space-between;
+  font-size: 12px; letter-spacing: 1px;
+}
+.data-quality {
+  font-family: 'JetBrains Mono', monospace;
+  color: var(--alert);
+}
+.data-table {
+  width: 100%; border-collapse: collapse;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+}
+.data-table th {
+  background: var(--paper-2); padding: 10px;
+  text-align: left; font-weight: 500;
+  font-size: 11px; letter-spacing: 1px;
+  color: var(--ink-2);
+  border-bottom: 1px solid var(--divider);
+}
+.data-table td {
+  padding: 8px 10px;
+  border-bottom: 1px dotted var(--divider);
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.data-table td.problematic { cursor: pointer; }
+.data-table td:hover { background: rgba(200, 97, 26, 0.05); }
+.data-table td.found {
+  background: rgba(200, 97, 26, 0.15);
+  color: var(--alert);
+  font-weight: 500;
+  position: relative;
+}
+.data-table td.found::after {
+  content: '●'; position: absolute; top: 4px; right: 6px;
+  font-size: 8px; color: var(--alert);
+}
+
+.finding-log {
+  margin-top: 16px;
+  padding: 16px 20px;
+  background: var(--paper-2);
+  border-left: 3px solid var(--gold);
+  font-size: 13px;
+  max-height: 200px;
+  overflow-y: auto;
+}
+.finding-log-title {
+  font-family: 'Noto Serif SC', serif;
+  font-weight: 600; margin-bottom: 8px; font-size: 13px;
+}
+.finding-item {
+  padding: 6px 0;
+  border-bottom: 1px dotted var(--divider);
+  font-size: 12px;
+  color: var(--ink-2);
+}
+.finding-item:last-child { border-bottom: none; }
+.finding-item strong { color: var(--alert); }
+
+/* ========== LLM 对话区 ========== */
+.llm-dialog {
+  background: #fff;
+  border: 1px solid var(--divider);
+  padding: 20px;
+  margin: 20px 0;
+}
+.llm-header {
+  display: flex; align-items: center; gap: 12px;
+  margin-bottom: 14px;
+  padding-bottom: 12px;
+  border-bottom: 1px dashed var(--divider);
+}
+.llm-icon {
+  width: 32px; height: 32px;
+  background: var(--physician);
+  color: #fff;
+  display: grid; place-items: center;
+  font-family: 'Noto Serif SC', serif;
+  font-weight: 700; font-size: 13px;
+}
+.llm-label { font-size: 13px; font-weight: 500; }
+.llm-label small {
+  display: block; font-size: 10px; color: var(--ink-2);
+  font-weight: 400; letter-spacing: 1px;
+}
+.llm-input-wrap {
+  display: flex; gap: 8px;
+}
+.llm-textarea {
+  flex: 1; padding: 10px 14px;
+  border: 1px solid var(--divider);
+  background: var(--paper);
+  font-family: inherit; font-size: 13px;
+  resize: vertical; min-height: 70px;
+  color: var(--ink);
+}
+.llm-textarea:focus { outline: none; border-color: var(--physician); }
+.llm-submit {
+  background: var(--physician); color: #fff;
+  border: none; padding: 0 20px;
+  font-family: 'Noto Serif SC', serif;
+  font-size: 13px; letter-spacing: 2px;
+  cursor: pointer; align-self: flex-end; height: 70px;
+}
+.llm-submit:disabled { background: var(--ink-2); cursor: not-allowed; opacity: 0.5; }
+.llm-response {
+  margin-top: 16px;
+  padding: 16px;
+  background: rgba(45, 110, 62, 0.04);
+  border-left: 3px solid var(--physician);
+  font-size: 13px;
+  line-height: 1.8;
+  min-height: 20px;
+  white-space: pre-wrap;
+  font-family: 'Noto Serif SC', serif;
+}
+.llm-loading {
+  display: inline-block;
+  color: var(--ink-2); font-style: italic;
+}
+.llm-loading::after {
+  content: '···';
+  animation: dots 1.4s infinite;
+}
+@keyframes dots {
+  0%, 20% { content: '·'; }
+  40% { content: '··'; }
+  60%, 100% { content: '···'; }
+}
+
+/* ========== 第一幕专用：全国医生选择分布 ========== */
+.survey-chart {
+  background: #fff;
+  border: 1px solid var(--divider);
+  padding: 24px;
+  margin: 24px 0;
+}
+.survey-chart-title {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 14px; font-weight: 600;
+  margin-bottom: 16px;
+  color: var(--ink);
+}
+.survey-bar-row {
+  display: flex; align-items: center; gap: 12px;
+  margin-bottom: 12px;
+}
+.survey-bar-label {
+  width: 280px; font-size: 12px; color: var(--ink-2);
+  flex-shrink: 0;
+}
+.survey-bar-track {
+  flex: 1; height: 20px; background: var(--paper-2);
+  position: relative; overflow: hidden;
+}
+.survey-bar-fill {
+  position: absolute; left: 0; top: 0; height: 100%;
+  background: var(--clinical);
+  transition: width 1.2s ease;
+}
+.survey-bar-fill.your-choice { background: var(--alert); }
+.survey-bar-value {
+  width: 50px;
+  text-align: right;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px; color: var(--ink);
+}
+
+/* ========== 特征卡（第三幕） ========== */
+.feature-workbench {
+  display: grid; grid-template-columns: 1fr 280px; gap: 24px;
+  margin: 24px 0;
+}
+.feature-pool {
+  border: 1px solid var(--divider);
+  background: #fff;
+  padding: 20px;
+  min-height: 400px;
+}
+.feature-pool-title {
+  font-size: 11px; letter-spacing: 2px;
+  color: var(--ink-2); margin-bottom: 14px;
+  padding-bottom: 8px; border-bottom: 1px dashed var(--divider);
+}
+.feature-cards {
+  display: flex; flex-wrap: wrap; gap: 8px;
+}
+.feature-card {
+  background: var(--paper-2);
+  border: 1px solid var(--divider);
+  padding: 8px 14px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s;
+  user-select: none;
+  font-family: inherit;
+  color: var(--ink);
+}
+.feature-card:hover { border-color: var(--clinical); transform: translateY(-2px); }
+.feature-card.selected {
+  background: var(--clinical); color: #fff; border-color: var(--clinical);
+}
+.feature-card.trap {
+  background: rgba(166, 56, 56, 0.08);
+}
+.feature-card.trap.selected {
+  background: var(--alert-red); color: #fff; border-color: var(--alert-red);
+}
+.feature-metrics {
+  border: 1px solid var(--divider);
+  background: #fff;
+  padding: 20px;
+  align-self: start;
+  position: sticky; top: 100px;
+}
+.metrics-row {
+  padding: 10px 0;
+  border-bottom: 1px dashed var(--divider);
+}
+.metrics-row:last-child { border-bottom: none; }
+.metrics-label {
+  font-size: 11px; color: var(--ink-2);
+  letter-spacing: 1px; margin-bottom: 4px;
+}
+.metrics-value {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 22px; font-weight: 500;
+  color: var(--clinical);
+}
+.metrics-value.warn { color: var(--alert); }
+
+/* ========== 过渡动画 ========== */
+.act {
+  display: none;
+  animation: fadeIn 0.6s ease;
+}
+.act.active { display: block; }
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ========== 模型动物园（第四幕） ========== */
+.model-zoo {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 12px; margin: 24px 0;
+}
+.model-card {
+  background: #fff;
+  border: 1px solid var(--divider);
+  padding: 18px 16px;
+  cursor: grab;
+  transition: all 0.2s;
+}
+.model-card:hover {
+  border-color: var(--clinical);
+  box-shadow: var(--shadow);
+}
+.model-emoji { font-size: 28px; margin-bottom: 6px; }
+.model-name {
+  font-family: 'Noto Serif SC', serif;
+  font-weight: 700; font-size: 14px;
+  margin-bottom: 4px;
+}
+.model-desc { font-size: 11px; color: var(--ink-2); line-height: 1.5; }
+
+.scenario-matcher {
+  margin: 24px 0;
+}
+.scenario-row {
+  background: #fff; border: 1px solid var(--divider);
+  padding: 16px 20px; margin-bottom: 10px;
+  display: flex; gap: 16px; align-items: center;
+}
+.scenario-desc { flex: 1; font-size: 13px; }
+.scenario-desc strong {
+  font-family: 'Noto Serif SC', serif;
+  display: block; margin-bottom: 2px;
+}
+.scenario-select {
+  padding: 8px 12px;
+  border: 1px solid var(--divider);
+  background: var(--paper);
+  font-family: inherit; font-size: 12px;
+  min-width: 160px;
+}
+.scenario-feedback {
+  width: 30px; text-align: center; font-size: 18px;
+}
+
+/* ========== 建模沙盒（第五幕） ========== */
+.modeling-sandbox {
+  background: #fff;
+  border: 1px solid var(--divider);
+  margin: 24px 0;
+  overflow: hidden;
+}
+.sandbox-header {
+  background: var(--ink); color: var(--paper);
+  padding: 14px 20px;
+  display: flex; justify-content: space-between; align-items: center;
+}
+.sandbox-title {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 14px; letter-spacing: 1px;
+}
+.sandbox-body {
+  padding: 24px;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 28px;
+}
+.sandbox-controls .control-group { margin-bottom: 18px; }
+.control-label {
+  font-size: 12px; color: var(--ink-2);
+  margin-bottom: 6px;
+  display: flex; justify-content: space-between;
+}
+.control-label .value {
+  font-family: 'JetBrains Mono', monospace;
+  color: var(--clinical); font-weight: 500;
+}
+.control-slider {
+  width: 100%;
+  -webkit-appearance: none;
+  appearance: none;
+  height: 4px;
+  background: var(--divider);
+  outline: none;
+}
+.control-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 14px; height: 14px;
+  background: var(--clinical);
+  cursor: pointer; border-radius: 50%;
+}
+.control-slider::-moz-range-thumb {
+  width: 14px; height: 14px;
+  background: var(--clinical);
+  cursor: pointer; border-radius: 50%;
+  border: none;
+}
+.train-btn {
+  width: 100%; padding: 12px;
+  background: var(--physician); color: #fff;
+  border: none;
+  font-family: 'Noto Serif SC', serif;
+  font-size: 14px; letter-spacing: 2px;
+  cursor: pointer;
+  margin-top: 8px;
+}
+.train-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.sandbox-results { display: flex; flex-direction: column; gap: 16px; }
+.result-metric {
+  border: 1px solid var(--divider);
+  padding: 12px 16px;
+}
+.result-metric-label {
+  font-size: 10px; letter-spacing: 2px;
+  color: var(--ink-2);
+}
+.result-metric-value {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 26px; font-weight: 500;
+  color: var(--ink);
+}
+.result-metric-value.good { color: var(--physician); }
+.result-metric-value.warn { color: var(--alert); }
+.result-metric-value.bad { color: var(--alert-red); }
+.result-metric-note {
+  font-size: 11px; color: var(--ink-2);
+  font-style: italic; margin-top: 2px;
+}
+
+#trainingChart { max-height: 180px; }
+
+.overfitting-alert {
+  background: rgba(166, 56, 56, 0.08);
+  border-left: 3px solid var(--alert-red);
+  padding: 14px 18px; margin-top: 14px;
+  font-size: 13px; display: none;
+}
+.overfitting-alert.show { display: block; }
+.overfitting-alert strong { color: var(--alert-red); }
+
+/* ========== 第六幕 诊室情景 ========== */
+.exam-room {
+  background: #fff;
+  border: 1px solid var(--divider);
+  margin: 24px 0;
+  overflow: hidden;
+}
+.exam-room-header {
+  background: var(--clinical); color: #fff;
+  padding: 12px 20px; font-size: 13px;
+  letter-spacing: 1px;
+  font-family: 'Noto Serif SC', serif;
+}
+.exam-room-body { padding: 24px; }
+
+/* 模型能力档案 */
+.model-profile {
+  background: linear-gradient(180deg, #fff 0%, #fafaf4 100%);
+  border: 1px solid var(--divider);
+  border-top: 3px solid var(--physician);
+  margin: 24px 0;
+  padding: 20px 24px;
+}
+.model-profile-header {
+  font-family: 'Noto Serif SC', serif;
+  font-weight: 700; font-size: 13px;
+  letter-spacing: 2px;
+  color: var(--physician);
+  margin-bottom: 14px;
+  padding-bottom: 10px;
+  border-bottom: 1px dashed var(--divider);
+}
+.model-profile-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  margin-bottom: 14px;
+}
+@media (max-width: 768px) {
+  .model-profile-grid { grid-template-columns: repeat(2, 1fr); }
+}
+.profile-metric {}
+.profile-label {
+  font-size: 10px; letter-spacing: 1.5px;
+  color: var(--ink-2); margin-bottom: 4px;
+  text-transform: uppercase;
+}
+.profile-value {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 24px; font-weight: 500;
+  color: var(--clinical);
+}
+.profile-hint {
+  font-size: 12px; color: var(--ink-2);
+  font-style: italic;
+  padding-top: 12px;
+  border-top: 1px dashed var(--divider);
+  line-height: 1.7;
+}
+
+/* 患儿进度指示 */
+.case-guide {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 28px 0 12px;
+  padding: 14px 20px;
+  background: linear-gradient(90deg, rgba(200, 97, 26, 0.08) 0%, rgba(200, 97, 26, 0.02) 100%);
+  border-left: 3px solid var(--alert);
+}
+.case-guide-label {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: var(--alert);
+  padding: 3px 10px;
+  background: #fff;
+  border: 1px solid var(--alert);
+  flex-shrink: 0;
+}
+.case-guide-text {
+  flex: 1;
+  font-size: 13px;
+  color: var(--ink);
+}
+.case-counter {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--alert);
+  padding: 4px 12px;
+  background: #fff;
+  border: 1px solid var(--divider);
+}
+
+.case-progress {
+  display: flex;
+  gap: 8px;
+  align-items: stretch;
+  margin: 0 0 24px;
+  padding: 0;
+  border: none;
+}
+.case-progress-arrow {
+  display: flex;
+  align-items: center;
+  color: var(--divider);
+  font-size: 20px;
+  flex-shrink: 0;
+}
+.case-progress-item {
+  flex: 1;
+  padding: 12px 16px;
+  background: var(--paper-2);
+  border-left: 3px solid var(--divider);
+  transition: all 0.3s;
+  opacity: 0.45;
+}
+.case-progress-item.active {
+  opacity: 1;
+  background: #fff;
+  border-left-color: var(--alert);
+  box-shadow: var(--shadow);
+  transform: scale(1.02);
+}
+.case-progress-item.active .case-num {
+  color: var(--alert);
+}
+.case-progress-item.done {
+  opacity: 0.85;
+  background: rgba(45, 110, 62, 0.06);
+  border-left-color: var(--physician);
+}
+.case-progress-item.done .case-num {
+  color: var(--physician);
+}
+.case-progress-item.done .case-name::after {
+  content: ' ✓';
+  color: var(--physician);
+  font-weight: 700;
+}
+.case-num {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 11px;
+  letter-spacing: 2px;
+  color: var(--gold);
+  margin-bottom: 2px;
+}
+.case-name {
+  font-family: 'Noto Serif SC', serif;
+  font-weight: 700;
+  font-size: 15px;
+}
+.case-desc {
+  font-size: 11px;
+  color: var(--ink-2);
+  margin-top: 2px;
+}
+
+/* 继续按钮醒目化 */
+.next-case-btn {
+  background: var(--alert) !important;
+  color: #fff !important;
+  padding: 14px 36px !important;
+  font-size: 15px !important;
+  box-shadow: 0 4px 14px rgba(200, 97, 26, 0.3);
+  animation: pulseBtn 2s ease-in-out infinite;
+}
+.next-case-btn:hover {
+  background: var(--alert-red) !important;
+}
+@keyframes pulseBtn {
+  0%, 100% { box-shadow: 0 4px 14px rgba(200, 97, 26, 0.3); }
+  50% { box-shadow: 0 4px 20px rgba(200, 97, 26, 0.5); }
+}
+.next-case-hint {
+  font-size: 12px;
+  color: var(--ink-2);
+  font-style: italic;
+  margin-top: 8px;
+}
+.all-done-btn {
+  background: var(--physician) !important;
+  color: #fff !important;
+  padding: 14px 36px !important;
+  font-size: 15px !important;
+}
+
+/* 诊室卡片 */
+.ai-prediction-panel {
+  background: var(--paper-2);
+  border-left: 4px solid var(--clinical);
+  padding: 18px 22px;
+  margin: 18px 0;
+}
+.ai-panel-label {
+  font-size: 10px; letter-spacing: 3px;
+  color: var(--ink-2); margin-bottom: 8px;
+}
+.ai-prediction-value {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 36px; font-weight: 500;
+  color: var(--clinical);
+  display: flex; align-items: baseline; gap: 12px;
+}
+.ai-prediction-value small {
+  font-size: 14px; color: var(--ink-2); font-weight: 400;
+}
+.ai-recommendation {
+  margin-top: 8px; font-size: 13px;
+  font-style: italic; color: var(--ink-2);
+}
+.ai-confidence-tag {
+  display: inline-block;
+  padding: 2px 8px;
+  background: var(--physician);
+  color: #fff;
+  font-size: 10px;
+  letter-spacing: 1px;
+  margin-left: 8px;
+  vertical-align: middle;
+}
+.ai-confidence-tag.low { background: var(--alert); }
+.ai-confidence-tag.veryLow { background: var(--alert-red); }
+
+/* ========== 第七幕三棱镜 ========== */
+.prism {
+  display: grid; grid-template-columns: 1fr; gap: 16px;
+  margin: 28px 0;
+}
+@media(min-width: 900px) {
+  .prism { grid-template-columns: repeat(3, 1fr); }
+}
+.prism-panel {
+  border: 1px solid var(--divider);
+  background: #fff;
+  padding: 24px 20px;
+}
+.prism-panel.law { border-top: 4px solid #5a4b3a; }
+.prism-panel.ethics { border-top: 4px solid var(--physician); }
+.prism-panel.humanity { border-top: 4px solid var(--alert-red); }
+.prism-title {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 22px; font-weight: 700;
+  margin-bottom: 8px;
+}
+.prism-subtitle {
+  font-size: 11px; letter-spacing: 2px;
+  color: var(--ink-2); margin-bottom: 16px;
+  text-transform: uppercase;
+}
+.prism-scenario {
+  background: var(--paper-2);
+  padding: 14px 16px;
+  font-size: 13px;
+  font-family: 'Noto Serif SC', serif;
+  font-style: italic;
+  margin-bottom: 16px;
+  line-height: 1.7;
+}
+
+/* ========== 尾声 ========== */
+.epilogue {
+  text-align: center;
+  padding: 40px 0;
+}
+.epilogue-quote {
+  font-family: 'Noto Serif SC', serif;
+  font-size: 26px; font-weight: 500;
+  line-height: 1.8;
+  color: var(--ink);
+  margin: 40px auto;
+  max-width: 600px;
+  padding: 32px;
+  border-top: 1px solid var(--divider);
+  border-bottom: 1px solid var(--divider);
+}
+.trajectory-list {
+  text-align: left;
+  max-width: 600px;
+  margin: 30px auto;
+}
+.trajectory-item {
+  padding: 14px 0;
+  border-bottom: 1px dashed var(--divider);
+  font-size: 13px;
+  display: flex; justify-content: space-between; gap: 16px;
+}
+.trajectory-item strong {
+  font-family: 'Noto Serif SC', serif;
+  flex-shrink: 0;
+}
+.trajectory-item span {
+  color: var(--ink-2); text-align: right;
+}
+
+/* ========== 响应式 ========== */
+@media(max-width: 768px) {
+  .stage { padding: 90px 20px 100px; }
+  .act-title { font-size: 28px; }
+  .patient-card { display: none; }
+  .topbar { padding: 12px 16px; gap: 12px; flex-wrap: wrap; }
+  .brand-sub { display: none; }
+  .progress-dots { display: none; }
+  .feature-workbench { grid-template-columns: 1fr; }
+  .sandbox-body { grid-template-columns: 1fr; }
+  .feature-metrics { position: static; }
+}
+
+/* 工具类 */
+.muted { color: var(--ink-2); }
+.center { text-align: center; }
+.mt-s { margin-top: 12px; }
+.mt-m { margin-top: 24px; }
+.hidden { display: none !important; }
+.kbd-group { display: flex; gap: 8px; flex-wrap: wrap; margin: 12px 0; }
+.kbd {
+  display: inline-block;
+  padding: 4px 8px;
+  background: var(--paper-2);
+  border: 1px solid var(--divider);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--ink-2);
+}
+</style>
+</head>
+<body>
+
+<!-- ============ 顶部导航 ============ -->
+<div class="topbar">
+  <div class="brand">
+    <span class="brand-mark">医</span>
+    <span>AI 素养智教助手</span>
+    <span class="brand-sub">新医科·儿科本科</span>
+  </div>
+  <div class="progress-wrap">
+    <div class="progress-dots" id="progressDots"></div>
+  </div>
+  <button class="settings-btn" onclick="openSettings()">⚙ 教师设置</button>
+</div>
+
+<!-- ============ 小宝状态卡 ============ -->
+<div class="patient-card" id="patientCard">
+  <div class="patient-card-label">当前患儿</div>
+  <div class="patient-name">小宝</div>
+  <div class="patient-detail">
+    男 · 52 天<br>
+    发热 6 小时 · T 38.5 ℃
+  </div>
+  <div class="patient-status" id="patientStatus">等待接诊中</div>
+</div>
+
+<!-- ============ 第一幕：小宝的故事 ============ -->
+<div class="stage act active" id="act1" data-act="1">
+  <div class="act-header">
+    <div class="act-number">第 一 幕</div>
+    <h1 class="act-title">小宝的故事</h1>
+    <div class="act-subtitle">—— 从一份急诊病历开始，进入不确定性的深处</div>
+  </div>
+
+  <p>这是一个周四凌晨两点的急诊。你值班。</p>
+
+  <div class="chart-paper">
+    <div class="chart-row">
+      <div class="chart-label">患儿姓名</div>
+      <div class="chart-value">小宝</div>
+    </div>
+    <div class="chart-row">
+      <div class="chart-label">性别 / 月龄</div>
+      <div class="chart-value">男 / <span class="chart-highlight">52 天</span></div>
+    </div>
+    <div class="chart-row">
+      <div class="chart-label">主诉</div>
+      <div class="chart-value">发热 6 小时，最高 38.5 ℃</div>
+    </div>
+    <div class="chart-row">
+      <div class="chart-label">一般情况</div>
+      <div class="chart-value">反应可，进食稍差，无咳嗽、腹泻、皮疹</div>
+    </div>
+    <div class="chart-row">
+      <div class="chart-label">查体</div>
+      <div class="chart-value">无明显感染灶，前囟平软，四肢末梢暖</div>
+    </div>
+    <div class="chart-row">
+      <div class="chart-label">急诊化验</div>
+      <div class="chart-value">WBC <span class="chart-highlight">14.2×10⁹/L</span>，CRP 12 mg/L，尿常规未见异常</div>
+    </div>
+  </div>
+
+  <div class="question-prompt">作为接诊医生，你会如何处置？</div>
+
+  <div class="choice-grid" id="act1Choices">
+    <button class="choice-btn" data-choice="A">
+      <span class="choice-letter">A</span>
+      <span>门诊观察，口服对乙酰氨基酚退热，24 小时后复诊。家长已签署知情。</span>
+    </button>
+    <button class="choice-btn" data-choice="B">
+      <span class="choice-letter">B</span>
+      <span>收住院，完善血培养、尿培养、脑脊液检查，经验性抗生素治疗。</span>
+    </button>
+    <button class="choice-btn" data-choice="C">
+      <span class="choice-letter">C</span>
+      <span>完善血培养、尿培养、PCT 后，根据结果再决定是否住院。</span>
+    </button>
+  </div>
+
+  <div id="act1Feedback" class="hidden">
+    <div class="survey-chart">
+      <div class="survey-chart-title">全国 1,247 位儿科医生的同题选择分布</div>
+      <div id="surveyBars"></div>
+      <p class="muted mt-m" style="font-size: 12px;">数据来源：模拟调查（基于真实文献合成）。同一份病历，不同医生的判断存在显著差异。</p>
+    </div>
+
+    <div class="narrative">
+      临床决策的不确定性，并非医生水平的差距，而是<strong>信息本身的不充分</strong>。<br>
+      小宝的血象偏高，但 52 天的婴儿免疫系统尚未成熟——谁能单凭这几项数据，说出他到底是一次普通病毒感染，还是即将恶化的菌血症？<br><br>
+      <em>如果我们有 2 万个小宝的历史数据，能不能帮医生做出更稳定的判断？</em>
+    </div>
+
+    <div class="insight-box">
+      <div class="insight-title">🔎 本幕核心概念</div>
+      <p style="font-size: 13px;">
+        <strong>临床决策的不确定性</strong>是医学 AI 的根本起点。AI 不是为了"替代医生"，而是为了<strong>让每一个决策都拥有更充分的依据</strong>。
+        接下来六幕，我们将亲手走完从"数据"到"模型"再到"诊室里的 AI"的全流程。
+      </p>
+    </div>
+  </div>
+
+  <div class="act-nav">
+    <button class="nav-btn secondary" disabled>← 上一幕</button>
+    <button class="nav-btn" onclick="nextAct()" id="nextBtn1" disabled>下一幕：数据的诞生 →</button>
+  </div>
+</div>
+
+<!-- ============ 第二幕 ============ -->
+<div class="stage act" id="act2" data-act="2">
+  <div class="act-header">
+    <div class="act-number">第 二 幕</div>
+    <h1 class="act-title">数据的诞生</h1>
+    <div class="act-subtitle">—— 病历如何变成机器可读的数据，以及其中的陷阱</div>
+  </div>
+
+  <p>医院信息系统里，每年产生数百万份像小宝这样的病历。但这些<strong>不是"数据"</strong>——它们需要被清洗、对齐、编码，才能喂给算法。</p>
+
+  <p class="mt-m">下面是从真实急诊系统导出的 <strong>20 例婴儿发热病历</strong>（节选）。<br>
+  <em>你的任务：点击表格中你认为"有问题"的单元格。</em></p>
+
+  <div class="data-table-wrap">
+    <div class="data-table-header">
+      <span>原始病历数据 · 脱敏样本</span>
+      <span class="data-quality">数据质量得分：<span id="qualityScore">45</span>/100</span>
+    </div>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>编号</th><th>月龄</th><th>体温</th><th>WBC</th><th>性别</th><th>诊断</th>
+        </tr>
+      </thead>
+      <tbody id="dataTableBody"></tbody>
+    </table>
+  </div>
+
+  <div class="finding-log">
+    <div class="finding-log-title">📋 你的发现</div>
+    <div id="findingLog"><p class="muted" style="font-size: 12px;">尚未发现问题。点击表格中的可疑单元格开始。</p></div>
+  </div>
+
+  <div id="act2Reflection" class="hidden">
+    <h3 class="serif mt-m" style="font-size: 18px; margin-top: 32px;">🌍 偏倚的浮现</h3>
+
+    <div class="narrative">
+      现在让我告诉你：<strong>这 2 万条数据全部来自某三甲儿童医院的急诊科</strong>。<br>
+      请思考：如果你用它训练的模型，部署到一个<strong>县级医院</strong>，会发生什么？
+    </div>
+
+    <div class="llm-dialog">
+      <div class="llm-header">
+        <div class="llm-icon">反思</div>
+        <div class="llm-label">
+          请用一到两句话写下你的思考
+          <small>完成后提交给 AI，看看它怎么看</small>
+        </div>
+      </div>
+      <div class="llm-input-wrap">
+        <textarea class="llm-textarea" id="biasInput" placeholder="例如：三甲医院的患儿病情更重，模型可能高估县级医院患儿的风险..."></textarea>
+        <button class="llm-submit" onclick="submitBiasReflection()">提交 ▷</button>
+      </div>
+      <div class="llm-response hidden" id="biasResponse"></div>
+    </div>
+
+    <div class="insight-box">
+      <div class="insight-title">🎯 本幕核心概念</div>
+      <p style="font-size: 13px;">
+        <strong>选择偏倚 · 测量偏倚 · 标签偏倚</strong>——数据永远不是"中立的事实"，
+        而是"<strong>谁测、测什么、怎么测</strong>"的产物。你若不了解数据的来源，就无法评估模型的可信度。<br>
+        记住这句话：<em>Garbage in, Garbage out.</em>
+      </p>
+    </div>
+  </div>
+
+  <div class="act-nav">
+    <button class="nav-btn secondary" onclick="prevAct()">← 上一幕</button>
+    <button class="nav-btn" onclick="nextAct()" id="nextBtn2" disabled>下一幕：特征的博弈 →</button>
+  </div>
+</div>
+
+<!-- ============ 第三幕 ============ -->
+<div class="stage act" id="act3" data-act="3">
+  <div class="act-header">
+    <div class="act-number">第 三 幕</div>
+    <h1 class="act-title">特征的博弈</h1>
+    <div class="act-subtitle">—— 医生的临床经验，如何被"翻译"给算法</div>
+  </div>
+
+  <p>在一家基层医院，检查设备有限，你只能选择 <strong>5 个特征</strong> 来预测"严重细菌感染"风险。<br>
+  桌上铺开了 20 张特征卡。<em>你会选哪 5 张？</em></p>
+
+  <div class="feature-workbench">
+    <div class="feature-pool">
+      <div class="feature-pool-title">候 选 特 征 · 请点击选择 5 个</div>
+      <div class="feature-cards" id="featureCards"></div>
+    </div>
+
+    <div class="feature-metrics">
+      <div class="metrics-row">
+        <div class="metrics-label">已选特征</div>
+        <div class="metrics-value" id="featureCount">0 / 5</div>
+      </div>
+      <div class="metrics-row">
+        <div class="metrics-label">预估模型 AUC</div>
+        <div class="metrics-value" id="featureAuc">—</div>
+      </div>
+      <div class="metrics-row">
+        <div class="metrics-label">陷阱特征警告</div>
+        <div class="metrics-value warn" id="trapWarning">无</div>
+      </div>
+    </div>
+  </div>
+
+  <div id="trapAlertBox" class="hidden">
+    <div class="narrative" style="border-color: var(--alert-red); background: rgba(166, 56, 56, 0.06);">
+      <strong>⚠️ 数据泄漏（Data Leakage）警告</strong><br>
+      你选中了一些"伪特征"——它们看似相关，实则是<strong>结果而非原因</strong>，或者来自未来信息。<br>
+      例如"是否抗生素使用"——这本身就是医生已经判断为重症后的决策结果；用它来预测重症，等于"事后诸葛亮"。<br>
+      <em>在真实部署时，模型会彻底失效。</em>
+    </div>
+  </div>
+
+  <div id="act3Reflection" class="hidden">
+    <div class="narrative">
+      选择特征的过程，本质上是把<strong>医学知识</strong>编码进算法的过程。<br>
+      有经验的医生选"月龄 + 体温 + WBC + CRP + 反应情况"——这不是数据驱动，这是<strong>临床驱动</strong>。<br><br>
+      另一种路线是"端到端深度学习"：把所有原始数据扔给神经网络，让它自己发现模式。
+      这在影像识别中极其成功，<strong>但在儿科这种错误代价极高的领域，我们通常选择可解释性优先</strong>。
+    </div>
+
+    <div class="insight-box">
+      <div class="insight-title">⚖️ 可解释性 vs 预测力</div>
+      <p style="font-size: 13px;">
+        这是医学 AI 中永恒的张力：<br>
+        · <strong>可解释模型</strong>（逻辑回归、决策树）：医生看得懂每个变量的权重，能质疑、能负责。<br>
+        · <strong>黑箱模型</strong>（深度学习）：预测力可能更强，但医生无法解释"为什么这么判"。<br>
+        在儿科，我们倾向前者。但"倾向"不等于"永远"——下一幕你会看到模型的家族谱。
+      </p>
+    </div>
+  </div>
+
+  <div class="act-nav">
+    <button class="nav-btn secondary" onclick="prevAct()">← 上一幕</button>
+    <button class="nav-btn" onclick="nextAct()" id="nextBtn3" disabled>下一幕：模型的抉择 →</button>
+  </div>
+</div>
+
+<!-- ============ 第四幕 ============ -->
+<div class="stage act" id="act4" data-act="4">
+  <div class="act-header">
+    <div class="act-number">第 四 幕</div>
+    <h1 class="act-title">模型的抉择</h1>
+    <div class="act-subtitle">—— 从逻辑回归到大语言模型的家族谱</div>
+  </div>
+
+  <p>机器学习不是一个模型，而是<strong>一个模型动物园</strong>。下面是主要家族成员：</p>
+
+  <div class="model-zoo" id="modelZoo"></div>
+
+  <h3 class="serif mt-m" style="font-size: 18px; margin-top: 36px;">🎯 场景匹配任务</h3>
+  <p>下面 5 个真实儿科场景，请为每个选择最合适的模型：</p>
+
+  <div class="scenario-matcher" id="scenarioMatcher"></div>
+
+  <div id="act4Reflection" class="hidden">
+    <div class="narrative">
+      <strong>没有最好的模型，只有最合适的模型</strong>。<br>
+      选择模型就像选择临床工具——你不会用听诊器做腹部 B 超，也不会用深度学习处理 200 例的罕见病数据集。<br><br>
+      尤其是<strong>大语言模型（LLM）</strong>。它不是万能钥匙。直接问 GPT "患儿用什么抗生素"是危险的——它可能引用过时或国外指南。
+      正确的做法是<strong>LLM + RAG</strong>：让模型在一个经过验证的知识库里检索答案。这是教师团队<em>童盾系统</em>的核心设计思路。
+    </div>
+
+    <div class="insight-box">
+      <div class="insight-title">💡 关键识别</div>
+      <p style="font-size: 13px;">
+        对小宝这个<strong>结构化临床数据 + 二分类预测</strong>任务，最合适的是 <strong>XGBoost 或逻辑回归</strong>。
+        不是神经网络，更不是大语言模型。<br>
+        下一幕，你将亲手训练一个 XGBoost 模型来预测住院风险。
+      </p>
+    </div>
+  </div>
+
+  <div class="act-nav">
+    <button class="nav-btn secondary" onclick="prevAct()">← 上一幕</button>
+    <button class="nav-btn" onclick="nextAct()" id="nextBtn4" disabled>下一幕：训练你的 AI →</button>
+  </div>
+</div>
+
+<!-- ============ 第五幕 ============ -->
+<div class="stage act" id="act5" data-act="5">
+  <div class="act-header">
+    <div class="act-number">第 五 幕</div>
+    <h1 class="act-title">训练你的 AI</h1>
+    <div class="act-subtitle">—— 亲手建一个发热婴儿住院预测模型</div>
+  </div>
+
+  <p>现在你是<strong>数据科学家</strong>。数据集：2 万例婴儿发热急诊病例。你的任务：训练一个 XGBoost 模型，预测"严重细菌感染"风险，并让它<strong>真的可用</strong>。</p>
+
+  <div class="modeling-sandbox">
+    <div class="sandbox-header">
+      <span class="sandbox-title">▌ 建 模 沙 盒</span>
+      <span class="mono" style="font-size: 11px;">XGBoost · n=20,000</span>
+    </div>
+    <div class="sandbox-body">
+      <div class="sandbox-controls">
+        <div class="control-group">
+          <div class="control-label">
+            <span>训练集比例</span>
+            <span class="value"><span id="trainRatio">70</span>%</span>
+          </div>
+          <input type="range" class="control-slider" id="trainSlider" min="50" max="90" value="70">
+        </div>
+        <div class="control-group">
+          <div class="control-label">
+            <span>树的最大深度</span>
+            <span class="value" id="depthValue">5</span>
+          </div>
+          <input type="range" class="control-slider" id="depthSlider" min="2" max="15" value="5">
+        </div>
+        <div class="control-group">
+          <div class="control-label">
+            <span>树的数量</span>
+            <span class="value" id="treesValue">100</span>
+          </div>
+          <input type="range" class="control-slider" id="treesSlider" min="10" max="500" value="100" step="10">
+        </div>
+        <div class="control-group">
+          <div class="control-label">
+            <span>学习率</span>
+            <span class="value" id="lrValue">0.10</span>
+          </div>
+          <input type="range" class="control-slider" id="lrSlider" min="1" max="30" value="10">
+        </div>
+        <button class="train-btn" onclick="trainModel()">▶ 开 始 训 练</button>
+      </div>
+
+      <div class="sandbox-results">
+        <div class="result-metric">
+          <div class="result-metric-label">训练集 AUC</div>
+          <div class="result-metric-value" id="trainAuc">—</div>
+          <div class="result-metric-note">Discrimination on training set</div>
+        </div>
+        <div class="result-metric">
+          <div class="result-metric-label">验证集 AUC</div>
+          <div class="result-metric-value" id="valAuc">—</div>
+          <div class="result-metric-note">True predictive performance</div>
+        </div>
+        <div class="result-metric">
+          <div class="result-metric-label">校准性（Brier 评分 · 越小越好）</div>
+          <div class="result-metric-value" id="brier">—</div>
+          <div class="result-metric-note">Probability calibration quality</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="overfitting-alert" id="overfittingAlert">
+    <strong>过拟合警告：</strong>训练集性能显著高于验证集。<br>
+    你的模型"背下了"训练数据，但无法泛化到新患儿。就像学生只会做课本原题，一换就露馅。<br>
+    <em>解决方案：降低树的深度、增加正则化、或增加训练数据量。</em>
+  </div>
+
+  <div id="externalValidationBox" class="hidden mt-m">
+    <h3 class="serif" style="font-size: 18px; margin-top: 28px;">🌍 外部验证：换一家医院看看</h3>
+    <p>模型在<strong>本院验证集</strong>表现不错。但医学模型真正的考验是<strong>外部验证</strong>——去另一家医院的数据上再看看。</p>
+    <button class="nav-btn mt-m" onclick="runExternalValidation()" id="externalBtn">▶ 在县医院数据上测试</button>
+    <div id="externalResult" class="hidden mt-m">
+      <div class="result-metric">
+        <div class="result-metric-label">县医院外部验证 AUC</div>
+        <div class="result-metric-value warn" id="externalAuc">—</div>
+        <div class="result-metric-note">External validation (Qianjiang Central Hospital)</div>
+      </div>
+      <div class="narrative mt-m">
+        性能下降是几乎必然的。<strong>为什么？</strong><br>
+        因为县医院的患儿人群、检查条件、转诊路径与三甲医院不同——这就是<strong>分布偏移（Distribution Shift）</strong>。<br>
+        <em>任何一个没有做过外部验证的 AI 模型，都不该被信任部署到临床。</em>
+      </div>
+    </div>
+  </div>
+
+  <div id="modelReadyForUse" class="hidden mt-m">
+    <div class="insight-box" style="border-color: var(--physician); border-left: 3px solid var(--physician);">
+      <div class="insight-title">✓ 你的模型已就绪</div>
+      <p style="font-size: 13px;">
+        恭喜。你训练的模型将跟随你进入第六幕——<strong>诊室情景模拟</strong>。<br>
+        届时，它将作为"AI 助手"给出对具体患儿的预测。你将面对真正的挑战：<em>医生如何与 AI 共事？</em>
+      </p>
+    </div>
+  </div>
+
+  <div class="act-nav">
+    <button class="nav-btn secondary" onclick="prevAct()">← 上一幕</button>
+    <button class="nav-btn" onclick="nextAct()" id="nextBtn5" disabled>下一幕：AI 在诊室里 →</button>
+  </div>
+</div>
+
+<!-- ============ 第六幕 ============ -->
+<div class="stage act" id="act6" data-act="6">
+  <div class="act-header">
+    <div class="act-number">第 六 幕</div>
+    <h1 class="act-title">AI 在诊室里</h1>
+    <div class="act-subtitle">—— 当你训练的模型，真的面对一个活生生的孩子</div>
+  </div>
+
+  <p>你训练好的 AI 助手已上线，并部署到急诊系统。<br>
+  这一幕，你会依次面对 <strong>3 位真实患儿</strong>。每一次，AI 助手都会基于<strong>你亲手训练的那个模型</strong>给出建议；你可以向它追问，也可以推翻它。</p>
+
+  <div style="background: rgba(200, 97, 26, 0.08); border-left: 3px solid var(--alert); padding: 12px 18px; margin: 16px 0; font-size: 13px;">
+    <strong>📍 操作说明</strong>：对每位患儿做出 <strong>A/B/C 决定</strong> 后，会出现"继续 · 下一位患儿"按钮。
+    处理完 3 位患儿后，底部"下一幕"按钮才会解锁。
+  </div>
+
+  <!-- 模型能力档案 -->
+  <div class="model-profile" id="modelProfile">
+    <div class="model-profile-header">▌ 你 的 模 型 能 力 档 案</div>
+    <div class="model-profile-grid">
+      <div class="profile-metric">
+        <div class="profile-label">内部验证 AUC</div>
+        <div class="profile-value" id="pfInternal">—</div>
+      </div>
+      <div class="profile-metric">
+        <div class="profile-label">外部验证 AUC</div>
+        <div class="profile-value" id="pfExternal">—</div>
+      </div>
+      <div class="profile-metric">
+        <div class="profile-label">校准性（Brier）</div>
+        <div class="profile-value" id="pfBrier">—</div>
+      </div>
+      <div class="profile-metric">
+        <div class="profile-label">模型类型</div>
+        <div class="profile-value" style="font-size: 14px;">XGBoost</div>
+      </div>
+    </div>
+    <p class="profile-hint">
+      这是你在第五幕训练出的模型。接下来 AI 助手将基于这份"能力档案"给出建议——
+      <strong>一个负责任的 AI，会诚实地说出自己的局限性</strong>。
+    </p>
+  </div>
+
+  <!-- 进度指示 -->
+  <div class="case-guide">
+    <span class="case-guide-label">本幕任务</span>
+    <span class="case-guide-text">依次处理 <strong>3 位真实患儿</strong>，每一位对模型都是不同的挑战</span>
+    <span class="case-counter">进度 <span id="caseCounter">0 / 3</span></span>
+  </div>
+
+  <div class="case-progress">
+    <div class="case-progress-item" data-case="1">
+      <div class="case-num">01</div>
+      <div class="case-name">小雨</div>
+      <div class="case-desc">典型情境</div>
+    </div>
+    <div class="case-progress-arrow">→</div>
+    <div class="case-progress-item" data-case="2">
+      <div class="case-num">02</div>
+      <div class="case-name">小凯</div>
+      <div class="case-desc">分布外挑战</div>
+    </div>
+    <div class="case-progress-arrow">→</div>
+    <div class="case-progress-item" data-case="3">
+      <div class="case-num">03</div>
+      <div class="case-name">小晨</div>
+      <div class="case-desc">边界情况</div>
+    </div>
+  </div>
+
+  <!-- 诊室卡片（动态渲染） -->
+  <div id="caseContainer"></div>
+
+  <div id="fatigueSection" class="hidden">
+    <h3 class="serif mt-m" style="font-size: 20px; margin-top: 36px;">⚠️ 警觉疲劳：AI 最大的非技术性失败</h3>
+    <div class="narrative">
+      你刚才连续处理了 3 个患儿。<strong>注意观察你自己</strong>：到第 3 个时，你是否开始<em>直接接受 AI 的建议</em>？<br><br>
+      这就是<strong>警觉疲劳（Alert Fatigue）</strong>——AI 用多了，医生反而<em>失去了独立判断的警觉</em>。
+      研究显示，在连续 5 次以上 AI 提示后，医生的独立核查率下降 40%。<br><br>
+      这是医疗 AI 部署后最常见、也最危险的失败模式。<em>一个好的 AI 不是让医生变"懒"，而是让医生在正确的地方"专注"。</em>
+    </div>
+  </div>
+
+  <div class="act-nav">
+    <button class="nav-btn secondary" onclick="prevAct()">← 上一幕</button>
+    <div style="display: flex; flex-direction: column; align-items: flex-end; gap: 6px;">
+      <span id="nextBtn6Hint" style="font-size: 11px; color: var(--ink-2); font-style: italic;">完成全部 3 位患儿后，下一幕解锁</span>
+      <button class="nav-btn" onclick="nextAct()" id="nextBtn6" disabled>下一幕：法律 · 伦理 · 人文 →</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 第七幕 ============ -->
+<div class="stage act" id="act7" data-act="7">
+  <div class="act-header">
+    <div class="act-number">第 七 幕</div>
+    <h1 class="act-title">当 AI 犯错时</h1>
+    <div class="act-subtitle">—— 法律、伦理、人文的三棱镜</div>
+  </div>
+
+  <div class="narrative">
+    现在，我们必须面对一个真实的问题。<br><br>
+    <strong>两天后，小雨——那个 AI 说"8% 风险"的 38 天女婴——以脑膜炎住院，留下神经系统后遗症。</strong><br>
+    家属起诉。谁来担责？孩子的未来该怎么办？她母亲在诊室哭着问你时，你说什么？<br><br>
+    这一幕，没有标准答案。
+  </div>
+
+  <div class="prism">
+
+    <!-- 法律 -->
+    <div class="prism-panel law">
+      <div class="prism-subtitle">PRISM · ONE</div>
+      <h3 class="prism-title">法律</h3>
+      <div class="prism-scenario">
+        AI 说 8%，医生采纳了 AI 建议。孩子出事了。<br><strong>主要责任方是？</strong>
+      </div>
+      <div class="choice-grid">
+        <button class="choice-btn" onclick="chooseLegal(this)" data-val="doctor"><span class="choice-letter">A</span><span>医生</span></button>
+        <button class="choice-btn" onclick="chooseLegal(this)" data-val="hospital"><span class="choice-letter">B</span><span>医院</span></button>
+        <button class="choice-btn" onclick="chooseLegal(this)" data-val="vendor"><span class="choice-letter">C</span><span>AI 厂商</span></button>
+        <button class="choice-btn" onclick="chooseLegal(this)" data-val="joint"><span class="choice-letter">D</span><span>多方连带</span></button>
+      </div>
+      <div id="legalFeedback" class="hidden mt-s" style="font-size: 12px; color: var(--ink-2); line-height: 1.7;"></div>
+    </div>
+
+    <!-- 伦理 -->
+    <div class="prism-panel ethics">
+      <div class="prism-subtitle">PRISM · TWO</div>
+      <h3 class="prism-title">伦理</h3>
+      <div class="prism-scenario">
+        模型总体 AUC = 0.82。<br>
+        但对<strong>农村来源男婴</strong>子群，AUC = 0.61。<br>
+        你会部署这个模型吗？
+      </div>
+      <div class="choice-grid">
+        <button class="choice-btn" onclick="chooseEthics(this)" data-val="deploy"><span class="choice-letter">A</span><span>部署，总体性能达标</span></button>
+        <button class="choice-btn" onclick="chooseEthics(this)" data-val="fix"><span class="choice-letter">B</span><span>暂缓，补充该子群数据</span></button>
+        <button class="choice-btn" onclick="chooseEthics(this)" data-val="disclose"><span class="choice-letter">C</span><span>部署，但对该子群明确弃权</span></button>
+      </div>
+      <div id="ethicsFeedback" class="hidden mt-s" style="font-size: 12px; color: var(--ink-2); line-height: 1.7;"></div>
+    </div>
+
+    <!-- 人文 -->
+    <div class="prism-panel humanity">
+      <div class="prism-subtitle">PRISM · THREE</div>
+      <h3 class="prism-title">人文</h3>
+      <div class="prism-scenario">
+        小雨的妈妈哭着问你：<br>
+        <strong>"是 AI 算错了吗？你们为什么要听机器的？"</strong><br>
+        你怎么回答？
+      </div>
+      <div class="llm-dialog" style="margin: 12px 0;">
+        <textarea class="llm-textarea" id="humanityInput" placeholder="请写下你会对她说的话..." style="min-height: 100px;"></textarea>
+        <button class="llm-submit" onclick="submitHumanity()" style="margin-top: 8px; width: 100%; height: auto; padding: 10px;">▷ 提交</button>
+        <div class="llm-response hidden" id="humanityResponse" style="margin-top: 12px;"></div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="narrative mt-m" style="margin-top: 40px;">
+    技术问题可以用更多的数据解决。<br>
+    但<strong>"机器出错时，谁来承担责任？"</strong>、<strong>"算法公平，能不能量化？"</strong>、<strong>"那张床上躺着的，是一个家庭的未来。"</strong>——<br>
+    这些问题，只能靠<em>你们——未来的医生</em>——来回答。
+  </div>
+
+  <div class="act-nav">
+    <button class="nav-btn secondary" onclick="prevAct()">← 上一幕</button>
+    <button class="nav-btn" onclick="nextAct()">进入尾声 →</button>
+  </div>
+</div>
+
+<!-- ============ 尾声 ============ -->
+<div class="stage act" id="act8" data-act="8">
+  <div class="epilogue">
+    <div class="act-number" style="margin-bottom: 12px;">尾 声</div>
+    <h1 class="serif" style="font-size: 34px; font-weight: 900;">你的决策轨迹</h1>
+    <p class="muted mt-s">以下是你在本次学习中的关键选择</p>
+
+    <div class="trajectory-list" id="trajectoryList"></div>
+
+    <div class="epilogue-quote" id="finalQuote">
+      （正在基于你的轨迹生成个性化学习画像···）
+    </div>
+
+    <p class="muted" style="font-size: 13px; margin-top: 24px;">
+      你完成了这次学习。请继续记住你自己的选择——因为很快，它们不再是模拟。
+    </p>
+
+    <div class="mt-m" style="margin-top: 32px;">
+      <button class="nav-btn" onclick="exportReport()">📥 导出我的学习报告</button>
+      <button class="nav-btn secondary" onclick="restart()" style="margin-left: 12px;">↺ 重新开始</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ 教师设置面板 ============ -->
+<div class="modal-overlay" id="settingsModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeSettings()">×</button>
+    <div class="modal-title">🔐 教师设置</div>
+    <div class="modal-sub">配置 LLM API · 本地保存 · 仅教师可见</div>
+
+    <div class="field">
+      <label class="field-label">选择 LLM 提供商</label>
+      <select class="field-select" id="providerSelect" onchange="onProviderChange()">
+        <option value="zhipu">智谱 GLM（glm-4-plus / glm-4-flash）</option>
+        <option value="moonshot">月之暗面 Kimi（moonshot-v1-8k）</option>
+        <option value="qwen">阿里通义千问（qwen-plus / qwen-max）</option>
+        <option value="deepseek">深度求索 DeepSeek（deepseek-chat）</option>
+        <option value="custom">自定义 OpenAI 兼容端点</option>
+      </select>
+    </div>
+
+    <div class="field">
+      <label class="field-label">API 端点 URL</label>
+      <input type="text" class="field-input" id="apiEndpoint">
+      <div class="field-hint">选择提供商后自动填充，可自定义修改</div>
+    </div>
+
+    <div class="field">
+      <label class="field-label">模型名称</label>
+      <input type="text" class="field-input" id="modelName">
+      <div class="field-hint">如 glm-4-flash、moonshot-v1-8k、qwen-plus 等</div>
+    </div>
+
+    <div class="field">
+      <label class="field-label">API Key</label>
+      <input type="password" class="field-input" id="apiKey" placeholder="sk-...">
+      <div class="field-hint">保存在本浏览器 localStorage，学生端不可见</div>
+    </div>
+
+    <div class="field">
+      <label class="field-label">超时时间（秒）</label>
+      <input type="number" class="field-input" id="apiTimeout" value="60" min="10" max="180">
+    </div>
+
+    <div class="field">
+      <label class="field-label">CORS 代理（可选）</label>
+      <input type="text" class="field-input" id="corsProxy" placeholder="例如 https://your-proxy.com/proxy?url=">
+      <div class="field-hint">
+        ⚠️ 国内大模型 API 通常<strong>不允许浏览器直接调用</strong>（CORS 限制）。
+        可留空先尝试直连；若失败，需填写代理地址。详见底部"部署说明"。
+      </div>
+    </div>
+
+    <details class="field" style="background: var(--paper-2); padding: 12px; border: 1px solid var(--divider);">
+      <summary style="cursor: pointer; font-size: 13px; font-weight: 500;">📖 部署说明（教师必读）</summary>
+      <div style="font-size: 12px; line-height: 1.7; margin-top: 10px; color: var(--ink-2);">
+        <p><strong>方案 A · 本地直接打开（推荐开发测试）：</strong><br>
+        Chrome 启动添加参数 <code style="background:#fff;padding:1px 5px">--disable-web-security --user-data-dir=/tmp/chrome</code>，可绕过 CORS。仅用于教师本机。</p>
+
+        <p><strong>方案 B · 自建简单代理（推荐课堂使用）：</strong><br>
+        用任意服务器（或 Cloudflare Worker）部署一个转发服务，将 <code>/proxy?url=xxx</code> 转发到目标 API。示例 Cloudflare Worker 代码：</p>
+        <pre style="background:#fff;padding:8px;overflow-x:auto;font-size:10px;">export default {
+  async fetch(req) {
+    const u = new URL(req.url);
+    const target = u.searchParams.get('url');
+    if (!target) return new Response('need ?url=', {status:400});
+    const r = await fetch(target, {
+      method: req.method, headers: req.headers, body: req.body
+    });
+    const resp = new Response(r.body, r);
+    resp.headers.set('Access-Control-Allow-Origin', '*');
+    return resp;
+  }
+}</pre>
+
+        <p><strong>方案 C · 将本应用托管到与 API 同域的服务器</strong>，或使用 Nginx 反向代理。</p>
+
+        <p><strong>方案 D · 无 API 演示模式：</strong> 即便不配置 LLM，应用的前 6 幕核心交互仍可完整运行，只有涉及 AI 反馈的环节会提示"未配置"。</p>
+      </div>
+    </details>
+
+    <div class="modal-actions">
+      <button class="nav-btn secondary" onclick="testAPI()">🧪 测试连通性</button>
+      <button class="nav-btn secondary" onclick="closeSettings()">取消</button>
+      <button class="nav-btn" onclick="saveSettings()">保存</button>
+    </div>
+
+    <div id="apiTestResult" class="mt-s" style="font-size: 12px; font-family: monospace;"></div>
+  </div>
+</div>
+
+<script>
+// ========== 全局状态 ==========
+const state = {
+  currentAct: 1,
+  totalActs: 7,
+  act1Choice: null,
+  foundProblems: [],
+  qualityScore: 45,
+  biasReflection: '',
+  selectedFeatures: [],
+  featureAuc: 0,
+  trapSelected: [],
+  scenarioAnswers: {},
+  modelResults: null,
+  externalValidated: false,
+  examChoice: null,
+  examAIResponses: [],
+  legalChoice: null,
+  ethicsChoice: null,
+  humanityResponse: '',
+  biasAIResponse: '',
+  humanityAIResponse: ''
+};
+
+// ========== LLM 配置 ==========
+const LLM_PROVIDERS = {
+  zhipu: {
+    name: '智谱 GLM',
+    endpoint: 'https://open.bigmodel.cn/api/paas/v4/chat/completions',
+    defaultModel: 'glm-4-flash'
+  },
+  moonshot: {
+    name: '月之暗面 Kimi',
+    endpoint: 'https://api.moonshot.cn/v1/chat/completions',
+    defaultModel: 'moonshot-v1-8k'
+  },
+  qwen: {
+    name: '通义千问',
+    endpoint: 'https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions',
+    defaultModel: 'qwen-plus'
+  },
+  deepseek: {
+    name: 'DeepSeek',
+    endpoint: 'https://api.deepseek.com/v1/chat/completions',
+    defaultModel: 'deepseek-chat'
+  },
+  custom: {
+    name: '自定义',
+    endpoint: '',
+    defaultModel: ''
+  }
+};
+
+function loadLLMConfig() {
+  const saved = localStorage.getItem('llm_config');
+  if (saved) {
+    try { return JSON.parse(saved); } catch(e) { return null; }
+  }
+  return null;
+}
+
+function saveLLMConfig(cfg) {
+  localStorage.setItem('llm_config', JSON.stringify(cfg));
+}
+
+// ========== 通用 LLM 调用函数 ==========
+async function callLLM(systemPrompt, userPrompt, opts = {}) {
+  const cfg = loadLLMConfig();
+  if (!cfg || !cfg.apiKey) {
+    return { error: '⚠️ 教师尚未配置 API Key。请点击右上角"教师设置"进行配置。' };
+  }
+
+  const messages = [];
+  if (systemPrompt) messages.push({ role: 'system', content: systemPrompt });
+  messages.push({ role: 'user', content: userPrompt });
+
+  const body = {
+    model: cfg.model,
+    messages: messages,
+    temperature: opts.temperature ?? 0.7,
+    max_tokens: opts.maxTokens ?? 800
+  };
+
+  // 若配置了 CORS 代理，拼接代理 URL
+  let url = cfg.endpoint;
+  if (cfg.corsProxy) {
+    url = cfg.corsProxy + encodeURIComponent(cfg.endpoint);
+  }
+
+  try {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), (cfg.timeout || 60) * 1000);
+
+    const resp = await fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + cfg.apiKey
+      },
+      body: JSON.stringify(body),
+      signal: controller.signal
+    });
+    clearTimeout(timeoutId);
+
+    if (!resp.ok) {
+      const errText = await resp.text();
+      return { error: `API 错误 ${resp.status}：${errText.substring(0, 200)}` };
+    }
+    const data = await resp.json();
+    const text = data.choices?.[0]?.message?.content || data.message || JSON.stringify(data);
+    return { text };
+  } catch (err) {
+    if (err.name === 'AbortError') {
+      return { error: '请求超时。请检查网络或增大超时时间。' };
+    }
+    // CORS 或网络错误通常不会暴露详细原因
+    const hint = err.message && err.message.toLowerCase().includes('failed to fetch')
+      ? '可能是 CORS 限制导致。请在"教师设置"中配置 CORS 代理，或使用方案 B 部署代理服务。'
+      : err.message;
+    return { error: '调用失败：' + hint };
+  }
+}
+
+// ========== 导航与进度 ==========
+function renderProgressDots() {
+  const dots = document.getElementById('progressDots');
+  dots.innerHTML = '';
+  for (let i = 1; i <= 7; i++) {
+    const d = document.createElement('div');
+    d.className = 'dot';
+    if (i < state.currentAct) d.classList.add('done');
+    if (i === state.currentAct) d.classList.add('active');
+    d.title = `第 ${i} 幕`;
+    d.onclick = () => goToAct(i);
+    dots.appendChild(d);
+  }
+}
+
+function goToAct(n) {
+  if (n < 1 || n > 8) return;
+  document.querySelectorAll('.act').forEach(a => a.classList.remove('active'));
+  document.getElementById('act' + n).classList.add('active');
+  state.currentAct = n;
+  renderProgressDots();
+  updatePatientStatus();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  if (n === 8) renderEpilogue();
+}
+
+function nextAct() { goToAct(state.currentAct + 1); }
+function prevAct() { goToAct(state.currentAct - 1); }
+
+function updatePatientStatus() {
+  const statuses = {
+    1: '等待接诊中',
+    2: '已收入数据库',
+    3: '特征工程中',
+    4: '模型选择中',
+    5: '模型训练中',
+    6: '回到诊室',
+    7: '留下反思'
+  };
+  const el = document.getElementById('patientStatus');
+  if (el) el.textContent = statuses[state.currentAct] || '课程完成';
+}
+
+// ========== 第一幕逻辑 ==========
+document.querySelectorAll('#act1Choices .choice-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('#act1Choices .choice-btn').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+    state.act1Choice = btn.dataset.choice;
+    showAct1Feedback();
+    document.getElementById('nextBtn1').disabled = false;
+  });
+});
+
+function showAct1Feedback() {
+  const fb = document.getElementById('act1Feedback');
+  fb.classList.remove('hidden');
+  fb.scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+  // 渲染全国医生选择分布
+  const dist = [
+    { label: 'A. 门诊观察，24小时复诊', pct: 22, letter: 'A' },
+    { label: 'B. 收住院，完善感染指标+腰穿', pct: 45, letter: 'B' },
+    { label: 'C. 完善培养+PCT 后决定', pct: 33, letter: 'C' }
+  ];
+  const barsEl = document.getElementById('surveyBars');
+  barsEl.innerHTML = '';
+  dist.forEach((d, i) => {
+    const row = document.createElement('div');
+    row.className = 'survey-bar-row';
+    const isYour = d.letter === state.act1Choice;
+    row.innerHTML = `
+      <div class="survey-bar-label">${d.label}${isYour ? ' <strong style="color:var(--alert)">◀ 你的选择</strong>' : ''}</div>
+      <div class="survey-bar-track">
+        <div class="survey-bar-fill ${isYour ? 'your-choice' : ''}" style="width: 0%"></div>
+      </div>
+      <div class="survey-bar-value">${d.pct}%</div>
+    `;
+    barsEl.appendChild(row);
+    setTimeout(() => {
+      row.querySelector('.survey-bar-fill').style.width = d.pct + '%';
+    }, 100 + i * 200);
+  });
+}
+
+// ========== 第二幕逻辑 ==========
+const DATA_ROWS = [
+  { id: '001', age: ['52天', false], temp: ['38.5', false], wbc: ['14.2', false], sex: ['男', false], dx: ['发热待查', false] },
+  { id: '002', age: ['2月', true, '单位不一致（天/月）'], temp: ['101.3℉', true, '华氏度未统一为摄氏度'], wbc: ['11.8', false], sex: ['M', true, '性别编码不统一（男/M）'], dx: ['菌血症?', true, '诊断含不确定符号'] },
+  { id: '003', age: ['—', true, '月龄缺失'], temp: ['38', false], wbc: ['—', true, 'WBC 缺失（未测？漏记？）'], sex: ['女', false], dx: ['上呼吸道感染', false] },
+  { id: '004', age: ['45d', true, '单位混用（d vs 天）'], temp: ['38.5℃', false], wbc: ['一万四千', true, '自由文本，机器无法计算'], sex: ['男', false], dx: ['URI', true, '中英文缩写混用'] },
+  { id: '005', age: ['67天', false], temp: ['37.8', false], wbc: ['10.5', false], sex: ['女', false], dx: ['病毒感染', false] },
+  { id: '006', age: ['3个月', true, '单位不一致'], temp: ['39.2', false], wbc: ['25.3', false], sex: ['F', true, '性别编码不统一'], dx: ['pneumonia', true, '中英文混用'] },
+  { id: '007', age: ['80天', false], temp: ['38.8', false], wbc: ['', true, 'WBC 空白'], sex: ['男', false], dx: ['急性胃肠炎', false] },
+  { id: '008', age: ['56天', false], temp: ['39', false], wbc: ['16.7', false], sex: ['女', false], dx: ['菌血症', false] }
+];
+
+function renderDataTable() {
+  const tbody = document.getElementById('dataTableBody');
+  tbody.innerHTML = '';
+  DATA_ROWS.forEach(row => {
+    const tr = document.createElement('tr');
+    ['age', 'temp', 'wbc', 'sex', 'dx'].forEach(col => {
+      // do nothing, iterate below
+    });
+    const cells = [
+      ['id', [row.id, false]],
+      ['age', row.age],
+      ['temp', row.temp],
+      ['wbc', row.wbc],
+      ['sex', row.sex],
+      ['dx', row.dx]
+    ];
+    tr.innerHTML = `<td>${row.id}</td>`;
+    cells.slice(1).forEach(([col, v]) => {
+      const td = document.createElement('td');
+      td.textContent = v[0] || '(空)';
+      if (v[1]) {
+        td.classList.add('problematic');
+        td.dataset.hint = v[2];
+        td.dataset.rowid = row.id;
+        td.dataset.col = col;
+        td.addEventListener('click', onProblemClick);
+      }
+      tr.appendChild(td);
+    });
+    tbody.appendChild(tr);
+  });
+}
+
+function onProblemClick(e) {
+  const td = e.currentTarget;
+  if (td.classList.contains('found')) return;
+  td.classList.add('found');
+  const hint = td.dataset.hint;
+  state.foundProblems.push({ rowid: td.dataset.rowid, col: td.dataset.col, hint });
+  state.qualityScore = Math.min(95, 45 + state.foundProblems.length * 5);
+  document.getElementById('qualityScore').textContent = state.qualityScore;
+
+  // 更新日志
+  const log = document.getElementById('findingLog');
+  log.innerHTML = '';
+  state.foundProblems.forEach((p, i) => {
+    const item = document.createElement('div');
+    item.className = 'finding-item';
+    item.innerHTML = `<strong>#${i+1} [患儿 ${p.rowid}]</strong> ${p.hint}`;
+    log.appendChild(item);
+  });
+
+  // 发现 >=5 个问题后解锁反思环节
+  if (state.foundProblems.length >= 5) {
+    document.getElementById('act2Reflection').classList.remove('hidden');
+    document.getElementById('nextBtn2').disabled = false;
+  }
+}
+
+async function submitBiasReflection() {
+  const input = document.getElementById('biasInput').value.trim();
+  if (!input) {
+    alert('请先写下你的思考');
+    return;
+  }
+  state.biasReflection = input;
+  const respEl = document.getElementById('biasResponse');
+  respEl.classList.remove('hidden');
+  respEl.innerHTML = '<span class="llm-loading">AI 正在思考你的回答</span>';
+
+  const systemPrompt = `你是一位医学统计学与AI医学教育专家。你正在指导一位儿科本科学生思考"医疗数据偏倚"问题。
+请以友善、启发式的方式点评学生的回答，要求：
+1. 先肯定学生回答中的合理之处（如果有）
+2. 指出学生可能忽略的重要偏倚类型（选择偏倚、谱偏倚、标签偏倚、测量偏倚等）
+3. 给出 1-2 个真实世界的类比或案例
+4. 结尾提出一个引发进一步思考的问题
+总字数控制在 200-300 字，语气温和，不说教。`;
+
+  const userPrompt = `学生的思考：
+"${input}"
+
+问题背景：将来自三甲儿童医院急诊的 2 万条婴儿发热数据训练的模型，部署到县级医院时会发生什么？`;
+
+  const result = await callLLM(systemPrompt, userPrompt, { temperature: 0.7, maxTokens: 600 });
+  if (result.error) {
+    respEl.innerHTML = `<span style="color:var(--alert-red); font-size: 12px;">${result.error}</span><br><br>` +
+      `<strong>（基于规则的降级反馈）</strong>\n\n` +
+      `你的思考触及了一个核心问题——<strong>分布偏移</strong>。\n\n` +
+      `三甲医院的患儿群体有几个系统性偏倚：(1) 转诊偏倚——能到三甲的患儿往往已被基层医生筛过一轮，病情更重；(2) 检查偏倚——三甲做得起 PCT、脑脊液等完整检查，县医院常常不做；(3) 标签偏倚——什么叫"严重感染"的定义，可能两级医院的临床判断标准都不一样。\n\n` +
+      `一个对照：MIMIC 数据集（美国 ICU）训练的模型，在非 ICU 场景往往系统性失效。这不是模型"坏"了，而是它被带到了训练分布之外。\n\n` +
+      `继续思考：你如何设计一个能"知道自己不知道"的模型？`;
+  } else {
+    respEl.textContent = result.text;
+    state.biasAIResponse = result.text;
+  }
+}
+
+// ========== 第三幕逻辑 ==========
+const FEATURES = [
+  { name: '月龄', good: true, score: 15 },
+  { name: '体温峰值', good: true, score: 12 },
+  { name: 'WBC', good: true, score: 10 },
+  { name: 'CRP', good: true, score: 12 },
+  { name: 'PCT', good: true, score: 13 },
+  { name: '反应情况', good: true, score: 9 },
+  { name: '进食情况', good: true, score: 6 },
+  { name: '喂养方式', good: false, score: 2 },
+  { name: '出生体重', good: false, score: 3 },
+  { name: '来院时间(凌晨?)', trap: true, score: -5, reason: '这是结果特征——凌晨来院的患儿往往病情更重，但这是"结果"而非"原因"' },
+  { name: '父母学历', good: false, score: 1 },
+  { name: '家距医院距离', good: false, score: 2 },
+  { name: '既往住院史', good: true, score: 7 },
+  { name: '尿常规白细胞', good: true, score: 8 },
+  { name: '是否已用抗生素', trap: true, score: -8, reason: '数据泄漏！已用抗生素本身就是医生判断为重症的结果' },
+  { name: '呼吸频率', good: true, score: 7 },
+  { name: '心率', good: true, score: 6 },
+  { name: '是否住院', trap: true, score: -10, reason: '严重泄漏！这就是你要预测的标签本身' },
+  { name: '胸片表现', good: true, score: 9 },
+  { name: '末梢灌注', good: true, score: 8 }
+];
+
+function renderFeatureCards() {
+  const pool = document.getElementById('featureCards');
+  pool.innerHTML = '';
+  FEATURES.forEach((f, i) => {
+    const card = document.createElement('div');
+    card.className = 'feature-card';
+    if (f.trap) card.classList.add('trap');
+    card.textContent = f.name;
+    card.dataset.idx = i;
+    card.addEventListener('click', () => toggleFeature(i, card));
+    pool.appendChild(card);
+  });
+}
+
+function toggleFeature(idx, card) {
+  const f = FEATURES[idx];
+  if (card.classList.contains('selected')) {
+    card.classList.remove('selected');
+    state.selectedFeatures = state.selectedFeatures.filter(x => x !== idx);
+    state.trapSelected = state.trapSelected.filter(x => x !== idx);
+  } else {
+    if (state.selectedFeatures.length >= 5) {
+      card.style.animation = 'shake 0.4s';
+      setTimeout(() => card.style.animation = '', 400);
+      return;
+    }
+    card.classList.add('selected');
+    state.selectedFeatures.push(idx);
+    if (f.trap) state.trapSelected.push(idx);
+  }
+  updateFeatureMetrics();
+}
+
+function updateFeatureMetrics() {
+  document.getElementById('featureCount').textContent = state.selectedFeatures.length + ' / 5';
+
+  // 计算 AUC
+  const base = 0.55;
+  let auc = base;
+  state.selectedFeatures.forEach(idx => {
+    const f = FEATURES[idx];
+    auc += (f.score / 100);
+  });
+  auc = Math.min(0.92, Math.max(0.5, auc));
+  state.featureAuc = auc;
+  document.getElementById('featureAuc').textContent = state.selectedFeatures.length > 0 ? auc.toFixed(2) : '—';
+
+  // 陷阱提示
+  const trapWarn = document.getElementById('trapWarning');
+  const trapBox = document.getElementById('trapAlertBox');
+  if (state.trapSelected.length > 0) {
+    trapWarn.textContent = `⚠️ ${state.trapSelected.length} 个陷阱特征`;
+    trapBox.classList.remove('hidden');
+  } else {
+    trapWarn.textContent = '无';
+    trapBox.classList.add('hidden');
+  }
+
+  // 选满 5 个时解锁反思
+  if (state.selectedFeatures.length === 5) {
+    document.getElementById('act3Reflection').classList.remove('hidden');
+    document.getElementById('nextBtn3').disabled = false;
+  }
+}
+
+// ========== 第四幕逻辑 ==========
+const MODELS = [
+  { id: 'logistic', emoji: '📐', name: '逻辑回归', desc: '线性、透明，每个变量权重一目了然' },
+  { id: 'tree', emoji: '🌳', name: '决策树', desc: '树状流程图，类似临床诊疗路径' },
+  { id: 'rf', emoji: '🌲', name: '随机森林', desc: '多棵树集体投票，更稳定' },
+  { id: 'xgboost', emoji: '🏆', name: 'XGBoost', desc: '表格数据的常胜冠军' },
+  { id: 'nn', emoji: '🧠', name: '深度神经网络', desc: '需要大量数据，可以学习复杂模式' },
+  { id: 'cnn', emoji: '📷', name: 'CNN', desc: '图像处理专家：X光、CT、眼底' },
+  { id: 'llm', emoji: '💬', name: 'LLM 大模型', desc: '语言、文本、病历、问答' },
+  { id: 'llm_rag', emoji: '📚', name: 'LLM + RAG', desc: '大模型 + 知识库检索' }
+];
+
+const SCENARIOS = [
+  { id: 's1', desc: '从胸片判断是否为肺炎', answer: 'cnn', feedback: '✓ 正确。图像数据的首选' },
+  { id: 's2', desc: '从结构化化验单+体征预测住院', answer: 'xgboost', feedback: '✓ 正确。表格数据、样本充足的首选' },
+  { id: 's3', desc: '从出院小结自动提取主诊断', answer: 'llm', feedback: '✓ 正确。自由文本任务的首选' },
+  { id: 's4', desc: '基于最新临床指南的问答机器人', answer: 'llm_rag', feedback: '✓ 正确。纯 LLM 会"幻觉"，必须加 RAG' },
+  { id: 's5', desc: '单中心 200 例罕见病预后预测', answer: 'logistic', feedback: '✓ 正确。样本少，复杂模型会严重过拟合' }
+];
+
+function renderModelZoo() {
+  const zoo = document.getElementById('modelZoo');
+  zoo.innerHTML = '';
+  MODELS.forEach(m => {
+    const card = document.createElement('div');
+    card.className = 'model-card';
+    card.innerHTML = `
+      <div class="model-emoji">${m.emoji}</div>
+      <div class="model-name">${m.name}</div>
+      <div class="model-desc">${m.desc}</div>
+    `;
+    zoo.appendChild(card);
+  });
+
+  const matcher = document.getElementById('scenarioMatcher');
+  matcher.innerHTML = '';
+  SCENARIOS.forEach(s => {
+    const row = document.createElement('div');
+    row.className = 'scenario-row';
+    const opts = MODELS.map(m => `<option value="${m.id}">${m.name}</option>`).join('');
+    row.innerHTML = `
+      <div class="scenario-desc"><strong>${s.id.toUpperCase()}</strong>${s.desc}</div>
+      <select class="scenario-select" data-scenario="${s.id}" data-answer="${s.answer}">
+        <option value="">-- 选择模型 --</option>${opts}
+      </select>
+      <div class="scenario-feedback" id="fb-${s.id}"></div>
+    `;
+    matcher.appendChild(row);
+  });
+  matcher.querySelectorAll('.scenario-select').forEach(sel => {
+    sel.addEventListener('change', onScenarioChange);
+  });
+}
+
+function onScenarioChange(e) {
+  const sel = e.target;
+  const id = sel.dataset.scenario;
+  const answer = sel.dataset.answer;
+  const chosen = sel.value;
+  state.scenarioAnswers[id] = chosen;
+  const fb = document.getElementById('fb-' + id);
+  if (chosen === answer) {
+    fb.innerHTML = '<span style="color: var(--physician)">✓</span>';
+  } else if (chosen) {
+    fb.innerHTML = '<span style="color: var(--alert)">✗</span>';
+  } else {
+    fb.innerHTML = '';
+  }
+
+  // 全部回答后解锁
+  if (Object.keys(state.scenarioAnswers).length === SCENARIOS.length
+      && Object.values(state.scenarioAnswers).every(v => v)) {
+    document.getElementById('act4Reflection').classList.remove('hidden');
+    document.getElementById('nextBtn4').disabled = false;
+  }
+}
+
+// ========== 第五幕逻辑 ==========
+let trainingChart = null;
+
+function setupModelingSliders() {
+  const map = [
+    ['trainSlider', 'trainRatio', v => v],
+    ['depthSlider', 'depthValue', v => v],
+    ['treesSlider', 'treesValue', v => v],
+    ['lrSlider', 'lrValue', v => (v / 100).toFixed(2)]
+  ];
+  map.forEach(([sliderId, valueId, fn]) => {
+    const s = document.getElementById(sliderId);
+    const v = document.getElementById(valueId);
+    s.addEventListener('input', () => { v.textContent = fn(s.value); });
+  });
+}
+
+function simulateTrainingOutcome(trainRatio, depth, trees, lr) {
+  // 预计算模拟：
+  // - 最佳区域：depth 4-6, trees 80-200, lr 0.05-0.15, trainRatio 60-80
+  // - 深度过大 → 过拟合：train AUC 升高，val AUC 降低
+  // - 树太少 → 欠拟合：两个 AUC 都低
+
+  const depthPenalty = Math.abs(depth - 5) * 0.015;  // 离5越远越差
+  const treePenalty = trees < 50 ? (50 - trees) * 0.002 : (trees > 300 ? (trees - 300) * 0.0005 : 0);
+  const lrPenalty = lr < 0.03 ? (0.03 - lr) * 2 : (lr > 0.2 ? (lr - 0.2) * 0.5 : 0);
+  const trainSizePenalty = trainRatio < 60 ? (60 - trainRatio) * 0.005 : 0;
+
+  // 基准 val AUC
+  let valAuc = 0.84 - depthPenalty - treePenalty - lrPenalty - trainSizePenalty;
+  valAuc += (Math.random() - 0.5) * 0.015;
+  valAuc = Math.max(0.55, Math.min(0.88, valAuc));
+
+  // 过拟合：深度过大时 train>>val
+  let trainAuc = valAuc;
+  if (depth > 8) {
+    trainAuc += (depth - 8) * 0.035;
+    trainAuc = Math.min(0.999, trainAuc);
+  } else if (depth > 6) {
+    trainAuc += (depth - 6) * 0.02;
+  } else {
+    trainAuc += 0.02 + Math.random() * 0.02;
+  }
+  trainAuc = Math.min(0.999, trainAuc);
+
+  // Brier 分数（越小越好），0.1-0.25
+  const brier = 0.12 + depthPenalty * 2 + Math.random() * 0.02;
+
+  const overfit = (trainAuc - valAuc) > 0.12;
+
+  return { trainAuc, valAuc, brier, overfit };
+}
+
+function trainModel() {
+  const trainRatio = parseInt(document.getElementById('trainSlider').value);
+  const depth = parseInt(document.getElementById('depthSlider').value);
+  const trees = parseInt(document.getElementById('treesSlider').value);
+  const lr = parseInt(document.getElementById('lrSlider').value) / 100;
+
+  // 显示"训练中"动效
+  ['trainAuc', 'valAuc', 'brier'].forEach(id => {
+    document.getElementById(id).textContent = '训练中···';
+    document.getElementById(id).className = 'result-metric-value';
+  });
+
+  setTimeout(() => {
+    const result = simulateTrainingOutcome(trainRatio, depth, trees, lr);
+    state.modelResults = result;
+
+    const trainEl = document.getElementById('trainAuc');
+    const valEl = document.getElementById('valAuc');
+    const brierEl = document.getElementById('brier');
+
+    trainEl.textContent = result.trainAuc.toFixed(3);
+    valEl.textContent = result.valAuc.toFixed(3);
+    brierEl.textContent = result.brier.toFixed(3);
+
+    // 颜色编码
+    trainEl.className = 'result-metric-value' + (result.overfit ? ' warn' : '');
+    valEl.className = 'result-metric-value' + (result.valAuc > 0.8 ? ' good' : result.valAuc > 0.7 ? '' : ' warn');
+    brierEl.className = 'result-metric-value' + (result.brier < 0.15 ? ' good' : result.brier < 0.2 ? '' : ' warn');
+
+    // 过拟合警告
+    document.getElementById('overfittingAlert').classList.toggle('show', result.overfit);
+
+    // 解锁外部验证
+    if (result.valAuc >= 0.75 && !result.overfit) {
+      document.getElementById('externalValidationBox').classList.remove('hidden');
+    }
+  }, 1500);
+}
+
+function runExternalValidation() {
+  const btn = document.getElementById('externalBtn');
+  btn.disabled = true;
+  btn.textContent = '验证中···';
+
+  setTimeout(() => {
+    const external = state.modelResults ?
+      Math.max(0.62, state.modelResults.valAuc - 0.12 - Math.random() * 0.05) :
+      0.71;
+    document.getElementById('externalAuc').textContent = external.toFixed(3);
+    document.getElementById('externalResult').classList.remove('hidden');
+    document.getElementById('modelReadyForUse').classList.remove('hidden');
+    document.getElementById('nextBtn5').disabled = false;
+    state.externalValidated = true;
+    btn.textContent = '✓ 已完成外部验证';
+  }, 1800);
+}
+
+// ========== 第六幕逻辑（基于学生自己模型） ==========
+
+// 三位患儿 —— 每位对应不同的模型挑战
+const CASES = [
+  {
+    id: 1,
+    name: '小雨',
+    desc: '典型情境',
+    age: '38 天', sex: '女',
+    chief: '发热 4 小时，T 38.1℃',
+    exam: '反应稍差，肢端凉',
+    lab: 'WBC 9.8, CRP 4, PCT 0.3',
+    origin: '三甲医院就诊（训练数据同源）',
+    modelAppliesWell: true,
+    basePrediction: 0.08,
+    truth: '最终诊断：病毒感染 · 住院观察 48h 痊愈出院',
+    narrative: '这是最标准的情境。患儿来自模型训练的同类医院，特征完全在训练分布内。你可以最大程度地相信模型。'
+  },
+  {
+    id: 2,
+    name: '小凯',
+    desc: '分布外挑战',
+    age: '71 天', sex: '男',
+    chief: '发热 12 小时，T 39.4℃',
+    exam: '精神萎靡，前囟饱满，颈强待排',
+    lab: 'WBC 2.1, CRP 86, PCT 4.2',
+    origin: '<strong>县医院转诊</strong>（分布外）',
+    modelAppliesWell: false,
+    basePrediction: 0.45,
+    truth: '最终诊断：B族链球菌脑膜炎 · 重症监护 · 抗生素疗程 21 天',
+    narrative: '注意：这个患儿来自县医院！你的模型在外部验证时 AUC 明显下降。这是一个严重的临床情境，即使 AI 预测值不算特别高，你应该完全相信它吗？'
+  },
+  {
+    id: 3,
+    name: '小晨',
+    desc: '边界情况',
+    age: '29 天', sex: '男',
+    chief: '发热 2 小时，T 38.0℃',
+    exam: '反应好，吃奶佳，无特殊',
+    lab: 'WBC 11.2, CRP 2, PCT 0.15',
+    origin: '三甲医院，但属<strong>高危年龄段</strong>',
+    modelAppliesWell: true,
+    basePrediction: 0.12,
+    truth: '回归现实：29 天婴儿发热本身就是"红色警示"年龄——即使 AI 说 12%，也仍是高风险区间',
+    narrative: '患儿在训练分布内，但 29 天这个年龄本身就意味着任何异常都要按严重感染处理。这是"模型正确但建议需要临床覆盖"的经典场景。'
+  }
+];
+
+let currentCaseIdx = 0;
+let caseDecisions = []; // 记录每次决策
+
+// 基于学生模型参数，计算实际预测（带上模型质量的影响）
+function computeAIPrediction(caseData) {
+  const mr = state.modelResults;
+  if (!mr) return { prob: caseData.basePrediction, confidence: 'unknown' };
+
+  let prob = caseData.basePrediction;
+  let confidence = 'high';
+
+  // 如果是分布外 case 而且学生做了外部验证：降低置信度
+  if (!caseData.modelAppliesWell) {
+    // 外部验证 AUC 越低，预测越"保守"（偏离真实）
+    const externalAUC = state.externalValidated
+      ? Math.max(0.6, mr.valAuc - 0.13)
+      : mr.valAuc - 0.15;
+    // 模拟：模型在分布外会系统性低估风险
+    prob = prob * (0.55 + externalAUC * 0.5);
+    confidence = externalAUC < 0.7 ? 'veryLow' : 'low';
+  } else if (mr.overfit) {
+    confidence = 'low';
+  } else if (mr.valAuc < 0.78) {
+    confidence = 'low';
+  }
+
+  return {
+    prob: Math.max(0.01, Math.min(0.98, prob)),
+    confidence
+  };
+}
+
+function renderModelProfile() {
+  const mr = state.modelResults;
+  if (!mr) {
+    document.getElementById('pfInternal').textContent = '未训练';
+    document.getElementById('pfExternal').textContent = '—';
+    document.getElementById('pfBrier').textContent = '—';
+    return;
+  }
+  document.getElementById('pfInternal').textContent = mr.valAuc.toFixed(3);
+  document.getElementById('pfExternal').textContent = state.externalValidated
+    ? Math.max(0.6, mr.valAuc - 0.13).toFixed(3)
+    : '未验证';
+  document.getElementById('pfBrier').textContent = mr.brier.toFixed(3);
+}
+
+function renderCaseProgress() {
+  document.querySelectorAll('.case-progress-item').forEach((el, i) => {
+    el.classList.remove('active', 'done');
+    if (i < currentCaseIdx) el.classList.add('done');
+    else if (i === currentCaseIdx) el.classList.add('active');
+  });
+}
+
+function renderCurrentCase() {
+  if (currentCaseIdx >= CASES.length) {
+    // 所有 case 完成 → 显示警觉疲劳段 + 解锁下一幕
+    document.getElementById('caseContainer').innerHTML = `
+      <div class="narrative" style="border-color: var(--physician);">
+        <strong>✓ 你已处理完三位患儿。</strong><br>
+        每一个决策都记录在案。请往下看——
+      </div>`;
+    document.getElementById('fatigueSection').classList.remove('hidden');
+    document.getElementById('nextBtn6').disabled = false;
+    return;
+  }
+
+  const c = CASES[currentCaseIdx];
+  const pred = computeAIPrediction(c);
+  const probPct = Math.round(pred.prob * 100);
+
+  const confTag = {
+    high: '<span class="ai-confidence-tag">高置信</span>',
+    low: '<span class="ai-confidence-tag low">低置信</span>',
+    veryLow: '<span class="ai-confidence-tag veryLow">极低置信</span>',
+    unknown: ''
+  }[pred.confidence];
+
+  let recommendation;
+  if (probPct < 10) recommendation = '建议：门诊观察，24 小时随访';
+  else if (probPct < 25) recommendation = '建议：留观 4-6 小时，必要时住院';
+  else recommendation = '建议：收住院，完善感染指标';
+
+  document.getElementById('caseContainer').innerHTML = `
+    <div class="exam-room">
+      <div class="exam-room-header">▌ 情境 ${c.id} · ${c.desc} · ${c.name}</div>
+      <div class="exam-room-body">
+        <div class="chart-paper" style="margin: 0;">
+          <div class="chart-row"><div class="chart-label">患儿</div><div class="chart-value"><strong>${c.name}</strong>，${c.sex}，${c.age}</div></div>
+          <div class="chart-row"><div class="chart-label">主诉</div><div class="chart-value">${c.chief}</div></div>
+          <div class="chart-row"><div class="chart-label">查体</div><div class="chart-value">${c.exam}</div></div>
+          <div class="chart-row"><div class="chart-label">化验</div><div class="chart-value">${c.lab}</div></div>
+          <div class="chart-row"><div class="chart-label">来源</div><div class="chart-value">${c.origin}</div></div>
+        </div>
+
+        <div class="ai-prediction-panel">
+          <div class="ai-panel-label">A I · 辅 助 判 断（基于你训练的模型）</div>
+          <div class="ai-prediction-value">
+            <span>${probPct}%</span>
+            <small>严重细菌感染概率</small>
+            ${confTag}
+          </div>
+          <div class="ai-recommendation">${recommendation}</div>
+        </div>
+
+        <div class="llm-dialog">
+          <div class="llm-header">
+            <div class="llm-icon">问</div>
+            <div class="llm-label">
+              向你的 AI 助手追问
+              <small>它会基于你这个模型的实际能力来回答</small>
+            </div>
+          </div>
+          <div class="llm-input-wrap">
+            <textarea class="llm-textarea" id="examAsk${c.id}" placeholder="例如：为什么你给出 ${probPct}% 这个数字？我能相信你对这个患儿的判断吗？"></textarea>
+            <button class="llm-submit" onclick="askExamAI(${c.id})">问 AI ▷</button>
+          </div>
+          <div class="llm-response hidden" id="examResponse${c.id}"></div>
+        </div>
+
+        <div class="question-prompt mt-m">你对 <strong>${c.name}</strong> 的最终决定？</div>
+        <div class="choice-grid">
+          <button class="choice-btn" onclick="chooseExam('A', ${c.id})" data-choice="A">
+            <span class="choice-letter">A</span>
+            <span>听从 AI 建议：<em>${recommendation.replace('建议：', '')}</em></span>
+          </button>
+          <button class="choice-btn" onclick="chooseExam('B', ${c.id})" data-choice="B">
+            <span class="choice-letter">B</span>
+            <span>推翻 AI 建议：按我的临床判断处理（升级诊疗强度）</span>
+          </button>
+          <button class="choice-btn" onclick="chooseExam('C', ${c.id})" data-choice="C">
+            <span class="choice-letter">C</span>
+            <span>暂缓决定：向家长充分说明 AI 的局限性，共同决定</span>
+          </button>
+        </div>
+
+        <div id="outcome${c.id}" class="hidden mt-m"></div>
+      </div>
+    </div>
+  `;
+
+  renderCaseProgress();
+}
+
+async function askExamAI(caseId) {
+  const c = CASES.find(x => x.id === caseId);
+  const input = document.getElementById('examAsk' + caseId);
+  const respEl = document.getElementById('examResponse' + caseId);
+  const q = input.value.trim();
+  if (!q) { alert('请先输入问题'); return; }
+
+  respEl.classList.remove('hidden');
+  respEl.innerHTML = '<span class="llm-loading">AI 正在分析</span>';
+
+  const mr = state.modelResults;
+  const pred = computeAIPrediction(c);
+  const extAuc = state.externalValidated ? Math.max(0.6, mr.valAuc - 0.13) : null;
+
+  const systemPrompt = `你正在扮演一个儿科临床决策辅助 AI。关键：你不是一个通用大模型，而是这位学生用真实数据训练出来的**一个具体的 XGBoost 模型**。你必须严格基于以下模型能力档案来诚实地回答。
+
+【你的模型能力档案】
+- 内部验证 AUC: ${mr ? mr.valAuc.toFixed(3) : '未知'}
+- 外部验证 AUC: ${extAuc ? extAuc.toFixed(3) : '未进行'}
+- 校准性 Brier 分数: ${mr ? mr.brier.toFixed(3) : '未知'}
+- 过拟合: ${mr && mr.overfit ? '存在' : '无明显过拟合'}
+
+【当前患儿】
+- ${c.name}，${c.sex}，${c.age}
+- ${c.chief}
+- 查体：${c.exam}
+- 化验：${c.lab}
+- 来源：${c.origin.replace(/<[^>]*>/g, '')}
+- 你的模型预测严重细菌感染概率：${Math.round(pred.prob * 100)}%
+- 置信度评估：${{high: '高', low: '较低', veryLow: '很低'}[pred.confidence] || '中等'}
+
+【你必须遵守的原则】
+1. **诚实说出局限性**：如果是县医院来的患儿而你外部验证 AUC 只有 ${extAuc ? extAuc.toFixed(2) : '较低'}，必须明确告知学生这个预测不可完全依赖
+2. **不要越界**：你是一个预测模型，不是全能 AI。不要给出训练范围外的建议
+3. **基于特征解释**：解释预测时要基于具体特征（年龄、WBC、CRP、PCT、反应情况等）
+4. **语言克制**：不超过 200 字，不使用过度自信的措辞
+5. **最终决策权在医生**：始终提醒学生最终判断权在他手上
+
+现在回答学生的问题。`;
+
+  const result = await callLLM(systemPrompt, q, { temperature: 0.4, maxTokens: 500 });
+  if (result.error) {
+    // 降级：给一个基于规则的静态回答
+    respEl.innerHTML = renderFallbackResponse(c, pred, mr, extAuc);
+  } else {
+    respEl.textContent = result.text;
+    state.examAIResponses.push({ case: c.name, q, a: result.text });
+  }
+}
+
+function renderFallbackResponse(c, pred, mr, extAuc) {
+  // 无 LLM 时的降级回答，保证教学连续性
+  let msg = `（⚠️ LLM 未配置，以下是基于规则的回答）\n\n`;
+  if (!c.modelAppliesWell && extAuc && extAuc < 0.72) {
+    msg += `我必须诚实告诉你：这个患儿来自${c.origin.replace(/<[^>]*>/g, '')}，而我在外部验证时 AUC 只有 ${extAuc.toFixed(2)}，显著低于内部验证。这意味着我对这个孩子的预测可能**系统性低估**风险。\n\n我给出的 ${Math.round(pred.prob*100)}% 仅供参考。请以临床判断为准。`;
+  } else if (mr && mr.overfit) {
+    msg += `我的训练存在过拟合（训练 AUC ${mr.trainAuc.toFixed(2)}, 验证 AUC ${mr.valAuc.toFixed(2)}, 差距大）。这意味着我"记住了"训练数据但泛化能力不足。建议你谨慎参考我的预测。`;
+  } else {
+    msg += `基于这个患儿的特征（${c.lab}，${c.exam}），模型综合判断严重细菌感染概率 ${Math.round(pred.prob*100)}%。但请记住：最终决策权在你手上，模型只是辅助。`;
+  }
+  return msg;
+}
+
+function chooseExam(choice, caseId) {
+  const c = CASES.find(x => x.id === caseId);
+  const pred = computeAIPrediction(c);
+
+  // 记录决策
+  caseDecisions.push({ caseId, caseName: c.name, choice, prediction: pred.prob });
+
+  // 选中的按钮样式
+  const btns = document.querySelectorAll(`#act6 [data-choice]`);
+  btns.forEach(b => {
+    if (b.closest('.exam-room')) {
+      if (b.dataset.choice === choice) b.classList.add('selected');
+    }
+  });
+
+  // 根据具体 case + 选择生成结局
+  const outcome = generateCaseOutcome(c, choice, pred);
+  const el = document.getElementById('outcome' + caseId);
+  el.classList.remove('hidden');
+
+  const remaining = CASES.length - caseDecisions.length;
+  const isLast = remaining === 0;
+
+  const continueBlock = isLast
+    ? `<div class="center mt-m">
+         <button class="nav-btn all-done-btn" onclick="nextCase()">✓ 完成三位患儿 · 查看总结</button>
+       </div>`
+    : `<div class="center mt-m">
+         <button class="nav-btn next-case-btn" onclick="nextCase()">继续 · 下一位患儿（还剩 ${remaining} 位）→</button>
+         <div class="next-case-hint">处理完全部 3 位患儿，才能进入第七幕</div>
+       </div>`;
+
+  el.innerHTML = `
+    <div class="narrative" style="border-color: ${outcome.color};">
+      <strong>${outcome.title}</strong><br><br>
+      ${outcome.body}<br><br>
+      <em style="color: var(--ink-2);">${c.truth}</em>
+    </div>
+    ${continueBlock}
+  `;
+  el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+  // 更新顶部计数器
+  updateCaseCounter();
+}
+
+function updateCaseCounter() {
+  const counter = document.getElementById('caseCounter');
+  if (counter) counter.textContent = `${caseDecisions.length} / 3`;
+  // 同步更新底部解锁提示
+  const hint = document.getElementById('nextBtn6Hint');
+  if (hint) {
+    if (caseDecisions.length >= 3) {
+      hint.textContent = '✓ 全部完成，可进入下一幕';
+      hint.style.color = 'var(--physician)';
+    } else {
+      hint.textContent = `完成 3 位患儿后解锁 · 当前 ${caseDecisions.length} / 3`;
+    }
+  }
+}
+
+function generateCaseOutcome(c, choice, pred) {
+  // 基于 case 的类型和学生选择生成不同反馈
+  if (c.id === 2 && !c.modelAppliesWell) {
+    // 分布外的严重 case
+    if (choice === 'A') {
+      return {
+        title: '你完全采纳了 AI 建议',
+        body: `这是最危险的情境。这个患儿的 AI 预测受限于外部验证的不确定性——AUC 从 ${state.modelResults ? state.modelResults.valAuc.toFixed(2) : '0.84'} 降到 ${state.externalValidated ? Math.max(0.6, state.modelResults.valAuc - 0.13).toFixed(2) : '0.71'}。模型对县医院来的患儿是<strong>系统性不可靠的</strong>。<br><br>在真实世界，完全采纳低置信度预测可能导致严重漏诊。这就是<strong>自动化偏倚（Automation Bias）</strong>的经典表现。`,
+        color: 'var(--alert-red)'
+      };
+    } else if (choice === 'B') {
+      return {
+        title: '你正确地推翻了 AI',
+        body: `很好。当 AI 来自不同分布时，临床判断必须优先。你注意到：前囟饱满、WBC 极低、CRP 和 PCT 都高——这些特征即使没有 AI，也应该立即警觉。<br><br><strong>AI 的正确用法不是"替代医生判断"，而是"提示医生再看一眼"</strong>。这是你的第一次正确推翻——记住这个感觉。`,
+        color: 'var(--physician)'
+      };
+    } else {
+      return {
+        title: '你选择了共享决策',
+        body: `在严重疑似感染的情境下，共享决策可能存在伦理问题——家长缺乏专业能力承担这种决策。但你向家长说明"AI 模型在外部验证中性能下降"的透明态度非常宝贵。<br><br>实操中，这时更好的做法是：在解释基础上，医生<strong>主动给出建议</strong>，而不是让家长决定技术问题。`,
+        color: 'var(--alert)'
+      };
+    }
+  }
+
+  if (c.id === 1) {
+    if (choice === 'A') {
+      return {
+        title: '你采纳了 AI 建议',
+        body: `在分布内、低风险患儿上，采纳 AI 建议通常是合理的。但请注意：即使 8%，仍意味着<strong>每 12 个类似患儿中就有 1 个真的有严重感染</strong>。<br><br>你对"8%"这个数字的感受，决定了你的决策风格。AI 给出的是概率，不是判决。`,
+        color: 'var(--physician)'
+      };
+    } else if (choice === 'B') {
+      return {
+        title: '你推翻了 AI',
+        body: `过度谨慎是否有代价？住院观察的费用、家庭焦虑、医保压力都是真实的。但你保护了那 8% 的不确定性。<br><br>问题是：如果每个患儿你都这样，你是否还需要 AI？这是<strong>"AI 到底改变了什么"</strong>的灵魂拷问。`,
+        color: 'var(--clinical)'
+      };
+    } else {
+      return {
+        title: '你选择了共享决策',
+        body: `在低风险、分布内的情境下，共享决策是理想的——家长参与"观察还是住院"这种可解释的决定。这是 AI 时代最有人文温度的选择。`,
+        color: 'var(--physician)'
+      };
+    }
+  }
+
+  if (c.id === 3) {
+    if (choice === 'A') {
+      return {
+        title: '你采纳了 AI 的"低风险"判断',
+        body: `但是——<strong>29 天</strong>。这个年龄在所有临床指南中都属于"红色警示区"。即使 AI 给出 12%，临床上这个月龄段 + 任何发热都建议充分评估。<br><br>这是<strong>"模型正确，但临床规则覆盖"</strong>的典型情境。AI 的概率输出，在特定高危人群面前应该让位于临床路径。`,
+        color: 'var(--alert)'
+      };
+    } else if (choice === 'B') {
+      return {
+        title: '你让临床指南覆盖了 AI',
+        body: `正确。<strong>29 天这个年龄，指南就是指南</strong>——无论 AI 说什么，完整感染评估都是标准做法。<br><br>这展示了 AI 的正确位置：<em>辅助，而非替代临床规则</em>。`,
+        color: 'var(--physician)'
+      };
+    } else {
+      return {
+        title: '你选择了共享决策',
+        body: `在高危年龄段，这可能不够强硬。家长很难判断"29 天发热"的严重性。此时医生需要承担更主动的引导责任。`,
+        color: 'var(--alert)'
+      };
+    }
+  }
+
+  return { title: '决定已记录', body: '', color: 'var(--clinical)' };
+}
+
+function nextCase() {
+  currentCaseIdx++;
+  renderCurrentCase();
+  window.scrollTo({ top: 400, behavior: 'smooth' });
+}
+
+function skipAct6() {
+  if (!confirm('确定跳过第六幕吗？所有 AI 诊室交互将标记为"未完成"。\n\n（此功能用于课堂演示或交互故障时的兜底。）')) return;
+  document.getElementById('nextBtn6').disabled = false;
+  nextAct();
+}
+
+function resetAct6() {
+  currentCaseIdx = 0;
+  caseDecisions = [];
+  renderModelProfile();
+  renderCurrentCase();
+  updateCaseCounter();
+}
+
+// 进入第六幕时的初始化：用事件监听而非函数 hook，更可靠
+function onEnterAct6() {
+  // 每次进入第六幕都根据当前状态智能处理：
+  // - 如果还没开始过，初始化
+  // - 如果进行到一半，保持在当前位置（学生可能返回看前面的幕再回来）
+  if (caseDecisions.length === 0) {
+    resetAct6();
+  } else {
+    // 已经在进行中，只刷新模型档案显示（因为学生可能重新训练了模型）
+    renderModelProfile();
+    // 如果三个都完成了，直接展示完成态
+    if (currentCaseIdx >= CASES.length) {
+      renderCurrentCase();
+      document.getElementById('fatigueSection').classList.remove('hidden');
+      document.getElementById('nextBtn6').disabled = false;
+    }
+  }
+}
+
+// 重写 goToAct，加入每幕的进入钩子
+const _baseGoToAct = function(n) {
+  if (n < 1 || n > 8) return;
+  document.querySelectorAll('.act').forEach(a => a.classList.remove('active'));
+  const target = document.getElementById('act' + n);
+  if (!target) return;
+  target.classList.add('active');
+  state.currentAct = n;
+  renderProgressDots();
+  updatePatientStatus();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+
+  if (n === 6) onEnterAct6();
+  if (n === 8) renderEpilogue();
+};
+
+// 覆盖原 goToAct
+goToAct = _baseGoToAct;
+
+// ========== 第七幕逻辑 ==========
+function chooseLegal(btn) {
+  document.querySelectorAll('.prism-panel.law .choice-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  state.legalChoice = btn.dataset.val;
+
+  const feedbacks = {
+    'doctor': '根据《民法典》第 1218 条，医疗损害责任采取过错责任原则。医生作为最终决策人，若存在诊疗过失需承担主要责任。即使依据 AI 建议，医生也不能以"AI 让我这么做"完全免责。',
+    'hospital': '医院承担用人单位替代责任，同时若存在管理过失（如未及时更新模型、未开展 AI 培训），医院将承担管理责任。',
+    'vendor': 'AI 厂商作为产品提供方，根据《产品质量法》对产品缺陷承担无过错责任。但举证"算法缺陷"极其困难，这是当前医疗 AI 法律的一大难题。',
+    'joint': '✓ 这是当前法学界主流观点：医生（决策过错）+ 医院（管理过错）+ 厂商（产品过错）可能形成连带责任。但实践中责任划分极其复杂，目前中国尚无成熟判例。'
+  };
+
+  const fb = document.getElementById('legalFeedback');
+  fb.classList.remove('hidden');
+  fb.innerHTML = feedbacks[state.legalChoice];
+}
+
+function chooseEthics(btn) {
+  document.querySelectorAll('.prism-panel.ethics .choice-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  state.ethicsChoice = btn.dataset.val;
+
+  const feedbacks = {
+    'deploy': '这是"功利主义"立场——最大化总体收益。但它的代价是：弱势群体的风险被忽视。这违反了《赫尔辛基宣言》和医学伦理的"不伤害"原则。<em>在儿科，这种选择几乎总是错的。</em>',
+    'fix': '这是"正义优先"立场。暂缓部署、主动补数据，符合医学伦理。代价：部署延迟，城市患儿在此期间仍面临更高漏诊风险。这是最负责任但最艰难的选择。',
+    'disclose': '这是"透明+弃权"立场。部署但明确说明 AI 对农村男婴不适用。可行但难——临床医生能否记住"这个 AI 在这个子群不可用"？<em>警觉疲劳将让这种弃权失效。</em>'
+  };
+
+  const fb = document.getElementById('ethicsFeedback');
+  fb.classList.remove('hidden');
+  fb.innerHTML = feedbacks[state.ethicsChoice];
+}
+
+async function submitHumanity() {
+  const input = document.getElementById('humanityInput').value.trim();
+  if (!input) { alert('请先写下你的回答'); return; }
+  state.humanityResponse = input;
+
+  const respEl = document.getElementById('humanityResponse');
+  respEl.classList.remove('hidden');
+  respEl.innerHTML = '<span class="llm-loading">正在反馈</span>';
+
+  const systemPrompt = `你是一位儿科临床伦理与医患沟通教育专家。一位学生刚刚面对"AI 预测失误导致患儿脑膜炎"的模拟场景，设想了自己会对患儿母亲说的话。
+
+请从三个不同的视角对学生的回答做简短反馈（每个视角 2-3 句话，共 250 字以内）：
+
+1. 🫂 **共情视角**：这段话对一个刚刚失去孩子健康的母亲来说，是否足够人性化？
+2. ⚖️ **医患关系视角**：这段话是否在维护患者信任的同时，坦诚面对医疗局限？
+3. 📜 **伦理视角**：这段话是否避免了推卸责任（尤其是"是机器的错"）？
+
+语气温暖、不评判。结尾不给标准答案，只提一个值得继续思考的问题。`;
+
+  const result = await callLLM(systemPrompt, `学生的回答：\n"${input}"`, { temperature: 0.7, maxTokens: 700 });
+  if (result.error) {
+    respEl.innerHTML = `<span style="color:var(--alert-red); font-size: 12px;">${result.error}</span><br><br>` +
+      `<strong>（基于规则的降级反馈 · 三视角）</strong>\n\n` +
+      `🫂 <strong>共情视角</strong>：一位刚刚失去孩子健康的母亲，此时最需要的不是信息，是承接。她问"是 AI 算错了吗"，背后其实是在问"为什么偏偏是我的孩子"。\n\n` +
+      `⚖️ <strong>医患关系视角</strong>：请注意避免两个极端——完全把责任推给 AI，或完全否认 AI 的参与。前者是推卸，后者是不诚实。真正重要的是让她知道：<em>AI 的结论医生是核对过的，承担这个决策的是医生自己</em>。\n\n` +
+      `📜 <strong>伦理视角</strong>：医疗本身就有不确定性，AI 没有改变这一点，只是让不确定性显得更像"数字"。你不欠她一个完美的答案，但你欠她一个诚实的答案。\n\n` +
+      `继续思考：如果你的第一句话说错了，后面 30 分钟也许都无法挽回信任。那一句话是什么？`;
+  } else {
+    respEl.textContent = result.text;
+    state.humanityAIResponse = result.text;
+  }
+}
+
+// ========== 尾声 ==========
+async function renderEpilogue() {
+  const list = document.getElementById('trajectoryList');
+  list.innerHTML = '';
+
+  const items = [
+    { label: '第一幕 · 小宝的处置', value: { A: '门诊观察', B: '收住院', C: '完善培养后决定' }[state.act1Choice] || '(未选)' },
+    { label: '第二幕 · 数据问题识别', value: `发现了 ${state.foundProblems.length} 个数据质量问题` },
+    { label: '第三幕 · 特征选择', value: state.selectedFeatures.length === 5
+        ? `AUC ≈ ${state.featureAuc.toFixed(2)}${state.trapSelected.length ? `（含 ${state.trapSelected.length} 个陷阱特征）` : ''}`
+        : '(未完成)' },
+    { label: '第四幕 · 模型匹配', value: `答对 ${Object.entries(state.scenarioAnswers).filter(([id, v]) => {
+      const s = SCENARIOS.find(x => x.id === id); return s && s.answer === v; }).length} / ${SCENARIOS.length}` },
+    { label: '第五幕 · 模型训练', value: state.modelResults
+        ? `验证 AUC = ${state.modelResults.valAuc.toFixed(3)}${state.externalValidated ? ' · 已完成外部验证' : ''}`
+        : '(未训练)' },
+    { label: '第六幕 · 诊室决策（3 例）', value: caseDecisions.length > 0
+        ? caseDecisions.map(d => `${d.caseName}→${{A:'采纳AI', B:'推翻AI', C:'共享决策'}[d.choice]}`).join('；')
+        : '(未完成)' },
+    { label: '第七幕 · 法律立场', value: { doctor: '医生主责', hospital: '医院主责', vendor: '厂商主责', joint: '多方连带' }[state.legalChoice] || '(未选)' },
+    { label: '第七幕 · 伦理立场', value: { deploy: '部署', fix: '暂缓修复', disclose: '部署+弃权' }[state.ethicsChoice] || '(未选)' }
+  ];
+
+  items.forEach(it => {
+    const div = document.createElement('div');
+    div.className = 'trajectory-item';
+    div.innerHTML = `<strong>${it.label}</strong><span>${it.value}</span>`;
+    list.appendChild(div);
+  });
+
+  // LLM 生成个性化画像
+  const quoteEl = document.getElementById('finalQuote');
+  const cfg = loadLLMConfig();
+  if (!cfg || !cfg.apiKey) {
+    // 基于规则的降级画像
+    quoteEl.innerHTML = generateFallbackPortrait(items);
+    return;
+  }
+
+  const systemPrompt = `你是一位医学教育导师。一位儿科本科生刚刚完成了一次 AI 医学素养的交互式学习，你需要基于他/她的决策轨迹，写一段温暖、有洞察力的"学习画像"，要求：
+
+1. 以"你是一位 ___ 型的未来医生"开头，给出一个简洁有画面感的风格标签
+2. 基于具体决策点，指出学生展现出的特质（2-3 个特质）
+3. 指出一个可以进一步思考/学习的方向
+4. 结尾用一句有哲思、有人文温度的话收束，可以引用或原创
+5. 总字数 180-250 字，分段清晰，语气温暖
+6. 不要泛泛而谈，要紧扣学生的具体选择`;
+
+  const trajectorySummary = items.map(i => `${i.label}: ${i.value}`).join('\n');
+  const userPrompt = `学生的决策轨迹：\n${trajectorySummary}\n\n额外信息：\n- 偏倚思考：${state.biasReflection || '(未提交)'}\n- 人文回答：${state.humanityResponse || '(未提交)'}`;
+
+  const result = await callLLM(systemPrompt, userPrompt, { temperature: 0.8, maxTokens: 600 });
+  if (result.error) {
+    quoteEl.innerHTML = `<em>${result.error}</em><br><br>"AI 能算概率，但不能替你握住那只手。"`;
+  } else {
+    quoteEl.innerHTML = result.text.replace(/\n/g, '<br>');
+    state.finalPortrait = result.text;
+  }
+}
+
+function generateFallbackPortrait(items) {
+  // 基于学生选择的规则化画像
+  const traps = state.trapSelected.length;
+  const foundProblems = state.foundProblems.length;
+  const hasModel = !!state.modelResults;
+  const externalDone = state.externalValidated;
+  const overridedAI = caseDecisions.filter(d => d.choice === 'B').length;
+  const sharedDecisions = caseDecisions.filter(d => d.choice === 'C').length;
+
+  let style, strength, suggestion;
+
+  if (overridedAI >= 2) {
+    style = '临床直觉主导型';
+    strength = '你多次推翻 AI 建议——这体现了可贵的临床自信。';
+  } else if (sharedDecisions >= 2) {
+    style = '共享决策型';
+    strength = '你倾向于让家长参与决策——这是最有人文温度的选择。';
+  } else if (traps === 0 && foundProblems >= 5) {
+    style = '严谨数据型';
+    strength = '你对数据陷阱很警觉，对数据质量问题识别充分。';
+  } else {
+    style = '平衡协作型';
+    strength = '你在信任 AI 与自主判断之间找到了平衡。';
+  }
+
+  if (!externalDone) {
+    suggestion = '进一步思考：一个未做外部验证的模型，敢不敢部署到临床？';
+  } else if (traps > 0) {
+    suggestion = '进一步思考：如何识别那些"看起来合理、实则泄漏"的陷阱特征？';
+  } else {
+    suggestion = '进一步思考：当 AI 与你判断一致时，你是真的同意，还是被影响了？';
+  }
+
+  return `
+    <div style="font-size: 18px; line-height: 1.9;">
+      你是一位 <strong>${style}</strong> 的未来医生。<br><br>
+      <span style="font-size: 14px; color: var(--ink-2);">${strength}</span><br><br>
+      <span style="font-size: 14px; color: var(--ink-2); font-style: italic;">${suggestion}</span>
+    </div>
+    <div style="margin-top: 28px; padding-top: 20px; border-top: 1px solid var(--divider); font-size: 20px;">
+      "AI 能算概率，<br>但不能替你握住那只手。"
+    </div>
+    <div style="font-size: 11px; color: var(--ink-2); margin-top: 16px; font-style: italic;">
+      (未配置 LLM · 以上为基于规则的简化画像)
+    </div>
+  `;
+}
+
+function exportReport() {
+  const now = new Date();
+  const dateStr = now.toLocaleString('zh-CN');
+
+  let md = `# AI 素养智教助手 · 学习报告\n\n`;
+  md += `**生成时间**：${dateStr}\n\n---\n\n`;
+  md += `## 决策轨迹\n\n`;
+
+  md += `### 第一幕 · 小宝的处置\n选择：${{ A: '门诊观察', B: '收住院', C: '完善培养后决定' }[state.act1Choice] || '(未选)'}\n\n`;
+  md += `### 第二幕 · 数据质量问题识别\n发现 ${state.foundProblems.length} 个问题：\n`;
+  state.foundProblems.forEach((p, i) => { md += `${i+1}. 患儿 ${p.rowid}：${p.hint}\n`; });
+  md += `\n**偏倚反思**：${state.biasReflection || '(未提交)'}\n\n`;
+  if (state.biasAIResponse) md += `**AI 点评**：\n> ${state.biasAIResponse.replace(/\n/g, '\n> ')}\n\n`;
+
+  md += `### 第三幕 · 特征选择\n已选特征：${state.selectedFeatures.map(i => FEATURES[i].name).join('、')}\n预估 AUC：${state.featureAuc.toFixed(3)}\n陷阱特征：${state.trapSelected.length} 个\n\n`;
+
+  md += `### 第四幕 · 模型场景匹配\n`;
+  SCENARIOS.forEach(s => {
+    const chosen = state.scenarioAnswers[s.id];
+    const correct = chosen === s.answer;
+    md += `- ${s.desc} → ${chosen ? MODELS.find(m => m.id === chosen)?.name : '(未选)'}${correct ? ' ✓' : ' ✗'}\n`;
+  });
+
+  md += `\n### 第五幕 · 模型训练\n`;
+  if (state.modelResults) {
+    md += `- 训练 AUC：${state.modelResults.trainAuc.toFixed(3)}\n- 验证 AUC：${state.modelResults.valAuc.toFixed(3)}\n- Brier 分数：${state.modelResults.brier.toFixed(3)}\n- 外部验证：${state.externalValidated ? '已完成' : '未完成'}\n`;
+  } else {
+    md += '(未训练)\n';
+  }
+
+  md += `\n### 第六幕 · 诊室决策（3 例患儿）\n`;
+  if (caseDecisions.length > 0) {
+    caseDecisions.forEach(d => {
+      md += `- **${d.caseName}**：AI 预测 ${Math.round(d.prediction*100)}% → 你的选择：${{A:'采纳 AI 建议', B:'推翻 AI，按临床判断', C:'共享决策'}[d.choice]}\n`;
+    });
+  } else {
+    md += '(未完成)\n';
+  }
+  if (state.examAIResponses.length) {
+    md += `\n**向 AI 提出的问题**：\n`;
+    state.examAIResponses.forEach((r, i) => { md += `\n**[${r.case || '患儿'}] 问题 ${i+1}**：${r.q}\n**回答**：${r.a}\n`; });
+  }
+
+  md += `\n### 第七幕 · 法律·伦理·人文\n`;
+  md += `- 法律立场：${{ doctor: '医生主责', hospital: '医院主责', vendor: '厂商主责', joint: '多方连带' }[state.legalChoice] || '(未选)'}\n`;
+  md += `- 伦理立场：${{ deploy: '部署', fix: '暂缓修复', disclose: '部署+弃权' }[state.ethicsChoice] || '(未选)'}\n`;
+  md += `- 人文回答：${state.humanityResponse || '(未提交)'}\n`;
+  if (state.humanityAIResponse) md += `\n**AI 多视角反馈**：\n> ${state.humanityAIResponse.replace(/\n/g, '\n> ')}\n`;
+
+  md += `\n---\n\n## 个性化学习画像\n\n${state.finalPortrait || '(未生成)'}\n`;
+
+  const blob = new Blob([md], { type: 'text/markdown;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `AI素养学习报告_${now.getFullYear()}${String(now.getMonth()+1).padStart(2,'0')}${String(now.getDate()).padStart(2,'0')}.md`;
+  a.click();
+  URL.revokeObjectURL(url);
+}
+
+function restart() {
+  if (!confirm('确认重新开始？当前所有选择将被清空。')) return;
+  location.reload();
+}
+
+// ========== 教师设置 ==========
+function openSettings() {
+  document.getElementById('settingsModal').classList.add('active');
+  const cfg = loadLLMConfig();
+  if (cfg) {
+    document.getElementById('providerSelect').value = cfg.provider || 'zhipu';
+    document.getElementById('apiEndpoint').value = cfg.endpoint || '';
+    document.getElementById('modelName').value = cfg.model || '';
+    document.getElementById('apiKey').value = cfg.apiKey || '';
+    document.getElementById('apiTimeout').value = cfg.timeout || 60;
+    document.getElementById('corsProxy').value = cfg.corsProxy || '';
+  } else {
+    onProviderChange();
+  }
+}
+
+function closeSettings() {
+  document.getElementById('settingsModal').classList.remove('active');
+}
+
+function onProviderChange() {
+  const prov = document.getElementById('providerSelect').value;
+  const p = LLM_PROVIDERS[prov];
+  document.getElementById('apiEndpoint').value = p.endpoint;
+  document.getElementById('modelName').value = p.defaultModel;
+}
+
+function saveSettings() {
+  const cfg = {
+    provider: document.getElementById('providerSelect').value,
+    endpoint: document.getElementById('apiEndpoint').value.trim(),
+    model: document.getElementById('modelName').value.trim(),
+    apiKey: document.getElementById('apiKey').value.trim(),
+    timeout: parseInt(document.getElementById('apiTimeout').value) || 60,
+    corsProxy: document.getElementById('corsProxy').value.trim()
+  };
+  if (!cfg.endpoint || !cfg.model || !cfg.apiKey) {
+    alert('请填写完整的端点、模型和 API Key');
+    return;
+  }
+  saveLLMConfig(cfg);
+  document.getElementById('apiTestResult').innerHTML = '<span style="color: var(--physician)">✓ 已保存</span>';
+  setTimeout(closeSettings, 600);
+}
+
+async function testAPI() {
+  const testResult = document.getElementById('apiTestResult');
+  testResult.innerHTML = '<span class="llm-loading">测试中</span>';
+
+  const tempCfg = {
+    provider: document.getElementById('providerSelect').value,
+    endpoint: document.getElementById('apiEndpoint').value.trim(),
+    model: document.getElementById('modelName').value.trim(),
+    apiKey: document.getElementById('apiKey').value.trim(),
+    timeout: parseInt(document.getElementById('apiTimeout').value) || 60,
+    corsProxy: document.getElementById('corsProxy').value.trim()
+  };
+  saveLLMConfig(tempCfg);
+
+  const r = await callLLM('你是一个测试机器人，请简短回复。', '请回复"连通成功"4个字', { maxTokens: 50 });
+  if (r.error) {
+    testResult.innerHTML = `<span style="color: var(--alert-red)">✗ ${r.error}</span>`;
+  } else {
+    testResult.innerHTML = `<span style="color: var(--physician)">✓ 连通正常：${r.text.substring(0, 50)}</span>`;
+  }
+}
+
+// ========== 初始化 ==========
+function init() {
+  renderProgressDots();
+  renderDataTable();
+  renderFeatureCards();
+  updateFeatureMetrics();
+  renderModelZoo();
+  setupModelingSliders();
+
+  // 注入 shake 动画
+  const style = document.createElement('style');
+  style.textContent = `
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-4px); }
+      75% { transform: translateX(4px); }
+    }
+  `;
+  document.head.appendChild(style);
+}
+
+document.addEventListener('DOMContentLoaded', init);
+
+</script>
+</body>
+</html>
