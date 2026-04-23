@@ -1132,11 +1132,11 @@ body {
     </div>
     <div class="chart-row">
       <div class="chart-label">主诉</div>
-      <div class="chart-value">发热 6 小时，最高 38.5 ℃</div>
+      <div class="chart-value">发热 6 小时</div>
     </div>
     <div class="chart-row">
       <div class="chart-label">一般情况</div>
-      <div class="chart-value">反应可，进食稍差，无咳嗽、腹泻、皮疹</div>
+      <div class="chart-value">发热为高热，最高39.0度，无咳嗽、腹泻、皮疹，精神反应可，进食稍差，大小便正常</div>
     </div>
     <div class="chart-row">
       <div class="chart-label">查体</div>
@@ -1318,7 +1318,7 @@ body {
     <div class="insight-box">
       <div class="insight-title">⚖️ 可解释性 vs 预测力</div>
       <p style="font-size: 13px;">
-        这是医学 AI 中永恒的张力：<br>
+        这是医学 AI 中需要做出的权衡：<br>
         · <strong>可解释模型</strong>（逻辑回归、决策树）：医生看得懂每个变量的权重，能质疑、能负责。<br>
         · <strong>黑箱模型</strong>（深度学习）：预测力可能更强，但医生无法解释"为什么这么判"。<br>
         在儿科，我们倾向前者。但"倾向"不等于"永远"——下一幕你会看到模型的家族谱。
@@ -1354,7 +1354,7 @@ body {
       <strong>没有最好的模型，只有最合适的模型</strong>。<br>
       选择模型就像选择临床工具——你不会用听诊器做腹部 B 超，也不会用深度学习处理 200 例的罕见病数据集。<br><br>
       尤其是<strong>大语言模型（LLM）</strong>。它不是万能钥匙。直接问 GPT "患儿用什么抗生素"是危险的——它可能引用过时或国外指南。
-      正确的做法是<strong>LLM + RAG</strong>：让模型在一个经过验证的知识库里检索答案。这是教师团队<em>童盾系统</em>的核心设计思路。
+      正确的做法是<strong>LLM + RAG</strong>：让模型在一个经过验证的知识库里检索答案。这也是重医儿童医院<em>小乙AI家庭医生</em>的核心设计思路。
     </div>
 
     <div class="insight-box">
@@ -1557,7 +1557,7 @@ body {
   <div id="fatigueSection" class="hidden">
     <h3 class="serif mt-m" style="font-size: 20px; margin-top: 36px;">⚠️ 警觉疲劳：AI 最大的非技术性失败</h3>
     <div class="narrative">
-      你刚才连续处理了 3 个患儿。<strong>注意观察你自己</strong>：到第 3 个时，你是否开始<em>直接接受 AI 的建议</em>？<br><br>
+      你刚才连续处理了 3 个患儿。<strong>注意观察你自己</strong>：到第 3 个患儿，你是否越来越容易<em>直接接受 AI 的建议</em>？<br><br>
       这就是<strong>警觉疲劳（Alert Fatigue）</strong>——AI 用多了，医生反而<em>失去了独立判断的警觉</em>。
       研究显示，在连续 5 次以上 AI 提示后，医生的独立核查率下降 40%。<br><br>
       这是医疗 AI 部署后最常见、也最危险的失败模式。<em>一个好的 AI 不是让医生变"懒"，而是让医生在正确的地方"专注"。</em>
@@ -1671,7 +1671,7 @@ body {
     </p>
 
     <div class="mt-m" style="margin-top: 32px;">
-      <button class="nav-btn" onclick="exportReport()">📥 导出我的学习报告</button>
+      <button class="nav-btn" onclick="exportReport()">📥 导出我的学习报告（HTML · 可打印为 PDF）</button>
       <button class="nav-btn secondary" onclick="restart()" style="margin-left: 12px;">↺ 重新开始</button>
     </div>
   </div>
@@ -1687,11 +1687,20 @@ body {
     <div class="field">
       <label class="field-label">选择 LLM 提供商</label>
       <select class="field-select" id="providerSelect" onchange="onProviderChange()">
-        <option value="zhipu">智谱 GLM（glm-4-plus / glm-4-flash）</option>
-        <option value="moonshot">月之暗面 Kimi（moonshot-v1-8k）</option>
-        <option value="qwen">阿里通义千问（qwen-plus / qwen-max）</option>
-        <option value="deepseek">深度求索 DeepSeek（deepseek-chat）</option>
-        <option value="custom">自定义 OpenAI 兼容端点</option>
+        <optgroup label="☁ 云端大模型（国产）">
+          <option value="zhipu">智谱 GLM（glm-4-plus / glm-4-flash）</option>
+          <option value="moonshot">月之暗面 Kimi（moonshot-v1-8k）</option>
+          <option value="qwen">阿里通义千问（qwen-plus / qwen-max）</option>
+          <option value="deepseek">深度求索 DeepSeek（deepseek-chat）</option>
+        </optgroup>
+        <optgroup label="🖥 本地模型（私有部署）">
+          <option value="ollama">Ollama（localhost:11434）</option>
+          <option value="lmstudio">LM Studio（localhost:1234）</option>
+          <option value="local_custom">本地自定义端点</option>
+        </optgroup>
+        <optgroup label="⚙ 其他">
+          <option value="custom">自定义 OpenAI 兼容端点</option>
+        </optgroup>
       </select>
     </div>
 
@@ -1708,7 +1717,7 @@ body {
     </div>
 
     <div class="field">
-      <label class="field-label">API Key</label>
+      <label class="field-label">API Key <span id="apiKeyRequired" style="color: var(--ink-2); font-size: 11px; font-weight: 400;">（本地模型可留空）</span></label>
       <input type="password" class="field-input" id="apiKey" placeholder="sk-...">
       <div class="field-hint">保存在本浏览器 localStorage，学生端不可见</div>
     </div>
@@ -1730,10 +1739,35 @@ body {
     <details class="field" style="background: var(--paper-2); padding: 12px; border: 1px solid var(--divider);">
       <summary style="cursor: pointer; font-size: 13px; font-weight: 500;">📖 部署说明（教师必读）</summary>
       <div style="font-size: 12px; line-height: 1.7; margin-top: 10px; color: var(--ink-2);">
-        <p><strong>方案 A · 本地直接打开（推荐开发测试）：</strong><br>
+
+        <p><strong style="color: var(--physician);">🖥 本地模型方案（推荐隐私敏感场景）：</strong><br>
+        在教师机或局域网服务器部署开源大模型，数据不离开本地，无 API 费用，无 CORS 限制。</p>
+
+        <p style="padding-left: 12px;">
+          <strong>① Ollama（最简单）</strong>：访问 <code style="background:#fff;padding:1px 5px">ollama.com</code> 下载安装 → 终端运行 <code style="background:#fff;padding:1px 5px">ollama pull qwen2.5:7b</code> 拉取国产模型 → 运行 <code style="background:#fff;padding:1px 5px">ollama serve</code> 启动服务 → 在本应用选择"Ollama"预设，模型名填 <code style="background:#fff;padding:1px 5px">qwen2.5:7b</code>，API Key 留空即可。<br>
+          <em style="color: var(--ink-2);">推荐模型：qwen2.5:7b（中文好）/ deepseek-r1:7b（推理）/ llama3.1:8b（通用）</em>
+        </p>
+
+        <p style="padding-left: 12px;">
+          <strong>② LM Studio（图形界面）</strong>：访问 <code style="background:#fff;padding:1px 5px">lmstudio.ai</code> 下载 → 图形化下载模型 → 在 "Developer" 标签页启动 Local Server → 默认端口 1234 → 在本应用选择"LM Studio"预设。
+        </p>
+
+        <p style="padding-left: 12px;">
+          <strong>③ vLLM / llama.cpp / TGI</strong>：这些服务端也兼容 OpenAI 协议，选"本地自定义端点"填入地址即可。
+        </p>
+
+        <p style="padding-left: 12px; background: #FFF9F0; padding: 8px; border-left: 2px solid var(--physician);">
+          ⚠ <strong>关键提示</strong>：若本应用 HTML 文件通过 <code style="background:#fff;padding:1px 5px">file://</code> 打开，Chrome 会阻止对 <code style="background:#fff;padding:1px 5px">localhost</code> 的访问。解决办法：<br>
+          (a) 把本 HTML 放到本地 Web 服务器（如 <code style="background:#fff;padding:1px 5px">python -m http.server</code>），或<br>
+          (b) 使用 Ollama 时配置环境变量 <code style="background:#fff;padding:1px 5px">OLLAMA_ORIGINS=*</code> 允许跨域。
+        </p>
+
+        <hr style="border: none; border-top: 1px dashed var(--divider); margin: 10px 0;">
+
+        <p><strong>☁ 云端 API 方案 · 方案 A · 本地直接打开（推荐开发测试）：</strong><br>
         Chrome 启动添加参数 <code style="background:#fff;padding:1px 5px">--disable-web-security --user-data-dir=/tmp/chrome</code>，可绕过 CORS。仅用于教师本机。</p>
 
-        <p><strong>方案 B · 自建简单代理（推荐课堂使用）：</strong><br>
+        <p><strong>云端 API · 方案 B · 自建简单代理（推荐课堂使用）：</strong><br>
         用任意服务器（或 Cloudflare Worker）部署一个转发服务，将 <code>/proxy?url=xxx</code> 转发到目标 API。示例 Cloudflare Worker 代码：</p>
         <pre style="background:#fff;padding:8px;overflow-x:auto;font-size:10px;">export default {
   async fetch(req) {
@@ -1749,7 +1783,7 @@ body {
   }
 }</pre>
 
-        <p><strong>方案 C · 将本应用托管到与 API 同域的服务器</strong>，或使用 Nginx 反向代理。</p>
+        <p><strong>云端 API · 方案 C · 将本应用托管到与 API 同域的服务器</strong>，或使用 Nginx 反向代理。</p>
 
         <p><strong>方案 D · 无 API 演示模式：</strong> 即便不配置 LLM，应用的前 6 幕核心交互仍可完整运行，只有涉及 AI 反馈的环节会提示"未配置"。</p>
       </div>
@@ -1794,27 +1828,50 @@ const LLM_PROVIDERS = {
   zhipu: {
     name: '智谱 GLM',
     endpoint: 'https://open.bigmodel.cn/api/paas/v4/chat/completions',
-    defaultModel: 'glm-4-flash'
+    defaultModel: 'glm-4-flash',
+    isLocal: false
   },
   moonshot: {
     name: '月之暗面 Kimi',
     endpoint: 'https://api.moonshot.cn/v1/chat/completions',
-    defaultModel: 'moonshot-v1-8k'
+    defaultModel: 'moonshot-v1-8k',
+    isLocal: false
   },
   qwen: {
     name: '通义千问',
     endpoint: 'https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions',
-    defaultModel: 'qwen-plus'
+    defaultModel: 'qwen-plus',
+    isLocal: false
   },
   deepseek: {
     name: 'DeepSeek',
     endpoint: 'https://api.deepseek.com/v1/chat/completions',
-    defaultModel: 'deepseek-chat'
+    defaultModel: 'deepseek-chat',
+    isLocal: false
+  },
+  ollama: {
+    name: 'Ollama（本地）',
+    endpoint: 'http://localhost:11434/v1/chat/completions',
+    defaultModel: 'qwen2.5:7b',
+    isLocal: true
+  },
+  lmstudio: {
+    name: 'LM Studio（本地）',
+    endpoint: 'http://localhost:1234/v1/chat/completions',
+    defaultModel: 'local-model',
+    isLocal: true
+  },
+  local_custom: {
+    name: '本地自定义',
+    endpoint: 'http://localhost:8000/v1/chat/completions',
+    defaultModel: '',
+    isLocal: true
   },
   custom: {
     name: '自定义',
     endpoint: '',
-    defaultModel: ''
+    defaultModel: '',
+    isLocal: false
   }
 };
 
@@ -1833,8 +1890,18 @@ function saveLLMConfig(cfg) {
 // ========== 通用 LLM 调用函数 ==========
 async function callLLM(systemPrompt, userPrompt, opts = {}) {
   const cfg = loadLLMConfig();
-  if (!cfg || !cfg.apiKey) {
+  const providerInfo = LLM_PROVIDERS[cfg?.provider];
+  const isLocal = providerInfo?.isLocal || false;
+
+  if (!cfg) {
+    return { error: '⚠️ 教师尚未配置 LLM。请点击右上角"教师设置"进行配置。' };
+  }
+  // 本地模型允许没有 API Key；云端必须有
+  if (!isLocal && !cfg.apiKey) {
     return { error: '⚠️ 教师尚未配置 API Key。请点击右上角"教师设置"进行配置。' };
+  }
+  if (!cfg.endpoint || !cfg.model) {
+    return { error: '⚠️ 未配置端点或模型名称。请在"教师设置"中完善配置。' };
   }
 
   const messages = [];
@@ -1848,9 +1915,9 @@ async function callLLM(systemPrompt, userPrompt, opts = {}) {
     max_tokens: opts.maxTokens ?? 800
   };
 
-  // 若配置了 CORS 代理，拼接代理 URL
+  // 若配置了 CORS 代理，拼接代理 URL（仅云端 API 需要）
   let url = cfg.endpoint;
-  if (cfg.corsProxy) {
+  if (cfg.corsProxy && !isLocal) {
     url = cfg.corsProxy + encodeURIComponent(cfg.endpoint);
   }
 
@@ -1858,12 +1925,15 @@ async function callLLM(systemPrompt, userPrompt, opts = {}) {
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), (cfg.timeout || 60) * 1000);
 
+    const headers = { 'Content-Type': 'application/json' };
+    // 本地模型 Key 可选（有则带，无则不带）；云端必带
+    if (cfg.apiKey) {
+      headers['Authorization'] = 'Bearer ' + cfg.apiKey;
+    }
+
     const resp = await fetch(url, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ' + cfg.apiKey
-      },
+      headers: headers,
       body: JSON.stringify(body),
       signal: controller.signal
     });
@@ -1880,10 +1950,16 @@ async function callLLM(systemPrompt, userPrompt, opts = {}) {
     if (err.name === 'AbortError') {
       return { error: '请求超时。请检查网络或增大超时时间。' };
     }
+    const msg = err.message || '';
     // CORS 或网络错误通常不会暴露详细原因
-    const hint = err.message && err.message.toLowerCase().includes('failed to fetch')
-      ? '可能是 CORS 限制导致。请在"教师设置"中配置 CORS 代理，或使用方案 B 部署代理服务。'
-      : err.message;
+    let hint = msg;
+    if (msg.toLowerCase().includes('failed to fetch')) {
+      if (isLocal) {
+        hint = '无法连接本地模型。请检查：(1) 模型服务是否已启动（如 ollama serve）；(2) 端口是否正确；(3) 本 HTML 若通过 file:// 打开需配置跨域（如 OLLAMA_ORIGINS=*）或改用本地 Web 服务器托管。';
+      } else {
+        hint = '可能是 CORS 限制导致。请在"教师设置"中配置 CORS 代理，或使用方案 B 部署代理服务。';
+      }
+    }
     return { error: '调用失败：' + hint };
   }
 }
@@ -2369,8 +2445,8 @@ const CASES = [
     desc: '典型情境',
     age: '38 天', sex: '女',
     chief: '发热 4 小时，T 38.1℃',
-    exam: '反应稍差，肢端凉',
-    lab: 'WBC 9.8, CRP 4, PCT 0.3',
+    exam: '反应好，吃奶可，无皮疹',
+    lab: 'WBC 9.8×10⁹/L, CRP 4 mg/L, PCT 0.3 ng/mL',
     origin: '三甲医院就诊（训练数据同源）',
     modelAppliesWell: true,
     basePrediction: 0.08,
@@ -2384,7 +2460,7 @@ const CASES = [
     age: '71 天', sex: '男',
     chief: '发热 12 小时，T 39.4℃',
     exam: '精神萎靡，前囟饱满，颈强待排',
-    lab: 'WBC 2.1, CRP 86, PCT 4.2',
+    lab: 'WBC 2.1×10⁹/L, CRP 86 mg/L, PCT 4.2 ng/mL',
     origin: '<strong>县医院转诊</strong>（分布外）',
     modelAppliesWell: false,
     basePrediction: 0.45,
@@ -2398,7 +2474,7 @@ const CASES = [
     age: '29 天', sex: '男',
     chief: '发热 2 小时，T 38.0℃',
     exam: '反应好，吃奶佳，无特殊',
-    lab: 'WBC 11.2, CRP 2, PCT 0.15',
+    lab: 'WBC 11.2×10⁹/L, CRP 7 mg/L, PCT 0.15 ng/mL',
     origin: '三甲医院，但属<strong>高危年龄段</strong>',
     modelAppliesWell: true,
     basePrediction: 0.12,
@@ -2469,6 +2545,9 @@ function renderCurrentCase() {
       <div class="narrative" style="border-color: var(--physician);">
         <strong>✓ 你已处理完三位患儿。</strong><br>
         每一个决策都记录在案。请往下看——
+      </div>
+      <div class="center mt-m">
+        <button class="nav-btn" onclick="prevCase()" style="background: var(--ink-3); color: var(--paper);">← 返回上一位 · 重新选择</button>
       </div>`;
     document.getElementById('fatigueSection').classList.remove('hidden');
     document.getElementById('nextBtn6').disabled = false;
@@ -2536,7 +2615,7 @@ function renderCurrentCase() {
           </button>
           <button class="choice-btn" onclick="chooseExam('B', ${c.id})" data-choice="B">
             <span class="choice-letter">B</span>
-            <span>推翻 AI 建议：按我的临床判断处理（升级诊疗强度）</span>
+            <span>不听从 AI 建议：按我自己的临床判断处理</span>
           </button>
           <button class="choice-btn" onclick="chooseExam('C', ${c.id})" data-choice="C">
             <span class="choice-letter">C</span>
@@ -2619,13 +2698,19 @@ function chooseExam(choice, caseId) {
   const c = CASES.find(x => x.id === caseId);
   const pred = computeAIPrediction(c);
 
-  // 记录决策
-  caseDecisions.push({ caseId, caseName: c.name, choice, prediction: pred.prob });
+  // 记录/更新决策：同一患儿只保留最新的选择（允许学生尝试不同选项看反馈）
+  const existingIdx = caseDecisions.findIndex(d => d.caseId === caseId);
+  if (existingIdx >= 0) {
+    caseDecisions[existingIdx] = { caseId, caseName: c.name, choice, prediction: pred.prob };
+  } else {
+    caseDecisions.push({ caseId, caseName: c.name, choice, prediction: pred.prob });
+  }
 
-  // 选中的按钮样式
+  // 选中的按钮样式：先清除该患儿所有 ABC 的 selected，再标记当前
   const btns = document.querySelectorAll(`#act6 [data-choice]`);
   btns.forEach(b => {
     if (b.closest('.exam-room')) {
+      b.classList.remove('selected');
       if (b.dataset.choice === choice) b.classList.add('selected');
     }
   });
@@ -2635,16 +2720,26 @@ function chooseExam(choice, caseId) {
   const el = document.getElementById('outcome' + caseId);
   el.classList.remove('hidden');
 
-  const remaining = CASES.length - caseDecisions.length;
+  // "还剩"按已决策的独立患儿数量计算，不按 caseDecisions.length
+  const decidedCaseIds = new Set(caseDecisions.map(d => d.caseId));
+  const remaining = CASES.length - decidedCaseIds.size;
   const isLast = remaining === 0;
+
+  // 生成"返回上一位"按钮：只有当前不是第一位时才显示
+  const backBtn = currentCaseIdx > 0
+    ? `<button class="nav-btn back-case-btn" onclick="prevCase()" style="margin-right: 0.5rem; background: var(--ink-3); color: var(--paper);">← 返回上一位 · 重新选择</button>`
+    : '';
 
   const continueBlock = isLast
     ? `<div class="center mt-m">
+         ${backBtn}
          <button class="nav-btn all-done-btn" onclick="nextCase()">✓ 完成三位患儿 · 查看总结</button>
+         <div class="next-case-hint">可点击 A/B/C 不同选项，查看不同决策的反馈</div>
        </div>`
     : `<div class="center mt-m">
+         ${backBtn}
          <button class="nav-btn next-case-btn" onclick="nextCase()">继续 · 下一位患儿（还剩 ${remaining} 位）→</button>
-         <div class="next-case-hint">处理完全部 3 位患儿，才能进入第七幕</div>
+         <div class="next-case-hint">可点击 A/B/C 不同选项，查看不同决策的反馈 · 处理完 3 位患儿才能进入第七幕</div>
        </div>`;
 
   el.innerHTML = `
@@ -2662,16 +2757,18 @@ function chooseExam(choice, caseId) {
 }
 
 function updateCaseCounter() {
+  // 用独立 caseId 计数（允许同一患儿重复点选不影响进度）
+  const decidedCount = new Set(caseDecisions.map(d => d.caseId)).size;
   const counter = document.getElementById('caseCounter');
-  if (counter) counter.textContent = `${caseDecisions.length} / 3`;
+  if (counter) counter.textContent = `${decidedCount} / 3`;
   // 同步更新底部解锁提示
   const hint = document.getElementById('nextBtn6Hint');
   if (hint) {
-    if (caseDecisions.length >= 3) {
+    if (decidedCount >= 3) {
       hint.textContent = '✓ 全部完成，可进入下一幕';
       hint.style.color = 'var(--physician)';
     } else {
-      hint.textContent = `完成 3 位患儿后解锁 · 当前 ${caseDecisions.length} / 3`;
+      hint.textContent = `完成 3 位患儿后解锁 · 当前 ${decidedCount} / 3`;
     }
   }
 }
@@ -2683,7 +2780,7 @@ function generateCaseOutcome(c, choice, pred) {
     if (choice === 'A') {
       return {
         title: '你完全采纳了 AI 建议',
-        body: `这是最危险的情境。这个患儿的 AI 预测受限于外部验证的不确定性——AUC 从 ${state.modelResults ? state.modelResults.valAuc.toFixed(2) : '0.84'} 降到 ${state.externalValidated ? Math.max(0.6, state.modelResults.valAuc - 0.13).toFixed(2) : '0.71'}。模型对县医院来的患儿是<strong>系统性不可靠的</strong>。<br><br>在真实世界，完全采纳低置信度预测可能导致严重漏诊。这就是<strong>自动化偏倚（Automation Bias）</strong>的经典表现。`,
+        body: `AI的建议可能是对的，但仍需注意：这个患儿的 AI 预测受限于外部验证的不确定性——AUC 从 ${state.modelResults ? state.modelResults.valAuc.toFixed(2) : '0.84'} 降到 ${state.externalValidated ? Math.max(0.6, state.modelResults.valAuc - 0.13).toFixed(2) : '0.71'}。模型对县医院来的患儿是<strong>系统性不可靠的</strong>。<br><br>在真实世界，完全采纳低置信度预测可能导致误诊、漏诊等情况。这就是<strong>自动化偏倚（Automation Bias）</strong>的经典表现。`,
         color: 'var(--alert-red)'
       };
     } else if (choice === 'B') {
@@ -2751,6 +2848,17 @@ function generateCaseOutcome(c, choice, pred) {
 function nextCase() {
   currentCaseIdx++;
   renderCurrentCase();
+  window.scrollTo({ top: 400, behavior: 'smooth' });
+}
+
+function prevCase() {
+  if (currentCaseIdx <= 0) return;
+  currentCaseIdx--;
+  // 返回上一位时，清除该患儿之前的决策记录（允许重新选择）
+  const prevCaseId = CASES[currentCaseIdx].id;
+  caseDecisions = caseDecisions.filter(d => d.caseId !== prevCaseId);
+  renderCurrentCase();
+  updateCaseCounter();
   window.scrollTo({ top: 400, behavior: 'smooth' });
 }
 
@@ -2985,60 +3093,254 @@ function exportReport() {
   const now = new Date();
   const dateStr = now.toLocaleString('zh-CN');
 
-  let md = `# AI 素养智教助手 · 学习报告\n\n`;
-  md += `**生成时间**：${dateStr}\n\n---\n\n`;
-  md += `## 决策轨迹\n\n`;
+  // === 收集所有数据 ===
+  const act1Text = { A: '门诊观察', B: '收住院', C: '完善培养后决定' }[state.act1Choice] || '<em>(未选)</em>';
 
-  md += `### 第一幕 · 小宝的处置\n选择：${{ A: '门诊观察', B: '收住院', C: '完善培养后决定' }[state.act1Choice] || '(未选)'}\n\n`;
-  md += `### 第二幕 · 数据质量问题识别\n发现 ${state.foundProblems.length} 个问题：\n`;
-  state.foundProblems.forEach((p, i) => { md += `${i+1}. 患儿 ${p.rowid}：${p.hint}\n`; });
-  md += `\n**偏倚反思**：${state.biasReflection || '(未提交)'}\n\n`;
-  if (state.biasAIResponse) md += `**AI 点评**：\n> ${state.biasAIResponse.replace(/\n/g, '\n> ')}\n\n`;
+  const dataProblemsHtml = state.foundProblems.length > 0
+    ? `<ol>${state.foundProblems.map(p => `<li>患儿 <code>${p.rowid}</code>：${p.hint}</li>`).join('')}</ol>`
+    : '<p class="muted">未发现问题</p>';
 
-  md += `### 第三幕 · 特征选择\n已选特征：${state.selectedFeatures.map(i => FEATURES[i].name).join('、')}\n预估 AUC：${state.featureAuc.toFixed(3)}\n陷阱特征：${state.trapSelected.length} 个\n\n`;
+  const featuresHtml = state.selectedFeatures.length > 0
+    ? state.selectedFeatures.map(i => `<span class="tag">${FEATURES[i].name}</span>`).join('')
+    : '<em class="muted">(未选)</em>';
 
-  md += `### 第四幕 · 模型场景匹配\n`;
-  SCENARIOS.forEach(s => {
+  const scenariosHtml = SCENARIOS.map(s => {
     const chosen = state.scenarioAnswers[s.id];
     const correct = chosen === s.answer;
-    md += `- ${s.desc} → ${chosen ? MODELS.find(m => m.id === chosen)?.name : '(未选)'}${correct ? ' ✓' : ' ✗'}\n`;
-  });
+    const chosenName = chosen ? MODELS.find(m => m.id === chosen)?.name : '(未选)';
+    return `<tr><td>${s.desc}</td><td>${chosenName}</td><td class="${correct ? 'ok' : 'err'}">${correct ? '✓ 正确' : '✗ 再想想'}</td></tr>`;
+  }).join('');
 
-  md += `\n### 第五幕 · 模型训练\n`;
-  if (state.modelResults) {
-    md += `- 训练 AUC：${state.modelResults.trainAuc.toFixed(3)}\n- 验证 AUC：${state.modelResults.valAuc.toFixed(3)}\n- Brier 分数：${state.modelResults.brier.toFixed(3)}\n- 外部验证：${state.externalValidated ? '已完成' : '未完成'}\n`;
-  } else {
-    md += '(未训练)\n';
+  const modelResultsHtml = state.modelResults
+    ? `<table class="kv">
+         <tr><th>训练 AUC</th><td><code>${state.modelResults.trainAuc.toFixed(3)}</code></td></tr>
+         <tr><th>验证 AUC</th><td><code>${state.modelResults.valAuc.toFixed(3)}</code></td></tr>
+         <tr><th>Brier 分数</th><td><code>${state.modelResults.brier.toFixed(3)}</code></td></tr>
+         <tr><th>外部验证</th><td>${state.externalValidated ? '✓ 已完成' : '✗ 未完成'}</td></tr>
+       </table>`
+    : '<p class="muted">未训练</p>';
+
+  const caseDecisionsHtml = caseDecisions.length > 0
+    ? `<table class="cases">
+         <thead><tr><th>患儿</th><th>AI 预测</th><th>你的选择</th></tr></thead>
+         <tbody>${caseDecisions.map(d => {
+           const choiceText = {A:'采纳 AI 建议', B:'不听从 AI 建议', C:'共享决策'}[d.choice];
+           const choiceClass = {A:'a', B:'b', C:'c'}[d.choice];
+           return `<tr><td><strong>${d.caseName}</strong></td><td><code>${Math.round(d.prediction*100)}%</code></td><td><span class="choice-${choiceClass}">${choiceText}</span></td></tr>`;
+         }).join('')}</tbody>
+       </table>`
+    : '<p class="muted">未完成</p>';
+
+  const aiQaHtml = state.examAIResponses.length > 0
+    ? state.examAIResponses.map((r, i) => `
+        <div class="qa">
+          <div class="qa-q"><span class="qa-label">[${r.case || '患儿'}] 你问：</span>${escapeHtml(r.q)}</div>
+          <div class="qa-a"><span class="qa-label">AI 答：</span>${escapeHtml(r.a).replace(/\n/g, '<br>')}</div>
+        </div>`).join('')
+    : '';
+
+  const legalText = { doctor: '医生主责', hospital: '医院主责', vendor: '厂商主责', joint: '多方连带' }[state.legalChoice] || '<em class="muted">(未选)</em>';
+  const ethicsText = { deploy: '部署', fix: '暂缓修复', disclose: '部署+弃权' }[state.ethicsChoice] || '<em class="muted">(未选)</em>';
+
+  const biasHtml = state.biasReflection
+    ? `<blockquote class="student-voice">${escapeHtml(state.biasReflection).replace(/\n/g, '<br>')}</blockquote>`
+    : '<p class="muted">(未提交)</p>';
+  const biasAiHtml = state.biasAIResponse
+    ? `<blockquote class="ai-voice"><strong>🤖 AI 点评：</strong><br>${escapeHtml(state.biasAIResponse).replace(/\n/g, '<br>')}</blockquote>`
+    : '';
+
+  const humanityHtml = state.humanityResponse
+    ? `<blockquote class="student-voice">${escapeHtml(state.humanityResponse).replace(/\n/g, '<br>')}</blockquote>`
+    : '<p class="muted">(未提交)</p>';
+  const humanityAiHtml = state.humanityAIResponse
+    ? `<blockquote class="ai-voice"><strong>🤖 AI 多视角反馈：</strong><br>${escapeHtml(state.humanityAIResponse).replace(/\n/g, '<br>')}</blockquote>`
+    : '';
+
+  const portraitHtml = state.finalPortrait
+    ? `<div class="portrait">${escapeHtml(state.finalPortrait).replace(/\n/g, '<br>')}</div>`
+    : '<p class="muted">(未生成)</p>';
+
+  // === 组装完整 HTML ===
+  const html = `<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>AI 素养智教助手 · 学习报告 · ${dateStr}</title>
+<style>
+  @page { size: A4; margin: 18mm 16mm; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: "SimSun", "Noto Serif SC", "Source Han Serif", serif;
+    font-size: 11pt; line-height: 1.7; color: #14202B;
+    background: #FAF7EE; padding: 14mm 16mm; max-width: 210mm; margin: 0 auto;
+  }
+  h1 { font-family: "SimHei", "Noto Sans SC", sans-serif; font-size: 26pt; font-weight: 900;
+       color: #14202B; letter-spacing: 1px; margin-bottom: 4mm; }
+  h2 { font-family: "SimHei", sans-serif; font-size: 15pt; font-weight: 700;
+       color: #1E5A8F; margin: 10mm 0 4mm; padding-bottom: 2mm;
+       border-bottom: 1.5px solid #1E5A8F; }
+  h3 { font-family: "SimHei", sans-serif; font-size: 12pt; font-weight: 700;
+       color: #C8611A; margin: 6mm 0 2mm; }
+  p { margin: 2mm 0; }
+  code { font-family: "Consolas", "Menlo", monospace; font-size: 10pt;
+         background: #F5F1E8; padding: 0 2pt; border-radius: 2px; color: #1E5A8F; }
+  ol, ul { padding-left: 6mm; margin: 2mm 0; }
+  li { margin: 1mm 0; }
+
+  .header {
+    border-bottom: 2px solid #1E5A8F; padding-bottom: 5mm; margin-bottom: 6mm;
+    display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 4mm;
+  }
+  .subtitle { font-size: 10pt; color: #6B7280; font-style: italic; margin-top: 1mm; }
+  .meta { font-size: 9pt; color: #6B7280; text-align: right; line-height: 1.5; }
+  .meta strong { color: #C8611A; font-family: "JetBrains Mono", "Consolas", monospace; }
+
+  .muted { color: #6B7280; font-style: italic; }
+  .ok { color: #2D6E3E; font-weight: bold; }
+  .err { color: #A52A2A; }
+
+  .tag {
+    display: inline-block; padding: 1mm 2.5mm; margin: 1mm 1mm 1mm 0;
+    background: #1E5A8F; color: #fff; border-radius: 3px;
+    font-size: 10pt; font-family: "SimHei", sans-serif;
   }
 
-  md += `\n### 第六幕 · 诊室决策（3 例患儿）\n`;
-  if (caseDecisions.length > 0) {
-    caseDecisions.forEach(d => {
-      md += `- **${d.caseName}**：AI 预测 ${Math.round(d.prediction*100)}% → 你的选择：${{A:'采纳 AI 建议', B:'推翻 AI，按临床判断', C:'共享决策'}[d.choice]}\n`;
-    });
-  } else {
-    md += '(未完成)\n';
+  table { border-collapse: collapse; width: 100%; margin: 3mm 0; font-size: 10.5pt; }
+  th, td { border: 1px solid #D4C9A8; padding: 2mm 3mm; text-align: left; vertical-align: top; }
+  th { background: #E8DFC8; font-family: "SimHei", sans-serif; font-weight: 700; color: #14202B; }
+  table.kv th { width: 30%; background: #F5F1E8; color: #1E5A8F; }
+  table.cases td { background: #fff; }
+  table.cases tr:hover td { background: #FFF9F0; }
+
+  .choice-a { color: #1E5A8F; font-weight: bold; }
+  .choice-b { color: #C8611A; font-weight: bold; }
+  .choice-c { color: #A38B5E; font-weight: bold; }
+
+  .qa { margin: 3mm 0; padding: 2.5mm 3.5mm; background: #fff;
+        border-left: 3px solid #2D6E3E; border-radius: 0 3px 3px 0; }
+  .qa-q { color: #1E5A8F; margin-bottom: 1.5mm; }
+  .qa-a { color: #14202B; }
+  .qa-label { font-family: "SimHei", sans-serif; font-weight: 700; margin-right: 1mm; font-size: 10pt; }
+
+  blockquote {
+    margin: 3mm 0; padding: 2.5mm 4mm; border-radius: 0 3px 3px 0;
+    font-style: normal; font-size: 10.5pt; line-height: 1.75;
   }
-  if (state.examAIResponses.length) {
-    md += `\n**向 AI 提出的问题**：\n`;
-    state.examAIResponses.forEach((r, i) => { md += `\n**[${r.case || '患儿'}] 问题 ${i+1}**：${r.q}\n**回答**：${r.a}\n`; });
+  .student-voice { background: #fff; border-left: 3px solid #1E5A8F; }
+  .ai-voice { background: #F5F1E8; border-left: 3px solid #C8611A; color: #14202B; }
+
+  .portrait {
+    background: linear-gradient(135deg, #FFF9F0 0%, #F5F1E8 100%);
+    border: 1.5px solid #C8611A; border-radius: 4px;
+    padding: 5mm 7mm; font-size: 11pt; line-height: 1.8; color: #14202B;
+    box-shadow: 0 2px 8px rgba(200,97,26,0.08);
   }
 
-  md += `\n### 第七幕 · 法律·伦理·人文\n`;
-  md += `- 法律立场：${{ doctor: '医生主责', hospital: '医院主责', vendor: '厂商主责', joint: '多方连带' }[state.legalChoice] || '(未选)'}\n`;
-  md += `- 伦理立场：${{ deploy: '部署', fix: '暂缓修复', disclose: '部署+弃权' }[state.ethicsChoice] || '(未选)'}\n`;
-  md += `- 人文回答：${state.humanityResponse || '(未提交)'}\n`;
-  if (state.humanityAIResponse) md += `\n**AI 多视角反馈**：\n> ${state.humanityAIResponse.replace(/\n/g, '\n> ')}\n`;
+  .footer {
+    margin-top: 10mm; padding-top: 4mm; border-top: 1px dashed #CCC;
+    text-align: center; font-size: 9pt; color: #6B7280; font-style: italic;
+  }
+  .print-tip {
+    margin: 6mm 0; padding: 3mm 4mm; background: #FFF9F0;
+    border: 1px dashed #C8611A; border-radius: 3px;
+    font-size: 9.5pt; color: #14202B;
+  }
+  .print-tip strong { color: #C8611A; }
 
-  md += `\n---\n\n## 个性化学习画像\n\n${state.finalPortrait || '(未生成)'}\n`;
+  @media print {
+    body { background: #FAF7EE !important; padding: 0; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .print-tip { display: none; }
+    h2 { page-break-after: avoid; }
+    blockquote, .qa, .portrait, table { page-break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
 
-  const blob = new Blob([md], { type: 'text/markdown;charset=utf-8' });
+  <div class="header">
+    <div>
+      <h1>AI 素养 · 学习报告</h1>
+      <div class="subtitle">新医科 AI 素养智教助手 v1.0 · 你的 AI 素养之旅</div>
+    </div>
+    <div class="meta">
+      生成时间<br><strong>${dateStr}</strong>
+    </div>
+  </div>
+
+  <div class="print-tip">
+    <strong>💡 保存为 PDF</strong>：按 <code>Ctrl+P</code>（Windows）或 <code>⌘+P</code>（Mac），在打印对话框选择"另存为 PDF"即可。打印时此提示会自动隐藏。
+  </div>
+
+  <h2>📋 第一幕 · 小宝的处置</h2>
+  <p>作为接诊医生，我的选择是：<strong>${act1Text}</strong></p>
+
+  <h2>🗃 第二幕 · 数据的诞生</h2>
+  <h3>我识别的数据质量问题（${state.foundProblems.length} 个）</h3>
+  ${dataProblemsHtml}
+  <h3>偏倚反思 · 我的思考</h3>
+  ${biasHtml}
+  ${biasAiHtml}
+
+  <h2>🎴 第三幕 · 特征的博弈</h2>
+  <h3>已选特征</h3>
+  <p>${featuresHtml}</p>
+  <table class="kv">
+    <tr><th>预估模型 AUC</th><td><code>${state.featureAuc.toFixed(3)}</code></td></tr>
+    <tr><th>陷阱特征数</th><td><code>${state.trapSelected.length}</code> 个</td></tr>
+  </table>
+
+  <h2>🧬 第四幕 · 模型的抉择</h2>
+  <table>
+    <thead><tr><th>临床场景</th><th>我选的模型</th><th>判断</th></tr></thead>
+    <tbody>${scenariosHtml}</tbody>
+  </table>
+
+  <h2>🔧 第五幕 · 训练你的 AI</h2>
+  ${modelResultsHtml}
+
+  <h2>🏥 第六幕 · AI 在诊室里</h2>
+  <h3>三位患儿的决策</h3>
+  ${caseDecisionsHtml}
+  ${aiQaHtml ? `<h3>向 AI 提出的追问</h3>${aiQaHtml}` : ''}
+
+  <h2>⚖ 第七幕 · 法律 · 伦理 · 人文</h2>
+  <table class="kv">
+    <tr><th>法律立场</th><td>${legalText}</td></tr>
+    <tr><th>伦理立场</th><td>${ethicsText}</td></tr>
+  </table>
+  <h3>我对哭泣母亲说的话</h3>
+  ${humanityHtml}
+  ${humanityAiHtml}
+
+  <h2>🎭 个性化学习画像</h2>
+  ${portraitHtml}
+
+  <div class="footer">
+    本报告由「新医科 AI 素养智教助手」自动生成<br>
+    — 用 AI 教 AI · AI 赋能教育者，教育者赋能学生 —
+  </div>
+
+</body>
+</html>`;
+
+  const blob = new Blob([html], { type: 'text/html;charset=utf-8' });
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;
-  a.download = `AI素养学习报告_${now.getFullYear()}${String(now.getMonth()+1).padStart(2,'0')}${String(now.getDate()).padStart(2,'0')}.md`;
+  a.download = `AI素养学习报告_${now.getFullYear()}${String(now.getMonth()+1).padStart(2,'0')}${String(now.getDate()).padStart(2,'0')}.html`;
   a.click();
   URL.revokeObjectURL(url);
+}
+
+// HTML 转义辅助函数（防止 XSS 和格式错乱）
+function escapeHtml(str) {
+  if (!str) return '';
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
 }
 
 function restart() {
@@ -3060,6 +3362,7 @@ function openSettings() {
   } else {
     onProviderChange();
   }
+  updateLocalModelUI();  // 刷新字段提示
 }
 
 function closeSettings() {
@@ -3071,19 +3374,48 @@ function onProviderChange() {
   const p = LLM_PROVIDERS[prov];
   document.getElementById('apiEndpoint').value = p.endpoint;
   document.getElementById('modelName').value = p.defaultModel;
+  updateLocalModelUI();
+}
+
+// 根据当前 provider 类型调整 UI 提示
+function updateLocalModelUI() {
+  const prov = document.getElementById('providerSelect').value;
+  const p = LLM_PROVIDERS[prov];
+  const isLocal = p?.isLocal || false;
+
+  const keyLabel = document.getElementById('apiKeyRequired');
+  if (keyLabel) {
+    keyLabel.textContent = isLocal ? '（本地模型通常可留空）' : '（必填）';
+    keyLabel.style.color = isLocal ? 'var(--physician)' : 'var(--alert)';
+  }
+
+  // CORS 代理字段：本地模型通常不需要，加视觉淡化
+  const corsField = document.getElementById('corsProxy');
+  if (corsField) {
+    corsField.parentElement.style.opacity = isLocal ? '0.55' : '1';
+  }
 }
 
 function saveSettings() {
+  const prov = document.getElementById('providerSelect').value;
+  const p = LLM_PROVIDERS[prov];
+  const isLocal = p?.isLocal || false;
+
   const cfg = {
-    provider: document.getElementById('providerSelect').value,
+    provider: prov,
     endpoint: document.getElementById('apiEndpoint').value.trim(),
     model: document.getElementById('modelName').value.trim(),
     apiKey: document.getElementById('apiKey').value.trim(),
     timeout: parseInt(document.getElementById('apiTimeout').value) || 60,
     corsProxy: document.getElementById('corsProxy').value.trim()
   };
-  if (!cfg.endpoint || !cfg.model || !cfg.apiKey) {
-    alert('请填写完整的端点、模型和 API Key');
+  if (!cfg.endpoint || !cfg.model) {
+    alert('请填写完整的端点和模型名称');
+    return;
+  }
+  // 云端 API 必须要 Key，本地模型可留空
+  if (!isLocal && !cfg.apiKey) {
+    alert('云端 API 需要填写 API Key。\n若使用本地模型（Ollama / LM Studio 等），请先在"选择 LLM 提供商"中切换。');
     return;
   }
   saveLLMConfig(cfg);
