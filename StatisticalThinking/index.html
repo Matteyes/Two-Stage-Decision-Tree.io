@@ -1,0 +1,1015 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>临床医生统计思维 · 20讲</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Noto+Serif+SC:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f4f1ea;
+  --bg-deep: #ebe6db;
+  --ink: #1a1815;
+  --ink-soft: #3d3a34;
+  --ink-mute: #6b6760;
+  --rule: #c9c2b3;
+  --rule-soft: #d9d3c4;
+  --accent: #a8341d;
+  --accent-deep: #7a2614;
+  --gold: #b08a3e;
+  --paper: #faf7f0;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: 'Noto Serif SC', 'Cormorant Garamond', Georgia, serif;
+  line-height: 1.6;
+  min-height: 100vh;
+  background-image:
+    radial-gradient(circle at 20% 10%, rgba(168, 52, 29, 0.04) 0%, transparent 40%),
+    radial-gradient(circle at 80% 90%, rgba(176, 138, 62, 0.04) 0%, transparent 40%);
+}
+
+/* ===== 噪点纹理 ===== */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.4;
+  z-index: 1;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' /%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.35'/%3E%3C/svg%3E");
+  mix-blend-mode: multiply;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 60px 40px 100px;
+  position: relative;
+  z-index: 2;
+}
+
+/* ===== 顶部刊头 ===== */
+.masthead {
+  border-bottom: 3px double var(--ink);
+  padding-bottom: 40px;
+  margin-bottom: 60px;
+  position: relative;
+}
+
+.masthead-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 12px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--rule);
+  margin-bottom: 30px;
+}
+
+.masthead-top .issue {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.title-block {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 40px;
+  align-items: end;
+}
+
+.main-title {
+  font-family: 'Noto Serif SC', serif;
+  font-size: clamp(48px, 7vw, 88px);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+
+.main-title .accent-char {
+  color: var(--accent);
+  font-style: italic;
+  font-family: 'Cormorant Garamond', serif;
+}
+
+.subtitle {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 22px;
+  color: var(--ink-soft);
+  margin-top: 16px;
+  font-weight: 400;
+}
+
+.title-side {
+  text-align: right;
+  font-family: 'Cormorant Garamond', serif;
+  border-left: 1px solid var(--rule);
+  padding-left: 24px;
+}
+
+.title-side .number {
+  font-size: 64px;
+  font-weight: 300;
+  line-height: 1;
+  color: var(--accent);
+  font-style: italic;
+}
+
+.title-side .label {
+  font-size: 11px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  margin-top: 8px;
+}
+
+/* ===== 引言 ===== */
+.intro {
+  max-width: 720px;
+  margin: 50px auto 80px;
+  text-align: center;
+  position: relative;
+  padding: 0 20px;
+}
+
+.intro::before, .intro::after {
+  content: '❦';
+  display: block;
+  color: var(--gold);
+  font-size: 20px;
+  margin: 16px auto;
+}
+
+.intro p {
+  font-family: 'Cormorant Garamond', 'Noto Serif SC', serif;
+  font-size: 19px;
+  line-height: 1.8;
+  color: var(--ink-soft);
+  font-style: italic;
+}
+
+.intro .signature {
+  font-style: normal;
+  font-size: 13px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ink-mute);
+  margin-top: 20px;
+}
+
+/* ===== 模块 ===== */
+.module {
+  margin-bottom: 64px;
+  position: relative;
+}
+
+.module-header {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 24px;
+  align-items: center;
+  margin-bottom: 36px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--ink);
+}
+
+.module-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 56px;
+  font-weight: 300;
+  color: var(--accent);
+  line-height: 1;
+}
+
+.module-title-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.module-title {
+  font-size: 28px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+
+.module-subtitle {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 18px;
+  color: var(--ink-mute);
+}
+
+.module-meta {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  color: var(--ink-mute);
+  text-align: right;
+  text-transform: uppercase;
+}
+
+/* ===== 文章网格 ===== */
+.articles {
+  display: grid;
+  gap: 1px;
+  background: var(--rule);
+  border: 1px solid var(--rule);
+}
+
+/* 按文章数定列数,确保每行填满不留空 */
+.articles[data-count="3"] {
+  grid-template-columns: repeat(3, 1fr);
+}
+.articles[data-count="4"] {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+/* 中等屏幕:4 篇文章降为 2 列 (2x2),3 篇保持 3 列 */
+@media (max-width: 1100px) {
+  .articles[data-count="4"] {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* 小屏幕:3 篇也降为 2 列时会留空,所以维持单列处理较好 */
+@media (max-width: 820px) {
+  .articles[data-count="3"],
+  .articles[data-count="4"] {
+    grid-template-columns: 1fr;
+  }
+}
+
+.article {
+  background: var(--paper);
+  padding: 28px 28px 24px;
+  text-decoration: none;
+  color: inherit;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  transition: background 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+  cursor: pointer;
+  min-height: 280px;
+}
+
+.article:hover {
+  background: var(--bg-deep);
+}
+
+.article::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 3px;
+  background: var(--accent);
+  transition: width 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.article:hover::before {
+  width: 100%;
+}
+
+.article-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 18px;
+  padding-bottom: 12px;
+  border-bottom: 1px dashed var(--rule);
+}
+
+.article-num {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 32px;
+  font-weight: 500;
+  font-style: italic;
+  color: var(--accent);
+  line-height: 1;
+}
+
+.article-tag {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  color: var(--ink-mute);
+  text-transform: uppercase;
+}
+
+.article-title {
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--ink);
+  margin-bottom: 10px;
+  letter-spacing: -0.005em;
+}
+
+.article-topic {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 15px;
+  color: var(--accent-deep);
+  margin-bottom: 18px;
+  font-weight: 500;
+}
+
+.article-case {
+  font-size: 13.5px;
+  line-height: 1.65;
+  color: var(--ink-soft);
+  flex-grow: 1;
+  border-left: 2px solid var(--gold);
+  padding-left: 12px;
+  margin-bottom: 18px;
+}
+
+.article-case .case-label {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 11px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--gold);
+  display: block;
+  margin-bottom: 4px;
+  font-weight: 600;
+}
+
+.article-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 14px;
+  border-top: 1px solid var(--rule);
+  margin-top: auto;
+}
+
+.read-more {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 14px;
+  color: var(--ink);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: color 0.3s ease, gap 0.3s ease;
+}
+
+.article:hover .read-more {
+  color: var(--accent);
+  gap: 12px;
+}
+
+.read-more .arrow {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 18px;
+  transform: translateY(-1px);
+}
+
+.article-pending {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.2em;
+  color: var(--ink-mute);
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border: 1px solid var(--rule);
+  border-radius: 2px;
+  background: var(--bg);
+}
+
+/* ===== 页脚 ===== */
+.footer {
+  margin-top: 100px;
+  padding-top: 30px;
+  border-top: 3px double var(--ink);
+  text-align: center;
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 14px;
+  color: var(--ink-mute);
+  letter-spacing: 0.05em;
+}
+
+.footer .ornament {
+  color: var(--gold);
+  font-size: 16px;
+  margin-bottom: 12px;
+}
+
+/* ===== 入场动画 ===== */
+.module {
+  opacity: 0;
+  transform: translateY(20px);
+  animation: rise 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+
+.module:nth-child(2) { animation-delay: 0.1s; }
+.module:nth-child(3) { animation-delay: 0.2s; }
+.module:nth-child(4) { animation-delay: 0.3s; }
+.module:nth-child(5) { animation-delay: 0.4s; }
+.module:nth-child(6) { animation-delay: 0.5s; }
+.module:nth-child(7) { animation-delay: 0.6s; }
+
+@keyframes rise {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.masthead {
+  opacity: 0;
+  animation: fade 1s ease-out 0.1s forwards;
+}
+
+.intro {
+  opacity: 0;
+  animation: fade 1s ease-out 0.4s forwards;
+}
+
+@keyframes fade {
+  to { opacity: 1; }
+}
+
+/* ===== 响应式 ===== */
+@media (max-width: 768px) {
+  .container { padding: 40px 20px 60px; }
+  .title-block {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+  .title-side {
+    border-left: none;
+    border-top: 1px solid var(--rule);
+    padding-left: 0;
+    padding-top: 16px;
+    text-align: left;
+  }
+  .module-header {
+    grid-template-columns: auto 1fr;
+    gap: 16px;
+  }
+  .module-meta { display: none; }
+  .module-title { font-size: 22px; }
+  .module-subtitle { font-size: 15px; }
+  .articles {
+    grid-template-columns: 1fr;
+  }
+  .intro p { font-size: 17px; }
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- 刊头 -->
+  <header class="masthead">
+    <div class="masthead-top">
+      <span>统计学专栏 · Pediatric Edition</span>
+      <span class="issue">第 一 辑 · 2026</span>
+      <span>儿科临床医生导读</span>
+    </div>
+    <div class="title-block">
+      <div>
+        <h1 class="main-title">临床医生<span class="accent-char">的</span>统计思维</h1>
+        <p class="subtitle">From Numbers to Decisions —— 二十讲全景路线图</p>
+      </div>
+      <div class="title-side">
+        <div class="number">20</div>
+        <div class="label">Lectures</div>
+      </div>
+    </div>
+  </header>
+
+  <!-- 引言 -->
+  <section class="intro">
+    <p>
+      统计学之于临床,不在公式之繁,而在思维之正。<br>
+      从一张直方图到一个预测模型,从一次 P 值到一份循证决策——<br>
+      这二十讲,愿与你共同打磨"读懂数据"的眼力。
+    </p>
+    <div class="signature">—— 编 者 序</div>
+  </section>
+
+  <!-- 模块一 -->
+  <section class="module">
+    <div class="module-header">
+      <div class="module-num">Ⅰ</div>
+      <div class="module-title-group">
+        <div class="module-title">统计思维基础篇</div>
+        <div class="module-subtitle">"看懂数据" · Reading the Data</div>
+      </div>
+      <div class="module-meta">Lecture 01—03</div>
+    </div>
+    <div class="articles" data-count="3">
+
+      <a href="#" class="article" data-id="01">
+        <div class="article-header">
+          <div class="article-num">01</div>
+          <div class="article-tag">Descriptives</div>
+        </div>
+        <div class="article-title">数据会说谎吗?</div>
+        <div class="article-topic">描述性统计与数据可视化</div>
+        <div class="article-case">
+          <span class="case-label">Case</span>
+          新生儿体重分布:均值看着正常,但藏着早产儿和巨大儿的两个"驼峰"
+        </div>
+        <div class="article-footer">
+          <span class="read-more">阅读全文 <span class="arrow">→</span></span>
+          <span class="article-pending">待链接</span>
+        </div>
+      </a>
+
+      <a href="#" class="article" data-id="02">
+        <div class="article-header">
+          <div class="article-num">02</div>
+          <div class="article-tag">Reference</div>
+        </div>
+        <div class="article-title">"正常值"到底怎么定?</div>
+        <div class="article-topic">参考范围与正态分布</div>
+        <div class="article-case">
+          <span class="case-label">Case</span>
+          儿童血红蛋白的年龄别参考区间:为什么 2 岁和 12 岁的"正常"不一样?
+        </div>
+        <div class="article-footer">
+          <span class="read-more">阅读全文 <span class="arrow">→</span></span>
+          <span class="article-pending">待链接</span>
+        </div>
+      </a>
+
+      <a href="#" class="article" data-id="03">
+        <div class="article-header">
+          <div class="article-num">03</div>
+          <div class="article-tag">Sampling</div>
+        </div>
+        <div class="article-title">抽样偏了,结论全废</div>
+        <div class="article-topic">抽样与选择偏倚</div>
+        <div class="article-case">
+          <span class="case-label">Case</span>
+          川崎病流行病学:只看三甲医院数据会高估重症比例
+        </div>
+        <div class="article-footer">
+          <span class="read-more">阅读全文 <span class="arrow">→</span></span>
+          <span class="article-pending">待链接</span>
+        </div>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- 模块二 -->
+  <section class="module">
+    <div class="module-header">
+      <div class="module-num">Ⅱ</div>
+      <div class="module-title-group">
+        <div class="module-title">假设检验篇</div>
+        <div class="module-subtitle">"这个差异是真的吗?" · Testing Hypotheses</div>
+      </div>
+      <div class="module-meta">Lecture 04—07</div>
+    </div>
+    <div class="articles" data-count="4">
+
+      <a href="#" class="article" data-id="04">
+        <div class="article-header">
+          <div class="article-num">04</div>
+          <div class="article-tag">P-value</div>
+        </div>
+        <div class="article-title">P 值不是万能的</div>
+        <div class="article-topic">假设检验与 P 值</div>
+        <div class="article-case">
+          <span class="case-label">Case</span>
+          比较两种退热方案:P=0.03 就能说布洛芬比对乙酰氨基酚好吗?
+        </div>
+        <div class="article-footer">
+          <span class="read-more">阅读全文 <span class="arrow">→</span></span>
+          <span class="article-pending">待链接</span>
+        </div>
+      </a>
+
+      <a href="#" class="article" data-id="05">
+        <div class="article-header">
+          <div class="article-num">05</div>
+          <div class="article-tag">Effect Size</div>
+        </div>
+        <div class="article-title">效果到底有多大?</div>
+        <div class="article-topic">效应量与置信区间</div>
+        <div class="article-case">
+          <span class="case-label">Case</span>
+          抗生素缩短肺炎住院天数:减少 0.5 天有意义吗?
+        </div>
+        <div class="article-footer">
+          <span class="read-more">阅读全文 <span class="arrow">→</span></span>
+          <span class="article-pending">待链接</span>
+        </div>
+      </a>
+
+      <a href="#" class="article" data-id="06">
+        <div class="article-header">
+          <div class="article-num">06</div>
+          <div class="article-tag">Multiplicity</div>
+        </div>
+        <div class="article-title">比较越多,错得越多</div>
+        <div class="article-topic">多重比较与多重检验</div>
+        <div class="article-case">
+          <span class="case-label">Case</span>
+          5 种抗癫痫药两两比较:做 10 次 t 检验,总有一个"显著"
+        </div>
+        <div class="article-footer">
+          <span class="read-more">阅读全文 <span class="arrow">→</span></span>
+          <span class="article-pending">待链接</span>
+        </div>
+      </a>
+
+      <a href="#" class="article" data-id="07">
+        <div class="article-header">
+          <div class="article-num">07</div>
+          <div class="article-tag">Power</div>
+        </div>
+        <div class="article-title">样本量不是拍脑袋定的</div>
+        <div class="article-topic">样本量估算与检验效能</div>
+        <div class="article-case">
+          <span class="case-label">Case</span>
+          计划一项早产儿喂养 RCT:需要多少例才能检测到差异?
+        </div>
+        <div class="article-footer">
+          <span class="read-more">阅读全文 <span class="arrow">→</span></span>
+          <span class="article-pending">待链接</span>
+        </div>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- 模块三 -->
+  <section class="module">
+    <div class="module-header">
+      <div class="module-num">Ⅲ</div>
+      <div class="module-title-group">
+        <div class="module-title">常用方法篇</div>
+        <div class="module-subtitle">"选对工具" · Choosing the Right Tool</div>
+      </div>
+      <div class="module-meta">Lecture 08—11</div>
+    </div>
+    <div class="articles" data-count="4">
+
+      <a href="#" class="article" data-id="08">
+        <div class="article-header">
+          <div class="article-num">08</div>
+          <div class="article-tag">Tests</div>
+        </div>
+        <div class="article-title">t 检验、卡方,到底用哪个?</div>
+        <div class="article-topic">常用检验方法速查</div>
+        <div class="article-case">
+          <span class="case-label">Case</span>
+          比较手足口病两组治疗效果:连续变量用 t 检验,分类结局用卡方
+        </div>
+        <div class="article-footer">
+          <span class="read-more">阅读全文 <span class="arrow">→</span></span>
+          <span class="article-pending">待链接</span>
+        </div>
+      </a>
+
+      <a href="#" class="article" data-id="09">
+        <div class="article-header">
+          <div class="article-num">09</div>
+          <div class="article-tag">Correlation</div>
+        </div>
+        <div class="article-title">不只是"相关"那么简单</div>
+        <div class="article-topic">相关与回归入门</div>
+        <div class="article-case">
+          <span class="case-label">Case</span>
+          身高预测:父母身高和孩子身高的关系有多强?
+        </div>
+        <div class="article-footer">
+          <span class="read-more">阅读全文 <span class="arrow">→</span></span>
+          <span class="article-pending">待链接</span>
+        </div>
+      </a>
+
+      <a href="#" class="article" data-id="10">
+        <div class="article-header">
+          <div class="article-num">10</div>
+          <div class="article-tag">Regression</div>
+        </div>
+        <div class="article-title">多个变量一起看</div>
+        <div class="article-topic">多元回归与混杂控制</div>
+        <div class="article-case">
+          <span class="case-label">Case</span>
+          早产儿 BPD 风险因素:胎龄、体重、用氧天数哪个影响最大?
+        </div>
+        <div class="article-footer">
+          <span class="read-more">阅读全文 <span class="arrow">→</span></span>
+          <span class="article-pending">待链接</span>
+        </div>
+      </a>
+
+      <a href="#" class="article" data-id="11">
+        <div class="article-header">
+          <div class="article-num">11</div>
+          <div class="article-tag">Survival</div>
+        </div>
+        <div class="article-title">从发病到结局的时间</div>
+        <div class="article-topic">生存分析入门</div>
+        <div class="article-case">
+          <span class="case-label">Case</span>
+          急性淋巴细胞白血病患儿 5 年生存率:KM 曲线怎么看?
+        </div>
+        <div class="article-footer">
+          <span class="read-more">阅读全文 <span class="arrow">→</span></span>
+          <span class="article-pending">待链接</span>
+        </div>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- 模块四 -->
+  <section class="module">
+    <div class="module-header">
+      <div class="module-num">Ⅳ</div>
+      <div class="module-title-group">
+        <div class="module-title">诊断与预测篇</div>
+        <div class="module-subtitle">"这个模型准不准?" · Diagnosis & Prediction</div>
+      </div>
+      <div class="module-meta">Lecture 12—14</div>
+    </div>
+    <div class="articles" data-count="3">
+
+      <a href="#" class="article" data-id="12">
+        <div class="article-header">
+          <div class="article-num">12</div>
+          <div class="article-tag">Sensitivity</div>
+        </div>
+        <div class="article-title">检验结果阳性,真的有病吗?</div>
+        <div class="article-topic">敏感度、特异度与预测值</div>
+        <div class="article-case">
+          <span class="case-label">Case</span>
+          RSV 快速抗原检测:流行季和非流行季的阳性预测值差这么多?
+        </div>
+        <div class="article-footer">
+          <span class="read-more">阅读全文 <span class="arrow">→</span></span>
+          <span class="article-pending">待链接</span>
+        </div>
+      </a>
+
+      <a href="#" class="article" data-id="13">
+        <div class="article-header">
+          <div class="article-num">13</div>
+          <div class="article-tag">ROC / AUC</div>
+        </div>
+        <div class="article-title">ROC 曲线不神秘</div>
+        <div class="article-topic">ROC 曲线与最佳截断值</div>
+        <div class="article-case">
+          <span class="case-label">Case</span>
+          CRP 多高才提示细菌感染?用 ROC 找最佳截断点
+        </div>
+        <div class="article-footer">
+          <span class="read-more">阅读全文 <span class="arrow">→</span></span>
+          <span class="article-pending">待链接</span>
+        </div>
+      </a>
+
+      <a href="#" class="article" data-id="14">
+        <div class="article-header">
+          <div class="article-num">14</div>
+          <div class="article-tag">Calibration</div>
+        </div>
+        <div class="article-title">预测模型可靠吗?</div>
+        <div class="article-topic">模型校准与验证</div>
+        <div class="article-case">
+          <span class="case-label">Case</span>
+          发热婴儿住院预测模型:预测 30% 风险的患儿,实际住院率也是 30% 吗?
+        </div>
+        <div class="article-footer">
+          <span class="read-more">阅读全文 <span class="arrow">→</span></span>
+          <span class="article-pending">待链接</span>
+        </div>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- 模块五 -->
+  <section class="module">
+    <div class="module-header">
+      <div class="module-num">Ⅴ</div>
+      <div class="module-title-group">
+        <div class="module-title">临床研究设计篇</div>
+        <div class="module-subtitle">"证据从哪来?" · Where Evidence Comes From</div>
+      </div>
+      <div class="module-meta">Lecture 15—17</div>
+    </div>
+    <div class="articles" data-count="3">
+
+      <a href="#" class="article" data-id="15">
+        <div class="article-header">
+          <div class="article-num">15</div>
+          <div class="article-tag">RCT</div>
+        </div>
+        <div class="article-title">RCT 为什么是金标准?</div>
+        <div class="article-topic">随机对照试验设计</div>
+        <div class="article-case">
+          <span class="case-label">Case</span>
+          评价一种新的哮喘吸入方案:为什么非要随机分组?
+        </div>
+        <div class="article-footer">
+          <span class="read-more">阅读全文 <span class="arrow">→</span></span>
+          <span class="article-pending">待链接</span>
+        </div>
+      </a>
+
+      <a href="#" class="article" data-id="16">
+        <div class="article-header">
+          <div class="article-num">16</div>
+          <div class="article-tag">Causal</div>
+        </div>
+        <div class="article-title">没有 RCT 怎么办?</div>
+        <div class="article-topic">观察性研究与因果推断</div>
+        <div class="article-case">
+          <span class="case-label">Case</span>
+          疫苗接种时机对百日咳保护效果:无法随机分配,如何尽量逼近因果?
+        </div>
+        <div class="article-footer">
+          <span class="read-more">阅读全文 <span class="arrow">→</span></span>
+          <span class="article-pending">待链接</span>
+        </div>
+      </a>
+
+      <a href="#" class="article" data-id="17">
+        <div class="article-header">
+          <div class="article-num">17</div>
+          <div class="article-tag">Meta-analysis</div>
+        </div>
+        <div class="article-title">Meta 分析里的门道</div>
+        <div class="article-topic">系统综述与 Meta 分析</div>
+        <div class="article-case">
+          <span class="case-label">Case</span>
+          多篇研究结论不一致:丙种球蛋白治疗川崎病的最佳剂量是多少?
+        </div>
+        <div class="article-footer">
+          <span class="read-more">阅读全文 <span class="arrow">→</span></span>
+          <span class="article-pending">待链接</span>
+        </div>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- 模块六 -->
+  <section class="module">
+    <div class="module-header">
+      <div class="module-num">Ⅵ</div>
+      <div class="module-title-group">
+        <div class="module-title">前沿与实践篇</div>
+        <div class="module-subtitle">"AI 时代的统计学" · Statistics in the Age of AI</div>
+      </div>
+      <div class="module-meta">Lecture 18—20</div>
+    </div>
+    <div class="articles" data-count="3">
+
+      <a href="#" class="article" data-id="18">
+        <div class="article-header">
+          <div class="article-num">18</div>
+          <div class="article-tag">ML vs Stats</div>
+        </div>
+        <div class="article-title">机器学习和统计学有什么不同?</div>
+        <div class="article-topic">ML vs 传统统计思维</div>
+        <div class="article-case">
+          <span class="case-label">Case</span>
+          XGBoost 预测发热婴儿住院:它和 Logistic 回归到底差在哪?
+        </div>
+        <div class="article-footer">
+          <span class="read-more">阅读全文 <span class="arrow">→</span></span>
+          <span class="article-pending">待链接</span>
+        </div>
+      </a>
+
+      <a href="#" class="article" data-id="19">
+        <div class="article-header">
+          <div class="article-num">19</div>
+          <div class="article-tag">AI Eval</div>
+        </div>
+        <div class="article-title">大模型看病靠谱吗?</div>
+        <div class="article-topic">AI 辅助诊断的评价方法</div>
+        <div class="article-case">
+          <span class="case-label">Case</span>
+          小乙医生诊断准确率怎么评估?和人类医生怎么比?
+        </div>
+        <div class="article-footer">
+          <span class="read-more">阅读全文 <span class="arrow">→</span></span>
+          <span class="article-pending">待链接</span>
+        </div>
+      </a>
+
+      <a href="#" class="article" data-id="20">
+        <div class="article-header">
+          <div class="article-num">20</div>
+          <div class="article-tag">Synthesis</div>
+        </div>
+        <div class="article-title">统计素养是临床能力</div>
+        <div class="article-topic">总结与实战指南</div>
+        <div class="article-case">
+          <span class="case-label">Case</span>
+          读一篇儿科高影响力论文:逐段拆解统计方法
+        </div>
+        <div class="article-footer">
+          <span class="read-more">阅读全文 <span class="arrow">→</span></span>
+          <span class="article-pending">待链接</span>
+        </div>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- 页脚 -->
+  <footer class="footer">
+    <div class="ornament">❦ &nbsp; ❦ &nbsp; ❦</div>
+    <p style="font-weight:500; color:var(--ink-soft);">大数据工程中心 · pediatriXlab</p>
+    <p style="margin-top:6px;">重庆医科大学附属儿童医院 · 儿童少年健康与疾病国家临床医学研究中心</p>
+    <p style="margin-top:8px; font-size:12px;">From Numbers to Decisions · 2026</p>
+  </footer>
+
+</div>
+
+<!-- ============================================= -->
+<!--  链接配置区:把每篇文章的 URL 填到下面即可        -->
+<!--  · 已填链接:卡片自动跳转,"待链接"标签自动消失   -->
+<!--  · 留空 ""  :卡片保持"待链接"状态,点击无反应   -->
+<!--  · 支持新窗口打开(默认在新标签页打开)            -->
+<!-- ============================================= -->
+<script>
+const ARTICLE_LINKS = {
+  "01": "",  // 数据会说谎吗?
+  "02": "",  // "正常值"到底怎么定?
+  "03": "",  // 抽样偏了,结论全废
+  "04": "",  // P 值不是万能的
+  "05": "",  // 效果到底有多大?
+  "06": "",  // 比较越多,错得越多
+  "07": "",  // 样本量不是拍脑袋定的
+  "08": "",  // t 检验、卡方,到底用哪个?
+  "09": "",  // 不只是"相关"那么简单
+  "10": "",  // 多个变量一起看
+  "11": "",  // 从发病到结局的时间
+  "12": "",  // 检验结果阳性,真的有病吗?
+  "13": "",  // ROC 曲线不神秘
+  "14": "",  // 预测模型可靠吗?
+  "15": "",  // RCT 为什么是金标准?
+  "16": "",  // 没有 RCT 怎么办?
+  "17": "",  // Meta 分析里的门道
+  "18": "",  // 机器学习和统计学有什么不同?
+  "19": "",  // 大模型看病靠谱吗?
+  "20": ""   // 统计素养是临床能力
+};
+
+// 是否在新标签页打开链接(true = 新标签页;false = 当前页跳转)
+const OPEN_IN_NEW_TAB = true;
+
+// ===== 以下为自动注入逻辑,无需修改 =====
+(function() {
+  document.querySelectorAll('.article').forEach(card => {
+    const id = card.dataset.id;
+    const url = (ARTICLE_LINKS[id] || '').trim();
+    const pendingTag = card.querySelector('.article-pending');
+
+    if (url) {
+      card.setAttribute('href', url);
+      if (OPEN_IN_NEW_TAB) {
+        card.setAttribute('target', '_blank');
+        card.setAttribute('rel', 'noopener noreferrer');
+      }
+      // 链接已填,移除"待链接"标签
+      if (pendingTag) pendingTag.remove();
+    } else {
+      // 链接未填,阻止跳转,保持"待链接"提示
+      card.setAttribute('href', 'javascript:void(0)');
+      card.style.cursor = 'default';
+      card.addEventListener('click', e => e.preventDefault());
+    }
+  });
+})();
+</script>
+
+</body>
+</html>
