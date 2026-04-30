@@ -115,6 +115,10 @@ var miscellaneous = new Vue({
 				info1:'',
 				info2:'时间序列基础模型：预测未来的魔法？',
 				website1:'./TSFM.html',
+			},{
+				info1:'',
+				info2:'医学AI 素养智教助手网页版',
+				website1:'./ai4mededu.html',
 			}
 		]
 	}
