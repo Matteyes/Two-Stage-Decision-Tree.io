@@ -158,6 +158,10 @@ var paper = new Vue({
 				name:'1. 统计学理论',
 				papers:[
 					{
+						info1:"Zhang, Y., Chen, J., Li, Y., Zhang, L., Chen, Y., Wang, J., ",
+						name: "Xu, X.",
+						info2: ", Luo, X., Wang, H. (2025). Trajectories of childhood atopic dermatitis and their association with attention-deficit hyperactivity disorder. Pediatric Allergy and Immunology 36(11), e70249."
+					},{
 						info1:"Wang, Y., Huang, G., Chen, C., Li, Q., ",
 						name: "Xu, X.",
 						info2: " (2025).A Comparative Study of Time Series Foundation Models for Hand, Foot and Mouth Disease Forecasting: TimesFM, Moirai, and Traditional Approaches. Frontiers in Public Health. 13, 1634138."
