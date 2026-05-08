@@ -110,19 +110,19 @@ var miscellaneous = new Vue({
 			},{
 				info1:'',
 				info2:'MIMIC数据库简介&下载与安装教程',
-				website1:'./MIMIC.html',
+				website1:'./MIMIC',
 			},{
 				info1:'',
 				info2:'时间序列基础模型：预测未来的魔法？',
-				website1:'./TSFM.html',
+				website1:'./TSFM',
 			},{
 				info1:'',
 				info2:'医学AI 素养智教助手网页版',
-				website1:'./ai4mededu.html',
+				website1:'./ai4mededu',
 			},{
 				info1:'',
 				info2:'临床医生统计思维-20讲',
-				website1:'./tutorials.html',
+				website1:'./tutorials',
 			}
 		]
 	}
