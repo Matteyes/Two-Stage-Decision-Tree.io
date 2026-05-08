@@ -108,8 +108,8 @@ var miscellaneous = new Vue({
 				info4:'Chinese',
 				website2:'http://probability.ca/jeff/ftpdir/lotteryChinese.pdf'
 			},{
-				info1:'MIMIC数据库简介&下载与安装教程',
-				info2:'Website',
+				info1:'',
+				info2:'MIMIC数据库简介&下载与安装教程',
 				website1:'./MIMIC.html',
 			},{
 				info1:'',
@@ -119,6 +119,10 @@ var miscellaneous = new Vue({
 				info1:'',
 				info2:'医学AI 素养智教助手网页版',
 				website1:'./ai4mededu.html',
+			},{
+				info1:'',
+				info2:'临床医生统计思维-20讲',
+				website1:'./tutorials.html',
 			}
 		]
 	}
