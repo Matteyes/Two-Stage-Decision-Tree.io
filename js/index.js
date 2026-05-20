@@ -122,7 +122,7 @@ var miscellaneous = new Vue({
 			},{
 				info1:'',
 				info2:'临床医生统计思维-20讲',
-				website1:'./tutorials',
+				website1:'./stats4clinmed',
 			}
 		]
 	}
